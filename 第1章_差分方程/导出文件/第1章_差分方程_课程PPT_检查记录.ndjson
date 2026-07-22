@@ -1,0 +1,206 @@
+{"kind":"deck","id":"pr/6evtyo","name":"Deck"}
+{"kind":"layout","layoutId":"b97a6507-c3bf-4ce6-acf4-8419b768f9eb","name":"Master","type":"master"}
+{"kind":"layout","layoutId":"e6387f70-0c75-4a01-a828-5af577f5698d","name":"Title Slide","type":"title"}
+{"kind":"slide","id":"sl/cue81i","slide":1,"title":"经济时间序列","textShapes":5}
+{"kind":"textbox","id":"sh/zyt8fy54","slide":1,"text":"经济时间序列","textPreview":"经济时间序列","textChars":6,"textLines":1,"bbox":[50,48,330,28]}
+{"kind":"textbox","id":"sh/0z298369","slide":1,"text":"第 1 章\n差分方程与时间序列模型","textPreview":"第 1 章 | 差分方程与时间序列模型","textChars":17,"textLines":2,"bbox":[50,180,950,190]}
+{"kind":"textbox","id":"sh/10bqh8nu","slide":1,"text":"从时间序列的运动方程出发：预测、均衡调整与可检验的动态模型","textPreview":"从时间序列的运动方程出发：预测、均衡调整与可检验的动态模型","textChars":29,"textLines":1,"bbox":[52,418,830,38]}
+{"kind":"shape","id":"sh/qt0729o7","slide":1,"bbox":[52,530,800,0]}
+{"kind":"textbox","id":"sh/ru98be5s","slide":1,"text":"适用对象：应用经济学硕士与低年级博士生","textPreview":"适用对象：应用经济学硕士与低年级博士生","textChars":19,"textLines":1,"bbox":[52,562,630,28]}
+{"kind":"textbox","id":"sh/cvip4j6d","slide":1,"text":"基于 Walter Enders《Applied Econometric Time Series》第一章的教学重构","textPreview":"基于 Walter Enders《Applied Econometric Time Series》第一章的教学重构","textChars":57,"textLines":1,"bbox":[52,606,850,24]}
+{"kind":"shape","id":"sh/dwrqdony","slide":1,"bbox":[1010,100,170,170]}
+{"kind":"shape","id":"sh/ap4red4r","slide":1,"bbox":[1090,330,100,100]}
+{"kind":"shape","id":"sh/vqd8ni5w","slide":1,"bbox":[942,430,64,64]}
+{"kind":"notes","id":"nt/cue81i","slide":1,"text":""}
+{"kind":"slide","id":"sl/pmqk40","slide":2,"title":"第 02 页","textShapes":13}
+{"kind":"textbox","id":"sh/bihkvuh0","slide":2,"text":"第 02 页","textPreview":"第 02 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/cjq14zyl","slide":2,"text":"为什么从“动态”而不是从“回归”开始？","textPreview":"为什么从“动态”而不是从“回归”开始？","textChars":19,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/dkz2x4z6","slide":2,"text":"时间序列的核心对象不是一组孤立观测，而是一条由过去、冲击和调整机制共同生成的路径。","textPreview":"时间序列的核心对象不是一组孤立观测，而是一条由过去、冲击和调整机制共同生成的路径。","textChars":41,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/yl8j69gr","slide":2,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/zmhkzehc","slide":2,"text":"同一条序列，至少包含三类信息","textPreview":"同一条序列，至少包含三类信息","textChars":14,"textLines":1,"bbox":[48,225,550,35]}
+{"kind":"shape","id":"sh/0nq18jyx","slide":2,"bbox":[48,290,350,200]}
+{"kind":"shape","id":"sh/loz214f2","slide":2,"bbox":[48,290,8,200]}
+{"kind":"textbox","id":"sh/ep4ju5gn","slide":2,"text":"过去状态","textPreview":"过去状态","textChars":4,"textLines":1,"bbox":[76,310,302,30]}
+{"kind":"textbox","id":"sh/fqdknahs","slide":2,"text":"滞后值把历史带入现在。\n例如：惯性、存量、预期与调整成本。","textPreview":"滞后值把历史带入现在。 | 例如：惯性、存量、预期与调整成本。","textChars":29,"textLines":2,"bbox":[76,352,302,118]}
+{"kind":"shape","id":"sh/radcj650","slide":2,"bbox":[430,290,350,200]}
+{"kind":"shape","id":"sh/q94va14f","slide":2,"bbox":[430,290,8,200]}
+{"kind":"textbox","id":"sh/dcvulwnq","slide":2,"text":"系统规律","textPreview":"系统规律","textChars":4,"textLines":1,"bbox":[458,310,302,30]}
+{"kind":"textbox","id":"sh/sbmdcrml","slide":2,"text":"趋势、季节、均衡关系或行为方程，规定变量如何演化。","textPreview":"趋势、季节、均衡关系或行为方程，规定变量如何演化。","textChars":25,"textLines":1,"bbox":[458,352,302,118]}
+{"kind":"shape","id":"sh/36dcfm5o","slide":2,"bbox":[812,290,350,200]}
+{"kind":"shape","id":"sh/i54v6h43","slide":2,"bbox":[812,290,8,200]}
+{"kind":"textbox","id":"sh/58vuhwnu","slide":2,"text":"新的冲击","textPreview":"新的冲击","textChars":4,"textLines":1,"bbox":[840,310,302,30]}
+{"kind":"textbox","id":"sh/47md8rm9","slide":2,"text":"每期都有不能被过去完全预见的创新：政策、需求、金融与测量误差。","textPreview":"每期都有不能被过去完全预见的创新：政策、需求、金融与测量误差。","textChars":31,"textLines":1,"bbox":[840,352,302,118]}
+{"kind":"textbox","id":"sh/vitcbm5s","slide":2,"text":"问题：给定今天的状态与已知规则，明天会怎样？","textPreview":"问题：给定今天的状态与已知规则，明天会怎样？","textChars":22,"textLines":1,"bbox":[48,555,920,44]}
+{"kind":"textbox","id":"sh/uhkb2h47","slide":2,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/yd0vex8z","slide":2,"text":"2","textPreview":"2","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/pmqk40","slide":2,"text":""}
+{"kind":"slide","id":"sl/71jd7u","slide":3,"title":"第 03 页","textShapes":11}
+{"kind":"textbox","id":"sh/wr6hcvah","slide":3,"text":"第 03 页","textPreview":"第 03 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/bqxgjq9w","slide":3,"text":"图 1.1：把一条经济时间序列拆开来看","textPreview":"图 1.1：把一条经济时间序列拆开来看","textChars":19,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/apofalsb","slide":3,"text":"观测值 = 趋势 + 季节 + 不规则项；预测来自对各成分运动规律的延伸。","textPreview":"观测值 = 趋势 + 季节 + 不规则项；预测来自对各成分运动规律的延伸。","textChars":37,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/lwzyp0ry","slide":3,"bbox":[48,174,1184,0]}
+{"kind":"shape","id":"sh/juhgna9s","slide":3,"bbox":[850,225,320,110]}
+{"kind":"shape","id":"sh/yt8ze5s7","slide":3,"bbox":[850,225,8,110]}
+{"kind":"textbox","id":"sh/tkjytkru","slide":3,"text":"趋势 Tₜ","textPreview":"趋势 Tₜ","textChars":5,"textLines":1,"bbox":[878,245,272,30]}
+{"kind":"textbox","id":"sh/8jahkfap","slide":3,"text":"决定长期平均水平。\n例：Tₜ = 1 + 0.1t","textPreview":"决定长期平均水平。 | 例：Tₜ = 1 + 0.1t","textChars":25,"textLines":2,"bbox":[878,287,272,28]}
+{"kind":"shape","id":"sh/al0ri9ob","slide":3,"bbox":[850,360,320,110]}
+{"kind":"shape","id":"sh/vm9sbe5w","slide":3,"bbox":[850,360,8,110]}
+{"kind":"textbox","id":"sh/wni9kj61","slide":3,"text":"季节 Sₜ","textPreview":"季节 Sₜ","textChars":5,"textLines":1,"bbox":[878,380,272,30]}
+{"kind":"textbox","id":"sh/x8radonm","slide":3,"text":"产生重复的周期性波动。\n例：Sₜ = 1.6 sin(tπ/6)","textPreview":"产生重复的周期性波动。 | 例：Sₜ = 1.6 sin(tπ/6)","textChars":32,"textLines":2,"bbox":[878,422,272,28]}
+{"kind":"shape","id":"sh/i90bmto7","slide":3,"bbox":[850,495,320,110]}
+{"kind":"shape","id":"sh/ja9sfy5s","slide":3,"bbox":[850,495,8,110]}
+{"kind":"textbox","id":"sh/kbito36d","slide":3,"text":"不规则 Iₜ","textPreview":"不规则 Iₜ","textChars":6,"textLines":1,"bbox":[878,515,272,30]}
+{"kind":"textbox","id":"sh/5cbah8ny","slide":3,"text":"短期相关、长期衰减。\n例：Iₜ = 0.7Iₜ₋₁ + εₜ","textPreview":"短期相关、长期衰减。 | 例：Iₜ = 0.7Iₜ₋₁ + εₜ","textChars":30,"textLines":2,"bbox":[878,557,272,28]}
+{"kind":"textbox","id":"sh/ydwrapo3","slide":3,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/zeps3u5o","slide":3,"text":"3","textPreview":"3","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"image","id":"im/dof6dkje","slide":3,"name":"","alt":"图1.1假想时间序列及其成分","bbox":[48,204,760,440]}
+{"kind":"notes","id":"nt/71jd7u","slide":3,"text":""}
+{"kind":"slide","id":"sl/8x66bx","slide":4,"title":"第 04 页","textShapes":13}
+{"kind":"textbox","id":"sh/kv254zy1","slide":4,"text":"第 04 页","textPreview":"第 04 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/jutovuxg","slide":4,"text":"从分解到运动方程：什么是差分方程？","textPreview":"从分解到运动方程：什么是差分方程？","textChars":17,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/itkn29gv","slide":4,"text":"差分方程把当前值写成过去值、时间、其他变量和随机扰动的函数。","textPreview":"差分方程把当前值写成过去值、时间、其他变量和随机扰动的函数。","textChars":30,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/tkv61ofi","slide":4,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/sjmp8jyx","slide":4,"text":"yₜ = f(yₜ₋₁, yₜ₋₂, …, t, xₜ, xₜ₋₁, …, εₜ)","textPreview":"yₜ = f(yₜ₋₁, yₜ₋₂, …, t, xₜ, xₜ₋₁, …, εₜ)","textChars":41,"textLines":1,"bbox":[92,226,1060,70]}
+{"kind":"textbox","id":"sh/7ydozexc","slide":4,"text":"它不仅说明变量之间“同时发生什么”，还说明变量从 t−1 到 t 如何调整。","textPreview":"它不仅说明变量之间“同时发生什么”，还说明变量从 t−1 到 t 如何调整。","textChars":38,"textLines":1,"bbox":[92,330,1050,40]}
+{"kind":"textbox","id":"sh/6x4n69gr","slide":4,"text":"给定初始条件、外生变量路径与冲击序列，差分方程生成整个时间路径。","textPreview":"给定初始条件、外生变量路径与冲击序列，差分方程生成整个时间路径。","textChars":32,"textLines":1,"bbox":[92,385,1050,36]}
+{"kind":"shape","id":"sh/9ob6pkfe","slide":4,"bbox":[90,484,230,78]}
+{"kind":"textbox","id":"sh/8ni5wfyt","slide":4,"text":"初始状态\ny₀, y₋₁","textPreview":"初始状态 | y₀, y₋₁","textChars":12,"textLines":2,"bbox":[90,497,230,48]}
+{"kind":"shape","id":"sh/2t8rmtkj","slide":4,"bbox":[335,523,130,0]}
+{"kind":"shape","id":"sh/nuhsfy14","slide":4,"bbox":[454,517,12,12]}
+{"kind":"textbox","id":"sh/ovqto32p","slide":4,"text":"动态规则","textPreview":"动态规则","textChars":4,"textLines":1,"bbox":[335,487,130,24]}
+{"kind":"shape","id":"sh/pwzahoja","slide":4,"bbox":[480,484,270,78]}
+{"kind":"textbox","id":"sh/ax8bqtkv","slide":4,"text":"当前状态\nyₜ","textPreview":"当前状态 | yₜ","textChars":7,"textLines":2,"bbox":[480,497,270,48]}
+{"kind":"shape","id":"sh/bihsjy1g","slide":4,"bbox":[765,523,130,0]}
+{"kind":"shape","id":"sh/cjqts32l","slide":4,"bbox":[884,517,12,12]}
+{"kind":"textbox","id":"sh/xkjal8j6","slide":4,"text":"递推","textPreview":"递推","textChars":2,"textLines":1,"bbox":[765,487,130,24]}
+{"kind":"shape","id":"sh/ylsbudkr","slide":4,"bbox":[910,484,250,78]}
+{"kind":"textbox","id":"sh/zm1sni1c","slide":4,"text":"未来路径\nyₜ₊₁, yₜ₊₂, …","textPreview":"未来路径 | yₜ₊₁, yₜ₊₂, …","textChars":18,"textLines":2,"bbox":[910,497,250,48]}
+{"kind":"textbox","id":"sh/vq1sbihk","slide":4,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/upsrid0z","slide":4,"text":"4","textPreview":"4","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/8x66bx","slide":4,"text":""}
+{"kind":"slide","id":"sl/wtvum7","slide":5,"title":"第 05 页","textShapes":13}
+{"kind":"textbox","id":"sh/orat07qx","slide":5,"text":"第 05 页","textPreview":"第 05 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/nq1c729c","slide":5,"text":"例 1：随机游走——价格变化中的“新信息”","textPreview":"例 1：随机游走——价格变化中的“新信息”","textChars":21,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/2psbyx8r","slide":5,"text":"随机游走提供了一个最简单的随机差分方程，也是检验可预测性的基准。","textPreview":"随机游走提供了一个最简单的随机差分方程，也是检验可预测性的基准。","textChars":32,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/1oja5cr6","slide":5,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/0natw7ql","slide":5,"text":"yₜ₊₁ = yₜ + εₜ₊₁       或       Δyₜ₊₁ = εₜ₊₁","textPreview":"yₜ₊₁ = yₜ + εₜ₊₁       或       Δyₜ₊₁ = εₜ₊₁","textChars":43,"textLines":1,"bbox":[82,220,1110,64]}
+{"kind":"shape","id":"sh/fm1s329g","slide":5,"bbox":[82,335,324,175]}
+{"kind":"shape","id":"sh/el8bux8v","slide":5,"bbox":[82,335,8,175]}
+{"kind":"textbox","id":"sh/lk3uhwrq","slide":5,"text":"经济含义","textPreview":"经济含义","textChars":4,"textLines":1,"bbox":[110,355,276,30]}
+{"kind":"textbox","id":"sh/kjut8rq5","slide":5,"text":"yₜ 为股票价格的对数。\n新的价格变化只来自 t 期无法预见的创新。","textPreview":"yₜ 为股票价格的对数。 | 新的价格变化只来自 t 期无法预见的创新。","textChars":34,"textLines":2,"bbox":[110,397,276,93]}
+{"kind":"shape","id":"sh/i9wv6dgb","slide":5,"bbox":[456,335,324,175]}
+{"kind":"shape","id":"sh/3apcfixw","slide":5,"bbox":[456,335,8,175]}
+{"kind":"textbox","id":"sh/4byd8ny1","slide":5,"text":"可检验形式","textPreview":"可检验形式","textChars":5,"textLines":1,"bbox":[484,355,276,30]}
+{"kind":"textbox","id":"sh/5c7ehsfm","slide":5,"text":"Δyₜ₊₁ = a₀ + a₁yₜ + εₜ₊₁\n随机游走要求 a₀ = a₁ = 0。","textPreview":"Δyₜ₊₁ = a₀ + a₁yₜ + εₜ₊₁ | 随机游走要求 a₀ = a₁ = 0。","textChars":44,"textLines":2,"bbox":[484,397,276,93]}
+{"kind":"shape","id":"sh/u5wv2dgz","slide":5,"bbox":[830,335,324,175]}
+{"kind":"shape","id":"sh/v65cbyhk","slide":5,"bbox":[830,335,8,175]}
+{"kind":"textbox","id":"sh/g7ed43y5","slide":5,"text":"不要误解","textPreview":"不要误解","textChars":4,"textLines":1,"bbox":[858,355,276,30]}
+{"kind":"textbox","id":"sh/h8nud8fq","slide":5,"text":"它不是“价格不变”，而是“给定当前信息，变化没有系统性可预测部分”。","textPreview":"它不是“价格不变”，而是“给定当前信息，变化没有系统性可预测部分”。","textChars":34,"textLines":1,"bbox":[858,397,276,93]}
+{"kind":"textbox","id":"sh/e1gvexgj","slide":5,"text":"这里的关键不是预测价格水平，而是检验过去信息是否仍含有可利用的预测内容。","textPreview":"这里的关键不是预测价格水平，而是检验过去信息是否仍含有可利用的预测内容。","textChars":36,"textLines":1,"bbox":[82,562,1000,30]}
+{"kind":"textbox","id":"sh/f29wn2xo","slide":5,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/bm1sfuxg","slide":5,"text":"5","textPreview":"5","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/wtvum7","slide":5,"text":""}
+{"kind":"slide","id":"sl/bmda60","slide":6,"title":"第 06 页","textShapes":14}
+{"kind":"textbox","id":"sh/a5kveh0b","slide":6,"text":"第 06 页","textPreview":"第 06 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/x8vu9wj2","slide":6,"text":"例 2：收入—消费—投资系统（结构式）","textPreview":"例 2：收入—消费—投资系统（结构式）","textChars":19,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/c7mdgrih","slide":6,"text":"经济理论常自然地给出一组相互联系的差分方程。Samuelson 的模型说明这一点。","textPreview":"经济理论常自然地给出一组相互联系的差分方程。Samuelson 的模型说明这一点。","textChars":41,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/n2tc3m10","slide":6,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/21kvah0f","slide":6,"text":"yₜ = cₜ + iₜ","textPreview":"yₜ = cₜ + iₜ","textChars":12,"textLines":1,"bbox":[74,220,360,48]}
+{"kind":"textbox","id":"sh/p4bu5wjq","slide":6,"text":"cₜ = αyₜ₋₁ + εᶜₜ， 0 < α < 1","textPreview":"cₜ = αyₜ₋₁ + εᶜₜ， 0 < α < 1","textChars":27,"textLines":1,"bbox":[452,220,660,48]}
+{"kind":"textbox","id":"sh/o32dcril","slide":6,"text":"iₜ = β(cₜ − cₜ₋₁) + εⁱₜ， β > 0","textPreview":"iₜ = β(cₜ − cₜ₋₁) + εⁱₜ， β > 0","textChars":30,"textLines":1,"bbox":[278,294,720,48]}
+{"kind":"shape","id":"sh/7yxwf6h4","slide":6,"bbox":[100,410,250,100]}
+{"kind":"textbox","id":"sh/mx4vm10j","slide":6,"text":"产出 yₜ\n消费 + 投资","textPreview":"产出 yₜ | 消费 + 投资","textChars":13,"textLines":2,"bbox":[100,428,250,55]}
+{"kind":"shape","id":"sh/szmds3m9","slide":6,"bbox":[360,460,130,0]}
+{"kind":"shape","id":"sh/t0vul8nu","slide":6,"bbox":[479,454,12,12]}
+{"kind":"textbox","id":"sh/6xkbqd43","slide":6,"text":"滞后收入","textPreview":"滞后收入","textChars":4,"textLines":1,"bbox":[360,424,130,24]}
+{"kind":"shape","id":"sh/rydcji5o","slide":6,"bbox":[505,410,250,100]}
+{"kind":"textbox","id":"sh/4v2to3mx","slide":6,"text":"消费 cₜ\nαyₜ₋₁ + 冲击","textPreview":"消费 cₜ | αyₜ₋₁ + 冲击","textChars":16,"textLines":2,"bbox":[505,428,250,55]}
+{"kind":"shape","id":"sh/5wbuh8ni","slide":6,"bbox":[765,460,130,0]}
+{"kind":"shape","id":"sh/itkbmt47","slide":6,"bbox":[884,454,12,12]}
+{"kind":"textbox","id":"sh/jutcfy5c","slide":6,"text":"消费变化","textPreview":"消费变化","textChars":4,"textLines":1,"bbox":[765,424,130,24]}
+{"kind":"shape","id":"sh/w72tkjm1","slide":6,"bbox":[910,410,250,100]}
+{"kind":"textbox","id":"sh/h8budonm","slide":6,"text":"投资 iₜ\n加速数原理","textPreview":"投资 iₜ | 加速数原理","textChars":11,"textLines":2,"bbox":[910,428,250,55]}
+{"kind":"textbox","id":"sh/xo3ahkfa","slide":6,"text":"结构式保留行为机制；但当期内生变量彼此相连，单方程预测并不直接。","textPreview":"结构式保留行为机制；但当期内生变量彼此相连，单方程预测并不直接。","textChars":32,"textLines":1,"bbox":[100,562,1050,28]}
+{"kind":"textbox","id":"sh/wnu9ofyp","slide":6,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/bmlsfax4","slide":6,"text":"6","textPreview":"6","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/bmda60","slide":6,"text":""}
+{"kind":"slide","id":"sl/39359f","slide":7,"title":"第 07 页","textShapes":12}
+{"kind":"textbox","id":"sh/zutozqhw","slide":7,"text":"第 07 页","textPreview":"第 07 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/0v25svy1","slide":7,"text":"从结构式到简化式：为什么预测常使用滞后变量？","textPreview":"从结构式到简化式：为什么预测常使用滞后变量？","textChars":22,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/1wv610zm","slide":7,"text":"通过代入消去当前的其他内生变量，可得到只含自身历史与扰动的单变量方程。","textPreview":"通过代入消去当前的其他内生变量，可得到只含自身历史与扰动的单变量方程。","textChars":35,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/qpknm1gz","slide":7,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/rqtov6hk","slide":7,"text":"代入消费方程与投资方程","textPreview":"代入消费方程与投资方程","textChars":11,"textLines":1,"bbox":[70,220,330,30]}
+{"kind":"shape","id":"sh/cr25oby5","slide":7,"bbox":[398,236,150,0]}
+{"kind":"shape","id":"sh/dsb6xgzq","slide":7,"bbox":[537,230,12,12]}
+{"kind":"textbox","id":"sh/2l0ni1g3","slide":7,"text":"消去 cₜ 与 iₜ","textPreview":"消去 cₜ 与 iₜ","textChars":10,"textLines":1,"bbox":[398,200,150,24]}
+{"kind":"textbox","id":"sh/3m9or6ho","slide":7,"text":"yₜ = α(1 + β)yₜ₋₁ − αβyₜ₋₂ + xₜ","textPreview":"yₜ = α(1 + β)yₜ₋₁ − αβyₜ₋₂ + xₜ","textChars":31,"textLines":1,"bbox":[560,205,610,72]}
+{"kind":"shape","id":"sh/3y903als","slide":7,"bbox":[70,340,498,185]}
+{"kind":"shape","id":"sh/ix0ja5kn","slide":7,"bbox":[70,340,8,185]}
+{"kind":"textbox","id":"sh/50bi503y","slide":7,"text":"简化式的收益","textPreview":"简化式的收益","textChars":6,"textLines":1,"bbox":[98,360,450,30]}
+{"kind":"textbox","id":"sh/4z21cf2d","slide":7,"text":"• 当前产出仅由过去产出和扰动决定。\n• 给定参数与历史 yₜ，可递推预测 yₜ₊₁、yₜ₊₂、…\n• 这正是单变量时间序列模型的工作方式。","textPreview":"• 当前产出仅由过去产出和扰动决定。 | • 给定参数与历史 yₜ，可递推预测 yₜ₊₁、yₜ₊₂、… | • 这正是单变量时间序列模型的工作方式。","textChars":70,"textLines":3,"bbox":[98,402,450,103]}
+{"kind":"shape","id":"sh/r2t07al4","slide":7,"bbox":[622,340,498,185]}
+{"kind":"shape","id":"sh/q1kje5kj","slide":7,"bbox":[622,340,8,185]}
+{"kind":"textbox","id":"sh/d4bi9k3a","slide":7,"text":"简化式的代价","textPreview":"简化式的代价","textChars":6,"textLines":1,"bbox":[650,360,450,30]}
+{"kind":"textbox","id":"sh/s321gf2p","slide":7,"text":"• 它隐藏了消费和投资的当期行为机制。\n• 用于预测很方便；识别 α 与 β 等结构参数则需额外理论限制。","textPreview":"• 它隐藏了消费和投资的当期行为机制。 | • 用于预测很方便；识别 α 与 β 等结构参数则需额外理论限制。","textChars":53,"textLines":2,"bbox":[650,402,450,103]}
+{"kind":"textbox","id":"sh/76p0vql0","slide":7,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/65gz2l4f","slide":7,"text":"7","textPreview":"7","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/39359f","slide":7,"text":""}
+{"kind":"slide","id":"sl/5bdsv4","slide":8,"title":"第 08 页","textShapes":12}
+{"kind":"textbox","id":"sh/6l8fmhs3","slide":8,"text":"第 08 页","textPreview":"第 08 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/tozyhwbu","slide":8,"text":"例 3：误差修正——偏离均衡会触发调整","textPreview":"例 3：误差修正——偏离均衡会触发调整","textChars":19,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/8nqxora9","slide":8,"text":"长期均衡关系并不要求每一期都严格成立；关键是偏离后是否存在回调力量。","textPreview":"长期均衡关系并不要求每一期都严格成立；关键是偏离后是否存在回调力量。","textChars":34,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/jixgb2ts","slide":8,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/yhofihs7","slide":8,"text":"sₜ₊₁ = fₜ + εₜ₊₁","textPreview":"sₜ₊₁ = fₜ + εₜ₊₁","textChars":16,"textLines":1,"bbox":[88,215,450,54]}
+{"kind":"textbox","id":"sh/lkzydcbi","slide":8,"text":"无偏远期汇率关系：从 t 期看，远期价格 fₜ 是下一期即期价格 sₜ₊₁ 的无偏预测。","textPreview":"无偏远期汇率关系：从 t 期看，远期价格 fₜ 是下一期即期价格 sₜ₊₁ 的无偏预测。","textChars":44,"textLines":1,"bbox":[585,224,570,45]}
+{"kind":"textbox","id":"sh/kj6xk7ax","slide":8,"text":"sₜ₊₂ = sₜ₊₁ − α(sₜ₊₁ − fₜ) + εˢₜ₊₂","textPreview":"sₜ₊₂ = sₜ₊₁ − α(sₜ₊₁ − fₜ) + εˢₜ₊₂","textChars":34,"textLines":1,"bbox":[102,340,1040,48]}
+{"kind":"textbox","id":"sh/3e1gn69w","slide":8,"text":"fₜ₊₁ = fₜ + β(sₜ₊₁ − fₜ) + εᶠₜ₊₁","textPreview":"fₜ₊₁ = fₜ + β(sₜ₊₁ − fₜ) + εᶠₜ₊₁","textChars":32,"textLines":1,"bbox":[102,405,1040,48]}
+{"kind":"shape","id":"sh/idszu1sb","slide":8,"bbox":[150,516,250,60]}
+{"kind":"textbox","id":"sh/knil432d","slide":8,"text":"偏离：sₜ₊₁ − fₜ","textPreview":"偏离：sₜ₊₁ − fₜ","textChars":12,"textLines":1,"bbox":[150,533,250,25]}
+{"kind":"shape","id":"sh/5obmd8jy","slide":8,"bbox":[410,546,160,0]}
+{"kind":"shape","id":"sh/i1032tkn","slide":8,"bbox":[559,540,12,12]}
+{"kind":"textbox","id":"sh/j294by1s","slide":8,"text":"误差修正项","textPreview":"误差修正项","textChars":5,"textLines":1,"bbox":[410,510,160,24]}
+{"kind":"shape","id":"sh/wzil032h","slide":8,"bbox":[585,516,450,60]}
+{"kind":"textbox","id":"sh/x0rm9oj2","slide":8,"text":"即期回落、远期上升 → 回到长期均衡","textPreview":"即期回落、远期上升 → 回到长期均衡","textChars":18,"textLines":1,"bbox":[585,533,450,25]}
+{"kind":"textbox","id":"sh/ax03ytkb","slide":8,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/vy947y1w","slide":8,"text":"8","textPreview":"8","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/5bdsv4","slide":8,"text":""}
+{"kind":"slide","id":"sl/vxhbtt","slide":9,"title":"第 09 页","textShapes":11}
+{"kind":"textbox","id":"sh/6l0z654j","slide":9,"text":"第 09 页","textPreview":"第 09 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/toryhk3a","slide":9,"text":"例 4：非线性动态——正、负变化的反应可以不同","textPreview":"例 4：非线性动态——正、负变化的反应可以不同","textChars":23,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/snih8fmp","slide":9,"text":"线性模型假定系数恒定；经济主体的调整往往具有不对称性。 ","textPreview":"线性模型假定系数恒定；经济主体的调整往往具有不对称性。","textChars":28,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/fa9gjul0","slide":9,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/u90zap4v","slide":9,"text":"iₜ = β₁(cₜ − cₜ₋₁) − λₜβ₂(cₜ − cₜ₋₁) + εⁱₜ","textPreview":"iₜ = β₁(cₜ − cₜ₋₁) − λₜβ₂(cₜ − cₜ₋₁) + εⁱₜ","textChars":42,"textLines":1,"bbox":[92,220,1060,60]}
+{"kind":"shape","id":"sh/hcbyl436","slide":9,"bbox":[125,340,420,180]}
+{"kind":"shape","id":"sh/gbihczml","slide":9,"bbox":[125,340,8,180]}
+{"kind":"textbox","id":"sh/vepg7qlw","slide":9,"text":"消费上升：Δcₜ ≥ 0","textPreview":"消费上升：Δcₜ ≥ 0","textChars":12,"textLines":1,"bbox":[153,360,372,30]}
+{"kind":"textbox","id":"sh/adgfyl4b","slide":9,"text":"λₜ = 0\niₜ = β₁Δcₜ + εⁱₜ\n企业可能迅速增加投资以扩张产能。","textPreview":"λₜ = 0 | iₜ = β₁Δcₜ + εⁱₜ | 企业可能迅速增加投资以扩张产能。","textChars":40,"textLines":3,"bbox":[153,402,372,98]}
+{"kind":"shape","id":"sh/cf6hsvah","slide":9,"bbox":[730,340,420,180]}
+{"kind":"shape","id":"sh/dgfi10bm","slide":9,"bbox":[730,340,8,180]}
+{"kind":"textbox","id":"sh/qdozqlsb","slide":9,"text":"消费下降：Δcₜ < 0","textPreview":"消费下降：Δcₜ < 0","textChars":12,"textLines":1,"bbox":[758,360,372,30]}
+{"kind":"textbox","id":"sh/rex0zqtw","slide":9,"text":"λₜ = 1\niₜ = (β₁ − β₂)Δcₜ + εⁱₜ\n企业可能主要通过降低开工率调整。","textPreview":"λₜ = 1 | iₜ = (β₁ − β₂)Δcₜ + εⁱₜ | 企业可能主要通过降低开工率调整。","textChars":47,"textLines":3,"bbox":[758,402,372,98]}
+{"kind":"textbox","id":"sh/0jqhwfad","slide":9,"text":"若 β₁ > β₂ > 0，则投资对消费增加的反应强于对消费减少的反应。","textPreview":"若 β₁ > β₂ > 0，则投资对消费增加的反应强于对消费减少的反应。","textChars":36,"textLines":1,"bbox":[125,565,1020,30]}
+{"kind":"textbox","id":"sh/14zi5kby","slide":9,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/ehozu5s7","slide":9,"text":"9","textPreview":"9","textChars":1,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/vxhbtt","slide":9,"text":""}
+{"kind":"slide","id":"sl/k23gbl","slide":10,"title":"第 10 页","textShapes":15}
+{"kind":"textbox","id":"sh/tojyhsvq","slide":10,"text":"第 10 页","textPreview":"第 10 页","textChars":6,"textLines":1,"bbox":[48,34,120,22]}
+{"kind":"textbox","id":"sh/618z6dcf","slide":10,"text":"本部分小结：用运动方程理解时间序列","textPreview":"本部分小结：用运动方程理解时间序列","textChars":17,"textLines":1,"bbox":[48,70,1120,58]}
+{"kind":"textbox","id":"sh/rmhgfidk","slide":10,"text":"本课保留导言和“时间序列模型”部分；差分方程的求解技术将作为后续专题另行讲授。 ","textPreview":"本课保留导言和“时间序列模型”部分；差分方程的求解技术将作为后续专题另行讲授。","textChars":40,"textLines":1,"bbox":[48,132,1110,30]}
+{"kind":"shape","id":"sh/grahcnuh","slide":10,"bbox":[48,174,1184,0]}
+{"kind":"textbox","id":"sh/1sjylsv2","slide":10,"text":"01","textPreview":"01","textChars":2,"textLines":1,"bbox":[66,220,70,44]}
+{"kind":"textbox","id":"sh/epszadcb","slide":10,"text":"分解与预测","textPreview":"分解与预测","textChars":5,"textLines":1,"bbox":[66,282,300,32]}
+{"kind":"textbox","id":"sh/fq1gjidw","slide":10,"text":"趋势、季节和不规则项提供了理解与预测序列的基本入口。","textPreview":"趋势、季节和不规则项提供了理解与预测序列的基本入口。","textChars":26,"textLines":1,"bbox":[66,329,318,100]}
+{"kind":"shape","id":"sh/ovuhg7ud","slide":10,"bbox":[66,452,314,0]}
+{"kind":"textbox","id":"sh/pw3ypcvy","slide":10,"text":"02","textPreview":"02","textChars":2,"textLines":1,"bbox":[456,220,70,44]}
+{"kind":"textbox","id":"sh/9sbu5kvy","slide":10,"text":"动态经济机制","textPreview":"动态经济机制","textChars":6,"textLines":1,"bbox":[456,282,300,32]}
+{"kind":"textbox","id":"sh/872dcfed","slide":10,"text":"随机游走、结构式、简化式与误差修正把经济理论写成可检验的运动方程。","textPreview":"随机游走、结构式、简化式与误差修正把经济理论写成可检验的运动方程。","textChars":33,"textLines":1,"bbox":[456,329,318,100]}
+{"kind":"shape","id":"sh/n6tc3ad8","slide":10,"bbox":[456,452,314,0]}
+{"kind":"textbox","id":"sh/m50va5wn","slide":10,"text":"03","textPreview":"03","textChars":2,"textLines":1,"bbox":[846,220,70,44]}
+{"kind":"textbox","id":"sh/xwbe9kva","slide":10,"text":"建模边界","textPreview":"建模边界","textChars":4,"textLines":1,"bbox":[846,282,300,32]}
+{"kind":"textbox","id":"sh/wv2dgfep","slide":10,"text":"线性、均衡与对称调整都是假设；非线性模型提醒我们检验它们。","textPreview":"线性、均衡与对称调整都是假设；非线性模型提醒我们检验它们。","textChars":29,"textLines":1,"bbox":[846,329,318,100]}
+{"kind":"shape","id":"sh/vutc7ud4","slide":10,"bbox":[846,452,314,0]}
+{"kind":"shape","id":"sh/atkvepwj","slide":10,"bbox":[66,532,1080,72]}
+{"kind":"textbox","id":"sh/d0rux0vq","slide":10,"text":"讨论问题：在你的研究对象中，哪些变量体现“惯性”、哪些冲击不可预见、哪些均衡关系可能被打破又逐步修复？","textPreview":"讨论问题：在你的研究对象中，哪些变量体现“惯性”、哪些冲击不可预见、哪些均衡关系可能被打破又逐步修复？","textChars":51,"textLines":1,"bbox":[96,554,1030,30]}
+{"kind":"textbox","id":"sh/czid4vel","slide":10,"text":"经济时间序列 · 第 1 章","textPreview":"经济时间序列 · 第 1 章","textChars":14,"textLines":1,"bbox":[48,678,340,18]}
+{"kind":"textbox","id":"sh/4j2dkvm1","slide":10,"text":"10","textPreview":"10","textChars":2,"textLines":1,"bbox":[1194,676,38,18]}
+{"kind":"notes","id":"nt/k23gbl","slide":10,"text":""}

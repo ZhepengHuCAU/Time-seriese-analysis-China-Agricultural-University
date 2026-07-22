@@ -1,0 +1,32 @@
+site_name: 经济时间序列
+site_description: 中国农业大学经济时间序列课程讲义
+site_author: Zhepeng Hu
+site_url: https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/
+
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.sections
+    - navigation.expand
+    - navigation.top
+    - toc.integrate
+    - search.highlight
+    - search.suggest
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: blue
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+
+nav:
+  - 课程首页: index.md
+  - 第1章 差分方程: 第1章_差分方程/index.md
+  - 第2章 平稳时间序列模型: 第2章_平稳时间序列模型/index.md
