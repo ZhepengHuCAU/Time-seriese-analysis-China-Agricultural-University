@@ -23,6 +23,8 @@ markdown_extensions:
   - attr_list
   - md_in_html
   - tables
+  - pymdownx.arithmatex:
+      generic: true
   - toc:
       permalink: true
 
@@ -33,3 +35,7 @@ nav:
 
 extra_css:
   - 样式/课堂阅读.css
+
+extra_javascript:
+  - 脚本/mathjax.js
+  - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js

@@ -48,6 +48,14 @@
   line-height: 1.75;
 }
 
+.md-typeset .arithmatex {
+  font-size: 1.04em;
+}
+
+.md-typeset .arithmatex mjx-container[jax="CHTML"][display="true"] {
+  margin: 1.1em 0;
+}
+
 .md-nav {
   font-size: 0.74rem;
 }
