@@ -32,6 +32,7 @@ nav:
   - 课程首页: index.md
   - 第1章 差分方程: 第1章_差分方程/index.md
   - 第2章 平稳时间序列模型: 第2章_平稳时间序列模型/index.md
+  - 第3章 ARCH与GARCH模型: 第3章_ARCH与GARCH模型/index.md
 
 extra_css:
   - 样式/课堂阅读.css
