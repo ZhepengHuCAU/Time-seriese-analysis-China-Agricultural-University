@@ -829,6 +829,80 @@ $$
 
 这些模式为模型识别提供线索。例如，如果样本 PACF 在 1 阶显著、之后迅速不显著，而 ACF 逐渐衰减，可以考虑 AR(1)。如果样本 ACF 在 1 阶显著、之后不显著，而 PACF 逐渐衰减，可以考虑 MA(1)。
 
+为了更直观地理解这些模式，可以用 R 模拟几个典型的 AR、MA 和 ARMA 序列，然后比较它们的样本 ACF 和 PACF。下面的代码只使用 R 自带函数，适合作为课堂演示或课后练习。
+
+```r
+set.seed(20260723)
+
+n <- 500
+max_lag <- 16
+
+models <- list(
+  list(
+    name = "AR(1): y[t] = 0.7 y[t-1] + e[t]",
+    model = list(ar = 0.7)
+  ),
+  list(
+    name = "AR(1): y[t] = -0.7 y[t-1] + e[t]",
+    model = list(ar = -0.7)
+  ),
+  list(
+    name = "MA(1): y[t] = e[t] - 0.7 e[t-1]",
+    model = list(ma = -0.7)
+  ),
+  list(
+    name = "AR(2): y[t] = 0.7 y[t-1] - 0.49 y[t-2] + e[t]",
+    model = list(ar = c(0.7, -0.49))
+  ),
+  list(
+    name = "ARMA(1,1): y[t] = -0.7 y[t-1] + e[t] - 0.7 e[t-1]",
+    model = list(ar = -0.7, ma = -0.7)
+  )
+)
+
+series_list <- lapply(models, function(m) {
+  as.numeric(arima.sim(model = m$model, n = n))
+})
+
+par(mfrow = c(5, 1), mar = c(3, 4, 3, 1))
+for (i in seq_along(models)) {
+  plot(
+    series_list[[i]],
+    type = "l",
+    main = models[[i]]$name,
+    xlab = "Time",
+    ylab = "Value"
+  )
+  abline(h = 0, col = "gray70", lty = 2)
+}
+
+par(mfrow = c(5, 2), mar = c(3, 4, 3, 1))
+for (i in seq_along(models)) {
+  acf(
+    series_list[[i]],
+    lag.max = max_lag,
+    main = paste("ACF:", models[[i]]$name),
+    ylim = c(-1, 1)
+  )
+  pacf(
+    series_list[[i]],
+    lag.max = max_lag,
+    main = paste("PACF:", models[[i]]$name),
+    ylim = c(-1, 1)
+  )
+}
+```
+
+图 2-1 展示了上述五个模型模拟出来的时间序列。即使模型都满足平稳性，序列的短期波动形态仍然会明显不同。正 AR(1) 序列通常表现出较强的局部持续性；负 AR(1) 序列更容易在均值两侧交替波动；MA 序列的冲击影响较短；AR(2) 与 ARMA(1,1) 则可能表现出更复杂的动态形态。
+
+![图2-1 不同 AR、MA 与 ARMA 模型的模拟序列](图片/图2-1_不同ARMA模型的模拟序列/图2-1_不同ARMA模型的模拟序列.png)
+
+图 2-2 给出了同一批序列的样本 ACF 与 PACF。读图时应重点观察“显著相关大致出现在哪些滞后阶”以及“相关系数是突然消失还是逐渐衰减”。
+
+![图2-2 不同 AR、MA 与 ARMA 模型的样本 ACF 和 PACF](图片/图2-2_ACF与PACF模式/图2-2_不同ARMA模型的样本ACF与PACF.png)
+
+从图中可以看到，AR(1) 的 ACF 通常逐步衰减，而 PACF 主要集中在 1 阶；MA(1) 的 ACF 主要集中在 1 阶，而 PACF 往往逐步衰减；ARMA(1,1) 的 ACF 和 PACF 通常都不会表现出干净的有限阶截尾。由于图中使用的是有限样本模拟，样本 ACF/PACF 不会完全等于理论图形，但它们提供了非常有用的识别线索。
+
 ### 2.6.2 信息准则
 
 真实经济数据通常不会表现出完美截尾或拖尾。此时需要借助信息准则。常用的信息准则包括 AIC 和 BIC。
