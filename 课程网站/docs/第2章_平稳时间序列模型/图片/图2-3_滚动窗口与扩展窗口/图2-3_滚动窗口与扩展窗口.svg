@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="760" viewBox="0 0 1200 760" role="img" aria-labelledby="title desc">
+  <title id="title">滚动窗口与扩展窗口预测样本选择示意图</title>
+  <desc id="desc">同一条时间轴上比较滚动窗口和扩展窗口。滚动窗口保持固定长度并随预测起点向右移动；扩展窗口固定起点并不断向右扩展。</desc>
+  <defs>
+    <marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L0,6 L9,3 z" fill="#475569"/>
+    </marker>
+    <style>
+      .title { font: 700 34px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #0f172a; }
+      .subtitle { font: 400 20px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #475569; }
+      .section { font: 700 26px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #0f172a; }
+      .label { font: 500 19px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #1e293b; }
+      .small { font: 400 16px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #475569; }
+      .tiny { font: 400 14px "Microsoft YaHei", "Noto Sans CJK SC", Arial, sans-serif; fill: #64748b; }
+      .axis { stroke: #475569; stroke-width: 3; marker-end: url(#arrow); }
+      .tick { stroke: #94a3b8; stroke-width: 2; }
+      .obs { fill: #e2e8f0; stroke: #94a3b8; stroke-width: 1.5; }
+      .estimate-roll { fill: #bfdbfe; stroke: #2563eb; stroke-width: 2; }
+      .estimate-expand { fill: #bbf7d0; stroke: #16a34a; stroke-width: 2; }
+      .forecast { fill: #fed7aa; stroke: #ea580c; stroke-width: 2; }
+      .line-blue { stroke: #2563eb; stroke-width: 3; fill: none; }
+      .line-green { stroke: #16a34a; stroke-width: 3; fill: none; }
+      .line-orange { stroke: #ea580c; stroke-width: 3; fill: none; }
+      .note-box { fill: #f8fafc; stroke: #cbd5e1; stroke-width: 1.5; rx: 16; }
+      .callout-blue { fill: #eff6ff; stroke: #93c5fd; stroke-width: 1.5; rx: 14; }
+      .callout-green { fill: #f0fdf4; stroke: #86efac; stroke-width: 1.5; rx: 14; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1200" height="760" fill="#ffffff"/>
+
+  <text x="60" y="58" class="title">图 2-3　滚动窗口与扩展窗口的预测样本选择</text>
+  <text x="60" y="94" class="subtitle">每一次预测都只允许使用预测起点之前已经观察到的数据；区别在于估计样本如何随时间更新。</text>
+
+  <line x1="100" y1="150" x2="1095" y2="150" class="axis"/>
+  <text x="1085" y="133" class="small">时间</text>
+
+  <g id="ticks">
+    <line x1="140" y1="140" x2="140" y2="162" class="tick"/>
+    <line x1="230" y1="140" x2="230" y2="162" class="tick"/>
+    <line x1="320" y1="140" x2="320" y2="162" class="tick"/>
+    <line x1="410" y1="140" x2="410" y2="162" class="tick"/>
+    <line x1="500" y1="140" x2="500" y2="162" class="tick"/>
+    <line x1="590" y1="140" x2="590" y2="162" class="tick"/>
+    <line x1="680" y1="140" x2="680" y2="162" class="tick"/>
+    <line x1="770" y1="140" x2="770" y2="162" class="tick"/>
+    <line x1="860" y1="140" x2="860" y2="162" class="tick"/>
+    <line x1="950" y1="140" x2="950" y2="162" class="tick"/>
+    <line x1="1040" y1="140" x2="1040" y2="162" class="tick"/>
+    <text x="132" y="188" class="tiny">1</text>
+    <text x="221" y="188" class="tiny">2</text>
+    <text x="311" y="188" class="tiny">3</text>
+    <text x="401" y="188" class="tiny">4</text>
+    <text x="491" y="188" class="tiny">5</text>
+    <text x="581" y="188" class="tiny">6</text>
+    <text x="671" y="188" class="tiny">7</text>
+    <text x="761" y="188" class="tiny">8</text>
+    <text x="851" y="188" class="tiny">9</text>
+    <text x="936" y="188" class="tiny">10</text>
+    <text x="1026" y="188" class="tiny">11</text>
+  </g>
+
+  <g id="observations">
+    <rect x="120" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="210" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="300" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="390" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="480" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="570" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="660" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="750" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="840" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="930" y="210" width="40" height="40" rx="7" class="obs"/>
+    <rect x="1020" y="210" width="40" height="40" rx="7" class="obs"/>
+    <text x="119" y="236" class="tiny">y₁</text>
+    <text x="209" y="236" class="tiny">y₂</text>
+    <text x="299" y="236" class="tiny">y₃</text>
+    <text x="389" y="236" class="tiny">y₄</text>
+    <text x="479" y="236" class="tiny">y₅</text>
+    <text x="569" y="236" class="tiny">y₆</text>
+    <text x="659" y="236" class="tiny">y₇</text>
+    <text x="749" y="236" class="tiny">y₈</text>
+    <text x="839" y="236" class="tiny">y₉</text>
+    <text x="924" y="236" class="tiny">y₁₀</text>
+    <text x="1014" y="236" class="tiny">y₁₁</text>
+  </g>
+
+  <text x="60" y="315" class="section">A. 滚动窗口：窗口长度固定，整体向右移动</text>
+  <rect x="60" y="335" width="1080" height="160" class="callout-blue"/>
+  <text x="82" y="370" class="label">预测 y₈：用 y₄ 到 y₇ 估计</text>
+  <rect x="390" y="350" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="480" y="350" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="570" y="350" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="660" y="350" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="750" y="350" width="40" height="40" rx="7" class="forecast"/>
+  <line x1="705" y1="370" x2="742" y2="370" class="line-orange" marker-end="url(#arrow)"/>
+  <text x="753" y="411" class="tiny">预测值</text>
+
+  <text x="82" y="443" class="label">预测 y₉：用 y₅ 到 y₈ 估计</text>
+  <rect x="480" y="425" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="570" y="425" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="660" y="425" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="750" y="425" width="40" height="40" rx="7" class="estimate-roll"/>
+  <rect x="840" y="425" width="40" height="40" rx="7" class="forecast"/>
+  <line x1="795" y1="445" x2="832" y2="445" class="line-orange" marker-end="url(#arrow)"/>
+
+  <path d="M 390 397 C 430 412, 440 412, 480 397" class="line-blue" marker-end="url(#arrow)"/>
+  <text x="417" y="422" class="tiny">丢掉最早一期</text>
+
+  <text x="910" y="374" class="small">特点：样本长度始终为 R</text>
+  <text x="910" y="404" class="small">优点：更能适应近期结构变化</text>
+  <text x="910" y="434" class="small">代价：较早信息被不断舍弃</text>
+
+  <text x="60" y="555" class="section">B. 扩展窗口：起点固定，样本随时间不断变长</text>
+  <rect x="60" y="575" width="1080" height="130" class="callout-green"/>
+  <text x="82" y="610" class="label">预测 y₈：用 y₁ 到 y₇ 估计</text>
+  <rect x="120" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="210" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="300" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="390" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="480" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="570" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="660" y="630" width="40" height="40" rx="7" class="estimate-expand"/>
+  <rect x="750" y="630" width="40" height="40" rx="7" class="forecast"/>
+  <line x1="705" y1="650" x2="742" y2="650" class="line-orange" marker-end="url(#arrow)"/>
+
+  <text x="910" y="615" class="small">预测 y₉ 时：用 y₁ 到 y₈</text>
+  <text x="910" y="645" class="small">预测 y₁₀ 时：用 y₁ 到 y₉</text>
+  <text x="910" y="675" class="small">特点：历史信息不断累积</text>
+
+  <rect x="60" y="718" width="1080" height="30" class="note-box"/>
+  <text x="82" y="739" class="small">蓝色为估计样本，橙色为被预测期，绿色为扩展窗口估计样本。关键差别：滚动窗口“长度不变、位置移动”；扩展窗口“起点不变、终点右移”。</text>
+</svg>
