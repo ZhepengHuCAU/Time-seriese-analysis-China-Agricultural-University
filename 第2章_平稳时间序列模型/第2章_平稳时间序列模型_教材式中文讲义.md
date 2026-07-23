@@ -1044,6 +1044,102 @@ $$
 
 Chow 检验适合断点由明确经济事件给出的情形。例如，若研究 2005 年人民币汇率制度改革前后汇率动态是否变化，断点具有明确制度依据；若研究金融危机前后利率规则是否改变，也可以使用类似思路。
 
+**例 2-1：用真实金融数据进行 Chow 检验。**
+
+R 自带的 `EuStockMarkets` 数据集包含 1991—1998 年欧洲主要股票指数的日收盘价，包括德国 DAX、瑞士 SMI、法国 CAC 和英国 FTSE。这里构造一个简单例子：用英国 FTSE 日收益率解释德国 DAX 日收益率，并检验二者关系在 1997 年中前后是否发生结构变化。
+
+设回归模型为：
+
+$$
+r^{DAX}_t=\beta_0+\beta_1 r^{FTSE}_t+u_t.
+$$
+
+这里 \(r^{DAX}_t\) 和 \(r^{FTSE}_t\) 分别表示 DAX 和 FTSE 的对数日收益率。为了演示已知断点检验，取断点为 1997.5，即 1997 年年中附近。这个断点可以被理解为亚洲金融危机冲击欧洲金融市场前后的一个教学性分界点。
+
+下面的 R 代码手工计算 Chow 检验统计量。这样写虽然比直接调用现成函数稍长，但有助于理解检验的本质：比较“全样本一个回归”与“断点前后两个回归”的残差平方和。
+
+```r
+data(EuStockMarkets)
+
+# 1. 构造对数日收益率，乘以 100 后单位可理解为百分比收益率
+r <- diff(log(EuStockMarkets)) * 100
+
+d <- data.frame(
+  time = as.numeric(time(r)),
+  DAX  = as.numeric(r[, "DAX"]),
+  FTSE = as.numeric(r[, "FTSE"])
+)
+
+# 2. 设定已知断点：1997 年年中
+break_time <- 1997.5
+
+d1 <- subset(d, time < break_time)
+d2 <- subset(d, time >= break_time)
+
+# 3. 全样本回归与分样本回归
+model_full <- lm(DAX ~ FTSE, data = d)
+model_1    <- lm(DAX ~ FTSE, data = d1)
+model_2    <- lm(DAX ~ FTSE, data = d2)
+
+# 4. 计算残差平方和
+RSS_full <- sum(resid(model_full)^2)
+RSS_1    <- sum(resid(model_1)^2)
+RSS_2    <- sum(resid(model_2)^2)
+
+# 5. Chow 检验统计量
+k  <- length(coef(model_full))  # 参数个数：截距和斜率，所以 k = 2
+n1 <- nrow(d1)
+n2 <- nrow(d2)
+
+F_chow <- ((RSS_full - (RSS_1 + RSS_2)) / k) /
+  ((RSS_1 + RSS_2) / (n1 + n2 - 2 * k))
+
+p_value <- pf(F_chow, df1 = k, df2 = n1 + n2 - 2 * k, lower.tail = FALSE)
+
+list(
+  n_before = n1,
+  n_after = n2,
+  coef_full = coef(model_full),
+  coef_before = coef(model_1),
+  coef_after = coef(model_2),
+  F_chow = F_chow,
+  p_value = p_value
+)
+```
+
+运行后可以得到近似结果：
+
+```text
+n_before = 1560
+n_after  = 299
+
+全样本估计：
+  intercept = 0.0294
+  FTSE      = 0.8278
+
+断点之前：
+  intercept = 0.0238
+  FTSE      = 0.7374
+
+断点之后：
+  intercept = 0.0641
+  FTSE      = 1.0640
+
+Chow F statistic = 21.09
+df = (2, 1855)
+p-value ≈ 8.76 × 10^(-10)
+```
+
+检验原假设是：
+
+$$
+H_0:\beta_{\text{before}}=\beta_{\text{after}}.
+$$
+
+由于 p 值非常小，通常会拒绝原假设，认为 1997 年中前后 DAX 收益率与 FTSE 收益率之间的线性关系发生了显著变化。尤其是斜率系数从约 0.737 上升到约 1.064，说明断点之后 DAX 对 FTSE 波动的联动反应更强。
+
+需要强调的是，这只是“已知断点”Chow 检验的教学示例。若研究者并不能事先确定断点，就不应先看数据再挑一个断点做普通 Chow 检验，而应使用未知断点检验方法。
+
 ### 2.8.2 未知断点：Quandt-Andrews 与 sup 检验
 
 在许多应用中，研究者怀疑存在结构变化，却无法事先确定断点位置。此时如果凭肉眼选择某个断点，再进行普通 Chow 检验，显著性水平会被扭曲。
