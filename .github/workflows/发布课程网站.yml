@@ -1,6 +1,6 @@
 name: 发布课程网站
 
-# 课程网站由 GitHub Actions 构建并发布到 GitHub Pages；更新第四章 nporg 图示后重新触发部署。
+# 课程网站由 GitHub Actions 构建并发布到 GitHub Pages；刷新第四章 nporg 图示部署。
 
 on:
   push:
