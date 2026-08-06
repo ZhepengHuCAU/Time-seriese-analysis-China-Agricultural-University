@@ -529,6 +529,64 @@ Zivot-Andrews 检验的基本思想是：在一组可能的断点中逐一估计
 
 需要注意的是，Zivot-Andrews 检验仍然有局限。它通常只允许一个结构突变；如果数据中存在多个断点，或者断点附近存在复杂制度变化，单一断点模型可能不够。此时可以考虑更一般的多重结构突变检验。
 
+**例 4-1：使用 R package 进行 Zivot-Andrews 检验。**
+
+在实际应用中，不建议手工编写 Zivot-Andrews 检验程序。该检验涉及候选断点搜索、不同模型设定和非标准临界值，课堂和实证研究中应优先使用成熟 R package。下面使用 `urca` 包中的 `ur.za()` 函数。
+
+`urca` 包自带 `nporg` 数据集，其中包含 Nelson-Plosser 宏观经济数据。这里使用实际 GNP 序列 `gnp.r` 作为例子，检验其是否存在单位根，同时允许未知时间点发生截距和趋势斜率突变。
+
+```r
+library(urca)
+
+# 使用 urca 包自带数据
+data(nporg)
+
+# 取实际 GNP，并保留年份，便于解释断点位置
+d <- na.omit(nporg[, c("year", "gnp.r")])
+gnp <- d$gnp.r
+
+# Zivot-Andrews 检验：
+# model = "both" 表示同时允许截距和趋势斜率发生一次结构突变
+# lag = 2 表示检验回归中加入 2 阶滞后差分项
+za_gnp <- ur.za(gnp, model = "both", lag = 2)
+
+# 查看完整结果
+summary(za_gnp)
+
+# 提取主要结果
+break_position <- za_gnp@bpoint
+break_year <- d$year[break_position]
+
+list(
+  test_statistic = za_gnp@teststat,
+  critical_values = za_gnp@cval,
+  break_position = break_position,
+  break_year = break_year
+)
+```
+
+在本例中，运行结果的核心部分为：
+
+```text
+The value of the test statistic is: -3.8431
+
+Critical values:
+1pct  -5.57
+5pct  -5.08
+10pct -4.82
+
+break position = 21
+break year     = 1929
+```
+
+解释结果时要注意两点。
+
+第一，Zivot-Andrews 检验的原假设仍然是序列存在单位根。它的特点不是改变原假设，而是在备择假设中允许序列存在一次结构突变。
+
+第二，本例的检验统计量为 −3.8431，而 10% 临界值约为 −4.82。由于检验统计量没有比临界值更小，因此不能拒绝单位根原假设。换言之，即使允许 1929 年附近存在一次结构突变，数据仍然没有提供足够证据表明实际 GNP 是趋势平稳过程。
+
+从经济含义看，1929 年作为候选断点并不意外，因为它对应大萧条（Great Depression）前后。但统计结论仍需以检验统计量和临界值为依据，不能因为断点具有历史解释，就直接认为序列已经平稳。
+
 **本节小结。** 结构突变会影响单位根检验。普通 ADF 检验可能把未建模的结构变化误判为单位根。若断点已知，可加入虚拟变量；若断点未知，可考虑 Zivot-Andrews 检验。
 
 ---
