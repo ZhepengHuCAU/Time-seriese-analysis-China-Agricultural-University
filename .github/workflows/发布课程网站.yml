@@ -1,5 +1,7 @@
 name: 发布课程网站
 
+# 课程网站由 GitHub Actions 构建并发布到 GitHub Pages。
+
 on:
   push:
     branches:
