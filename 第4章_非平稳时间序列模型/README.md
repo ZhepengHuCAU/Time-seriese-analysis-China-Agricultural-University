@@ -6,6 +6,7 @@
 
 - `第4章_非平稳时间序列模型_教材式中文讲义.md`：第四章主讲义，内容包括随机游走、单位根、差分平稳与趋势平稳、伪回归、单位根检验、结构突变和 ARIMA 模型。
 - `脚本/Zivot-Andrews检验示例_urca.R`：使用 `urca` 包进行 Zivot-Andrews 单位根检验的课堂示例代码。
+- `图片/nporg_实际GNP序列.png`：`urca::nporg` 数据集中实际 GNP 序列的图示，用于配合 Zivot-Andrews 检验案例讲解。
 
 ## 文件夹结构
 

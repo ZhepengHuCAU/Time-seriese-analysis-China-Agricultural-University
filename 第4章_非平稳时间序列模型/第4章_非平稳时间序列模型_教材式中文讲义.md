@@ -531,12 +531,17 @@ Zivot-Andrews 检验的基本思想是：在一组可能的断点中逐一估计
 
 **例 4-1：使用 R package 进行 Zivot-Andrews 检验。**
 
-在实际应用中，不建议手工编写 Zivot-Andrews 检验程序。该检验涉及候选断点搜索、不同模型设定和非标准临界值，课堂和实证研究中应优先使用成熟 R package。下面使用 `urca` 包中的 `ur.za()` 函数。
+在实际应用中，不建议手工编写 Zivot-Andrews 检验程序。该检验涉及候选断点搜索、不同模型设定和非标准临界值，课堂和实证研究中应优先使用成熟 R package。下面使用 `urca` 包中的 `ur.za()` 函数。为了使检验对象更加直观，先画出该序列，再进行单位根检验。
 
 `urca` 包自带 `nporg` 数据集，其中包含 Nelson-Plosser 宏观经济数据。这里使用实际 GNP 序列 `gnp.r` 作为例子，检验其是否存在单位根，同时允许未知时间点发生截距和趋势斜率突变。
 
+![Nelson-Plosser 数据中的实际 GNP 序列](图片/nporg_实际GNP序列.png)
+
+图中虚线标出了本例 Zivot-Andrews 检验选择的断点年份 1929。这个年份处在美国经济史上非常重要的大萧条时期附近。从图形上看，实际 GNP 在 1929 年之后出现明显下滑，随后又恢复增长。需要强调的是，图形观察只能提示可能存在结构变化；是否能够在统计意义上拒绝单位根，仍要依赖检验统计量和相应临界值。
+
 ```r
 library(urca)
+library(ggplot2)
 
 # 使用 urca 包自带数据
 data(nporg)
@@ -544,6 +549,23 @@ data(nporg)
 # 取实际 GNP，并保留年份，便于解释断点位置
 d <- na.omit(nporg[, c("year", "gnp.r")])
 gnp <- d$gnp.r
+
+# 画出实际 GNP 序列
+ggplot(d, aes(x = year, y = gnp.r)) +
+  geom_line(color = "#1f5f99", linewidth = 0.9) +
+  geom_point(color = "#1f5f99", size = 1.8) +
+  geom_vline(xintercept = 1929, linetype = "dashed",
+             color = "#b23a48", linewidth = 0.8) +
+  annotate("label", x = 1929, y = max(d$gnp.r),
+           label = "Break: 1929", hjust = -0.05, vjust = 1) +
+  labs(
+    title = "Real GNP in the Nelson-Plosser nporg Data",
+    subtitle = "Dashed line marks the break year selected by the Zivot-Andrews example",
+    x = "Year",
+    y = "Real GNP",
+    caption = "Data source: urca::nporg"
+  ) +
+  theme_minimal(base_size = 15)
 
 # Zivot-Andrews 检验：
 # model = "both" 表示同时允许截距和趋势斜率发生一次结构突变
