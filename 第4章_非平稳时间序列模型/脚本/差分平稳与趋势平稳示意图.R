@@ -30,15 +30,16 @@ y_ts <- trend + u
 u_hat <- y_ts - trend
 
 # 差分平稳过程：
-# y_t = y_{t-1} + delta + epsilon_t
+# y_t = y_{t-1} + epsilon_t
+# 这里不加入确定性漂移项，使其在图形上区别于趋势平稳过程。
 # 第 60 期冲击进入水平值，此后会永久留在路径中。
-eps_ds <- rnorm(length(t), sd = 0.7)
-eps_ds[shock_time] <- eps_ds[shock_time] + 7
-y_ds <- numeric(length(t))
-y_ds[1] <- 20 + eps_ds[1]
-for (i in 2:length(t)) {
-  y_ds[i] <- y_ds[i - 1] + 0.18 + eps_ds[i]
-}
+eps_ds <- numeric(length(t))
+eps_ds[1:(shock_time - 1)] <- rnorm(shock_time - 1, sd = 0.55)
+eps_ds[(shock_time + 1):length(t)] <- rnorm(length(t) - shock_time, sd = 0.55)
+eps_ds[1:(shock_time - 1)] <- eps_ds[1:(shock_time - 1)] - mean(eps_ds[1:(shock_time - 1)])
+eps_ds[(shock_time + 1):length(t)] <- eps_ds[(shock_time + 1):length(t)] - mean(eps_ds[(shock_time + 1):length(t)])
+eps_ds[shock_time] <- 6.5
+y_ds <- 26 + cumsum(eps_ds)
 dy_ds <- c(NA, diff(y_ds))
 
 plot_data <- rbind(
@@ -47,7 +48,7 @@ plot_data <- rbind(
   data.frame(t = t, value = u_hat, reference = 0,
              type = "趋势平稳\ntrend stationary", view = "去趋势后：平稳偏离"),
   data.frame(t = t, value = y_ds, reference = NA,
-             type = "差分平稳\ndifference stationary", view = "水平值：冲击永久改变路径"),
+             type = "差分平稳\ndifference stationary", view = "水平值：随机趋势与永久冲击"),
   data.frame(t = t, value = dy_ds, reference = 0,
              type = "差分平稳\ndifference stationary", view = "一阶差分后：平稳变化")
 )
@@ -61,7 +62,7 @@ plot_data$view <- factor(
   levels = c(
     "水平值：围绕确定性趋势波动",
     "去趋势后：平稳偏离",
-    "水平值：冲击永久改变路径",
+    "水平值：随机趋势与永久冲击",
     "一阶差分后：平稳变化"
   )
 )
@@ -76,7 +77,7 @@ fig <- ggplot(plot_data, aes(x = t, y = value)) +
   facet_wrap(type ~ view, scales = "free_y", ncol = 2) +
   labs(
     title = "差分平稳与趋势平稳的基本区别",
-    subtitle = "虚线表示确定性趋势，点线表示同一期冲击；关键区别在于冲击是否永久改变序列水平",
+    subtitle = "红色虚线表示确定性趋势，橙色点线表示同一期冲击；关键区别在于冲击是否永久改变序列水平",
     x = "时间 t",
     y = "示意值",
     caption = "说明：图中数据为课堂模拟示意，不代表真实经济数据。"
