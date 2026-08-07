@@ -34,6 +34,7 @@ nav:
   - 第2章 平稳时间序列模型: 第2章_平稳时间序列模型/index.md
   - 第3章 ARCH与GARCH模型: 第3章_ARCH与GARCH模型/index.md
   - 第4章 非平稳时间序列模型: 第4章_非平稳时间序列模型/index.md
+  - 第5章 多变量时间序列模型: 第5章_多变量时间序列模型/index.md
 
 extra_css:
   - 样式/课堂阅读.css
