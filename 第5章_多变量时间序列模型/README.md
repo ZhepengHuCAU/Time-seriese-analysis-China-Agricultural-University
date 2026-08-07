@@ -5,7 +5,7 @@
 ## 主要文件
 
 - `第5章_多变量时间序列模型_教材式中文讲义.md`：第五章主讲义，内容包括 VAR、SVAR、脉冲响应、方差分解、结构识别和 local projection。
-- `脚本/VAR_SVAR_LocalProjection示例.R`：使用 `vars` 与 `lpirfs` 包演示 VAR、SVAR 和 local projection 的课堂代码。
+- `脚本/VAR_SVAR_LocalProjection示例.R`：使用 `vars`、`svars` 与 `lpirfs` 包演示 VAR、SVAR、基于异方差的 SVAR 识别和 local projection 的课堂代码。
 
 ## 文件夹结构
 
