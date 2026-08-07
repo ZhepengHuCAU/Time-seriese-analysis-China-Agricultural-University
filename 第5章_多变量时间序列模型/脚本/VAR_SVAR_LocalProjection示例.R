@@ -31,6 +31,21 @@ irf_var <- irf(
   boot = FALSE
 )
 
+# 正式实证报告中可使用 bootstrap 置信区间。
+# 为节省课堂运行时间，下面代码默认不运行；需要时把 FALSE 改为 TRUE。
+if (FALSE) {
+  irf_var_boot <- irf(
+    var_model,
+    impulse = "e",
+    response = "prod",
+    n.ahead = 20,
+    boot = TRUE,
+    ci = 0.90,
+    runs = 1000
+  )
+  plot(irf_var_boot)
+}
+
 # 6. 递归 SVAR 示例
 # 注意：这里的 B 矩阵限制仅用于课堂演示。
 # 实际研究中，变量排序和零限制必须有明确经济依据。
