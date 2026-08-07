@@ -66,14 +66,16 @@ print(svar_cv$B)
 svar_garch <- id.garch(var_usa)
 print(summary(svar_garch))
 
-# 8. Historical decomposition 与 counterfactual analysis
+# 8. Historical decomposition（历史分解）
 # 这里以 id.cv() 得到的 svar_cv 为例。
 hd_x <- hd(svar_cv, series = 1)
-cf_x <- cf(svar_cv, series = 1)
 print(head(hd_x[[1]]))
+
+# 9. Counterfactual analysis（反事实分析）
+cf_x <- cf(svar_cv, series = 1)
 print(head(cf_x[[1]]))
 
-# 9. Local Projection 示例
+# 10. Local Projection 示例
 canada_df <- as.data.frame(Canada)
 
 lp_model <- lp_lin(

@@ -938,21 +938,42 @@ irf_garch <- irf(svar_garch, n.ahead = 30)
 plot(irf_garch, scales = "free_y")
 ```
 
-已经得到识别后的 `svars` 对象之后，还可以进一步做历史分解和反事实分析。下面以 `svar_cv` 为例，对第 1 个变量进行分解。
+课堂讲解时，应把代码与识别假设对应起来。`id.cv()` 的核心问题是：断点前后是否主要体现为冲击方差变化，而不是结构传导机制改变？`id.garch()` 的核心问题是：条件异方差设定是否能合理刻画数据中的波动动态？如果这些问题不能成立，软件输出就不能被直接解释为可信的结构冲击。
+
+### 5.15.5 使用 `svars` 做 historical decomposition 和 counterfactual analysis
+
+已经得到识别后的 `svars` 对象之后，就可以进一步做历史分解（historical decomposition）和反事实分析（counterfactual analysis）。下面继续使用上一小节得到的 `svar_cv`。
 
 ```r
 # Historical decomposition
 # series = 1 表示分解 USA 数据中的第 1 个变量。
+# 若希望分解第 2 个或第 3 个变量，可改为 series = 2 或 series = 3。
 hd_x <- hd(svar_cv, series = 1)
-plot(hd_x)
 
+# 查看 historical decomposition 的前几行结果
+head(hd_x[[1]])
+
+# 画出历史分解图
+plot(hd_x)
+```
+
+这段代码的含义是：把第 1 个变量的历史波动分解为不同结构冲击的累计贡献。图中每一类冲击的贡献加总后，应当能够解释该变量相对于基准路径的主要波动。
+
+在同一个已识别 SVAR 对象上，也可以构造反事实路径：
+
+```r
 # Counterfactual analysis
 # cf() 会构造不同结构冲击被排除时的反事实路径。
 cf_x <- cf(svar_cv, series = 1)
+
+# 查看 counterfactual analysis 的前几行结果
+head(cf_x[[1]])
+
+# 画出反事实路径图
 plot(cf_x)
 ```
 
-课堂讲解时，应把代码与识别假设对应起来。`id.cv()` 的核心问题是：断点前后是否主要体现为冲击方差变化，而不是结构传导机制改变？`id.garch()` 的核心问题是：条件异方差设定是否能合理刻画数据中的波动动态？`hd()` 和 `cf()` 的解释同样依赖前面的结构识别：只有当结构冲击可信时，历史贡献和反事实路径才有经济含义。如果这些问题不能成立，软件输出就不能被直接解释为可信的结构冲击。
+`hd()` 和 `cf()` 的解释同样依赖前面的结构识别。只有当结构冲击可信时，历史贡献和反事实路径才有经济含义。因此，课堂讲解时不应把 historical decomposition 当作单纯的软件图形，而应追问：这些被分解出来的冲击是否真的具有清楚的经济含义？
 
 **本节小结。** R package 可以帮助快速完成 VAR、SVAR 和 LP 估计，但代码不能替代识别假设。多变量时间序列应用中，最重要的不是函数名称，而是变量选择、模型设定和冲击识别是否可信。
 
