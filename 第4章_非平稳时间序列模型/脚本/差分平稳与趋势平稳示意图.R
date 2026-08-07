@@ -4,6 +4,13 @@
 
 library(ggplot2)
 
+if (.Platform$OS.type == "windows") {
+  grDevices::windowsFonts(CourseCN = grDevices::windowsFont("Noto Sans SC"))
+  font_family <- "CourseCN"
+} else {
+  font_family <- "sans"
+}
+
 set.seed(20260807)
 
 t <- 1:100
@@ -36,18 +43,18 @@ dy_ds <- c(NA, diff(y_ds))
 
 plot_data <- rbind(
   data.frame(t = t, value = y_ts, reference = trend,
-             type = "趋势平稳（trend stationary）", view = "水平值：围绕确定性趋势波动"),
+             type = "趋势平稳\ntrend stationary", view = "水平值：围绕确定性趋势波动"),
   data.frame(t = t, value = u_hat, reference = 0,
-             type = "趋势平稳（trend stationary）", view = "去趋势后：平稳偏离"),
+             type = "趋势平稳\ntrend stationary", view = "去趋势后：平稳偏离"),
   data.frame(t = t, value = y_ds, reference = NA,
-             type = "差分平稳（difference stationary）", view = "水平值：冲击永久改变路径"),
+             type = "差分平稳\ndifference stationary", view = "水平值：冲击永久改变路径"),
   data.frame(t = t, value = dy_ds, reference = 0,
-             type = "差分平稳（difference stationary）", view = "一阶差分后：平稳变化")
+             type = "差分平稳\ndifference stationary", view = "一阶差分后：平稳变化")
 )
 
 plot_data$type <- factor(
   plot_data$type,
-  levels = c("趋势平稳（trend stationary）", "差分平稳（difference stationary）")
+  levels = c("趋势平稳\ntrend stationary", "差分平稳\ndifference stationary")
 )
 plot_data$view <- factor(
   plot_data$view,
@@ -74,18 +81,22 @@ fig <- ggplot(plot_data, aes(x = t, y = value)) +
     y = "示意值",
     caption = "说明：图中数据为课堂模拟示意，不代表真实经济数据。"
   ) +
-  theme_minimal(base_size = 15, base_family = "Microsoft YaHei") +
+  theme_minimal(base_size = 16, base_family = font_family) +
   theme(
-    plot.title = element_text(face = "bold", color = "#1f2933"),
-    plot.subtitle = element_text(color = "#4b5563"),
-    strip.text = element_text(face = "bold", color = "#1f2933"),
-    panel.grid.minor = element_blank()
+    plot.title = element_text(face = "bold", color = "#1f2933", size = 22, margin = margin(b = 8)),
+    plot.subtitle = element_text(color = "#4b5563", size = 14, margin = margin(b = 16)),
+    strip.text = element_text(face = "bold", color = "#1f2933", size = 15, lineheight = 1.12),
+    axis.title = element_text(size = 15),
+    axis.text = element_text(size = 13, color = "#3f4650"),
+    plot.caption = element_text(size = 11, color = "#4b5563", hjust = 1),
+    panel.grid.minor = element_blank(),
+    plot.margin = margin(18, 22, 14, 22)
   )
 
 ggsave(
   filename = "../图片/差分平稳与趋势平稳示意图.png",
   plot = fig,
-  width = 11,
-  height = 7.2,
-  dpi = 220
+  width = 12.5,
+  height = 7.6,
+  dpi = 240
 )
