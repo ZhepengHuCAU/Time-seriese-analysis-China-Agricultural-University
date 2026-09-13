@@ -122,19 +122,21 @@ AI 工具正在改变就业市场，但它并没有降低时间序列能力的�
 
 ## 6 这门课将如何展开
 
-本课程从差分方程开始，是因为差分方程提供了理解动态系统的基本语言。一个变量今天的值如何取决于昨天，冲击如何随时间传播，系统是否会回到均衡，这些问题都可以从差分方程中看到雏形。
+本课程先从时间序列数据开始，再进入差分方程和具体模型。原因很简单：如果没有先弄清楚数据的时间索引、频率、观测单位和数据结构，后面的模型估计很容易变成机械套公式。
 
-第 1 章讨论差分方程和时间序列模型的基本形式。我们会看到随机游走、结构式和简化式、误差修正等概念都可以放在动态方程中理解。
+第 1 章讨论时间序列数据。我们会区分时间序列数据、带时间的面板数据和不规则时间戳数据，并介绍 R 中常见的时间类型、读入方式和时间序列对象。
 
-第 2 章讨论平稳时间序列模型。平稳性是时间序列分析的核心概念之一。只有理解“均值、方差和自相关结构是否稳定”，才能判断历史规律能否用于预测未来。
+第 2 章讨论差分方程和时间序列模型的基本形式。我们会看到随机游走、结构式和简化式、误差修正等概念都可以放在动态方程中理解。
 
-第 3 章讨论 ARCH 与 GARCH 模型。它们关注的是波动率如何随时间变化，尤其适用于金融市场、期货市场和风险管理。
+第 3 章讨论平稳时间序列模型。平稳性是时间序列分析的核心概念之一。只有理解“均值、方差和自相关结构是否稳定”，才能判断历史规律能否用于预测未来。
 
-第 4 章讨论非平稳时间序列模型。许多经济变量存在趋势、单位根和结构变化，直接回归可能产生虚假关系。理解非平稳性，是避免错误经验结论的重要一步。
+第 4 章讨论 ARCH 与 GARCH 模型。它们关注的是波动率如何随时间变化，尤其适用于金融市场、期货市场和风险管理。
 
-第 5 章讨论多变量时间序列模型。现实经济系统中变量彼此影响，VAR、脉冲响应和方差分解等方法帮助我们刻画冲击如何在系统中传导。
+第 5 章讨论非平稳时间序列模型。许多经济变量存在趋势、单位根和结构变化，直接回归可能产生虚假关系。理解非平稳性，是避免错误经验结论的重要一步。
 
-第 6 章讨论协整与误差修正模型。许多经济变量短期会偏离均衡，但长期存在共同趋势。协整方法提供了连接短期波动和长期关系的工具。
+第 6 章讨论多变量时间序列模型。现实经济系统中变量彼此影响，VAR、脉冲响应和方差分解等方法帮助我们刻画冲击如何在系统中传导。
+
+第 7 章讨论协整与误差修正模型。许多经济变量短期会偏离均衡，但长期存在共同趋势。协整方法提供了连接短期波动和长期关系的工具。
 
 贯穿全课的主线可以概括为四句话：先看数据的时间结构，再提出经济机制；先区分预测问题和因果问题，再选择合适模型；先承认不确定性，再形成决策判断；先理解传统方法，再使用 AI 工具扩展分析边界。
 
@@ -159,6 +161,37 @@ AI 工具正在改变就业市场，但它并没有降低时间序列能力的�
 ------------------------------------------------------------------------
 
 ## 延伸阅读与参考资料
+
+下面的书和资料不要求一次读完，可以按自己的基础和研究方向选择。英文教材适合建立完整框架，中文教材适合入门和课堂复习，R 语言资料适合把模型真正跑起来。
+
+### 经典英文时间序列教材
+
+- Walter Enders, [*Applied Econometric Time Series*](https://books.google.com/books/about/Applied_Econometric_Time_Series.html?id=DzA4EAAAQBAJ). 这本书偏应用计量，适合经济学和管理学学生理解单位根、协整、VAR、GARCH 和非线性时间序列。
+- James D. Hamilton, [*Time Series Analysis*](https://www.jstor.org/stable/j.ctv14jx6sm). 这是经济时间序列领域的经典大部头，理论更系统，适合后续深入学习。
+- Peter J. Brockwell and Richard A. Davis, *Introduction to Time Series and Forecasting*. 统计学取向更强，适合理解 ARMA、谱分析和预测理论。
+- George E. P. Box, Gwilym M. Jenkins, Gregory C. Reinsel and Greta M. Ljung, *Time Series Analysis: Forecasting and Control*. Box-Jenkins 传统的代表性教材，适合理解模型识别、诊断和预测流程。
+- Rob J. Hyndman and George Athanasopoulos, [*Forecasting: Principles and Practice*](https://otexts.com/fpp3/). 免费在线教材，使用 R 讲预测，适合做课堂代码和实证练习。
+
+### 宏观时间序列与结构 VAR
+
+- Lutz Kilian and Helmut Lütkepohl, [*Structural Vector Autoregressive Analysis*](https://sites.google.com/site/lkilian2019/textbook). 适合深入学习结构 VAR、冲击识别和宏观政策传导。
+- Helmut Lütkepohl, *New Introduction to Multiple Time Series Analysis*. 多变量时间序列的经典教材，适合进一步学习 VAR、协整系统和多变量预测。
+
+### 中文时间序列与计量教材
+
+- 易丹辉、王燕，《应用时间序列分析》，中国人民大学出版社。适合中文课堂入门，内容覆盖时间序列分解、ARMA、预测、单位根和条件异方差等主题。
+- 王振龙，《应用时间序列分析》，中国统计出版社。偏应用统计取向，适合作为中文补充读物。
+- 田铮，《时间序列的理论与方法》，高等教育出版社。理论性更强，适合想从统计过程角度深入理解时间序列的同学。
+- 高铁梅，《计量经济分析方法与建模：EViews 应用及实例》。适合需要用计量软件完成宏观、金融和产业数据建模的同学参考。
+
+### R 语言与软件实现
+
+- 王燕，《时间序列分析：基于 R》，中国人民大学出版社。适合把中文时间序列概念和 R 代码连接起来。
+- Jonathan D. Cryer and Kung-Sik Chan, 《时间序列分析及应用：R 语言》，机械工业出版社。适合用 R 学习 ARIMA、季节模型、模型诊断和预测。
+- Robert I. Kabacoff, 《R 语言实战》，人民邮电出版社。适合补 R 语言、数据整理、统计建模和可视化基础。
+- Hadley Wickham, Mine Çetinkaya-Rundel and Garrett Grolemund, [*R for Data Science*](https://r4ds.hadley.nz/). 免费在线教材，适合系统学习 tidyverse 数据处理和可视化。
+
+### AI 与时间序列基础模型
 
 - Ansari et al. (2024), [Chronos: Learning the Language of Time Series](https://arxiv.org/abs/2403.07815).
 - Google Cloud Documentation, [The TimesFM model](https://docs.cloud.google.com/bigquery/docs/timesfm-model).
