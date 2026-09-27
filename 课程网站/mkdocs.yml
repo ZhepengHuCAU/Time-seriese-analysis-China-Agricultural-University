@@ -35,6 +35,7 @@ nav:
   - 第2章 差分方程: 第1章_差分方程/index.md
   - 第3章 平稳时间序列模型: 第2章_平稳时间序列模型/index.md
   - 第4章 ARCH与GARCH模型: 第3章_ARCH与GARCH模型/index.md
+  - Lab 1: lab-1/index.md
   - 第5章 非平稳时间序列模型: 第4章_非平稳时间序列模型/index.md
   - 第6章 多变量时间序列模型: 第5章_多变量时间序列模型/index.md
   - 第7章 协整与误差修正模型: 第6章_协整与误差修正模型/index.md
