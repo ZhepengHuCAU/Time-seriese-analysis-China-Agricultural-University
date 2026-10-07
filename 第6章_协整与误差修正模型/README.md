@@ -4,7 +4,7 @@
 
 ## 文件说明
 
-- `第6章_协整与误差修正模型_教材式中文讲义.md`：第6章主讲义，内容包括协整思想、Engle-Granger 两步法、误差修正模型、Johansen 检验、VECM 估计与解释，以及 Threshold VECM。
+- `第6章_协整与误差修正模型_教材式中文讲义.md`：第6章主讲义，内容包括协整思想、Engle-Granger 两步法、误差修正模型、Johansen 检验、VECM 估计与解释。
 - `脚本/协整与误差修正模型示例.R`：使用 `urca` 与 `vars` 包演示单位根检验、Engle-Granger 思路、Johansen 检验、VECM 估计和由 VECM 转换得到的脉冲响应。
 
 ## 网站对应位置

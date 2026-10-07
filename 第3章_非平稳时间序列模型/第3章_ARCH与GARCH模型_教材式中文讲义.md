@@ -1,4 +1,4 @@
-# 第4章 条件异方差模型（Conditional Heteroskedasticity Models）：ARCH 与 GARCH
+# 第3章 条件异方差模型（Conditional Heteroskedasticity Models）：ARCH 与 GARCH
 
 在前面的平稳时间序列模型中，我们主要关心序列的条件均值（conditional mean）。例如，AR、MA 和 ARMA 模型解释的是 \(y_t\) 如何由自身过去值和过去冲击所决定。这类模型回答的问题是：给定过去信息，变量的平均变化方向是什么？
 
@@ -609,4 +609,3 @@ $$
 9. 标准 GARCH 模型为什么不能刻画正负冲击的不对称影响？
 10. 在 LLM 和时间序列基础模型快速发展的背景下，为什么传统时间序列模型仍然重要？
 11. 如果一个复杂机器学习模型的样本外 RMSE 只略低于 ARIMA 或 GARCH 基准模型，研究者还需要进一步考虑哪些问题？
-
