@@ -58,18 +58,81 @@ plot(r_date[1:n_train], train, type = "l",
 par(mfrow = c(1, 1))
 # 观察：价格水平是否不断移动？收益率是否围绕较固定水平？大波动是否集中出现？
 
-# 3. Structural break：先检查结构变化 ----------------------------------------
-# 3.1 必要前提：通常不直接在非平稳价格上做普通回归断点检验。
-# ADF的H0是“有单位根”。看最下方tau统计量是否比临界值更负，
-# 不要把输出上方普通回归的Pr(>|t|)当成ADF检验p值。
-adf_price <- ur.df(log(price[1:(n_train + 1)]), type = "drift", lags = 6, selectlags = "BIC")
+# 3. 平稳性与结构变化 -------------------------------------------------------
+# 3.1 ADF检验：先区分原始价格、对数价格与收益率
+price_train <- price[1:(n_train + 1)]    # 原始价格P：2006-01—2019-02，158期
+logprice_train <- log(price_train)      # 对数价格log(P)，不是原始价格
+# train是100*diff(log(P))，2006-02—2019-02，157期；差分后少一期。
+
+# 三个检验对象分别写出，不用循环。ADF的H0：有单位根；H1：平稳。
+# drift表示含常数、不含线性时间趋势；最多6个差分滞后，由BIC选择。
+adf_price <- ur.df(price_train, type = "drift", lags = 6, selectlags = "BIC")
+adf_logprice <- ur.df(logprice_train, type = "drift", lags = 6, selectlags = "BIC")
 adf_return <- ur.df(train, type = "drift", lags = 6, selectlags = "BIC")
 summary(adf_price)
+summary(adf_logprice)
 summary(adf_return)
-# 本数据：价格ADF不拒绝单位根；收益率拒绝单位根，后面用收益率建模。
-# 若换数据后收益率仍非平稳，应先重新讨论转换方式，不要机械套ARMA。
 
-# 3.2 未知断点检验：暂用r_t=c+phi*r_(t-1)+u_t作简单筛查方程。
+# 如何读输出：看底部的tau2统计量与tau2临界值，统计量更负才拒绝H0。
+# 在5%水平，三者的ADF临界值都是-2.88：
+# 原始价格：-2.432 > -2.88，不拒绝单位根。
+# 对数价格：-2.377 > -2.88，不拒绝单位根。
+# 收益率：  -6.816 < -2.88，拒绝单位根，支持此设定下收益率平稳。
+# “不拒绝单位根”不等于“已经证明非平稳”，结论限定于样本、设定及显著性水平。
+#
+# 易错点1：上方Coefficients中的Pr(>|t|)是普通回归p值，不是ADF的p值。
+# 对数价格z.lag.1的普通p值约0.0187，虽小于0.05，也不能据此拒绝单位根！
+# 易错点2：phi1是联合限制的F型统计量，不能替代tau2作同一种判断。
+# 易错点3：若用tseries::adf.test()，输出“alternative hypothesis: stationary”
+# 只是写明备择假设，并不是报告“结论为平稳”。仍要读检验p值。
+# adf.test默认含常数和趋势、使用固定滞后规则，不等同于这里的drift+BIC。
+# 易错点4：全样本与训练集可能结论不同；完整样本的演示放在脚本末尾。
+
+# 3.2 PP检验：同样以“有单位根”为H0
+# 使用urca::ur.pp()，与上面的ADF保持含常数、不含趋势的设定。
+# Z-tau表示使用修正后的t型单位根统计量；不要看普通回归系数p值。
+# lags="short"是长期方差估计的短带宽规则，不是AR模型的阶数。
+pp_price <- ur.pp(price_train, type = "Z-tau", model = "constant", lags = "short")
+pp_logprice <- ur.pp(logprice_train, type = "Z-tau", model = "constant", lags = "short")
+pp_return <- ur.pp(train, type = "Z-tau", model = "constant", lags = "short")
+summary(pp_price)
+summary(pp_logprice)
+summary(pp_return)
+
+# 看底部Z-tau统计量与相应临界值；统计量更负才拒绝单位根。
+# 5%临界值约-2.880：
+# 原始价格约-2.169，对数价格约-2.209，均不拒绝单位根。
+# 收益率约-8.686，拒绝单位根。
+# PP对误差自相关和异方差作修正，但不保证小样本表现一定优于ADF。
+
+# 3.3 KPSS检验：注意原假设方向相反！
+# H0：围绕固定均值平稳；H1：单位根型非平稳。
+# type="mu"检验水平平稳，对应前面含常数、无趋势的比较框架。
+# 若研究趋势平稳，须将ADF/PP的趋势设定与KPSS的type="tau"一并考虑。
+kpss_price <- ur.kpss(price_train, type = "mu", lags = "short")
+kpss_logprice <- ur.kpss(logprice_train, type = "mu", lags = "short")
+kpss_return <- ur.kpss(train, type = "mu", lags = "short")
+summary(kpss_price)
+summary(kpss_logprice)
+summary(kpss_return)
+
+# KPSS统计量大于临界值才拒绝H0，与ADF/PP的比较方向不同！
+# 5%临界值为0.463：
+# 原始价格约0.578、对数价格约0.595，均拒绝水平平稳。
+# 收益率约0.065，不拒绝水平平稳；不拒绝也不等于“证明平稳”。
+# PP和KPSS可改用lags="long"检查带宽敏感性，但不要挑选有利结果报告。
+
+# 3.4 联合解释与建模选择
+# 本训练期、上述设定与5%水平下：
+# 原始/对数价格：ADF与PP不拒绝单位根，KPSS拒绝水平平稳。
+# 收益率：ADF与PP拒绝单位根，KPSS不拒绝水平平稳。
+# 这些结果为收益率建模提供依据，但不能靠“三个检验投票”证明真实过程。
+# 高持续性、小样本、结构变化和设定选择都可能影响检验结论。
+# 本实验用收益率研究涨跌与波动风险，而不是预先假定所有价格都非平稳。
+# 即便其他设定支持价格平稳，研究收益率波动仍有意义；
+# 若目标改为价格水平建模，则应另行识别价格模型，不要机械要求先差分。
+
+# 3.5 未知断点检验：暂用r_t=c+phi*r_(t-1)+u_t作简单筛查方程。
 # y取第2期到最后一期，lag1取第1期到倒数第2期，使两列一一对应。
 break_data <- data.frame(y = train[-1], lag1 = head(train, -1))
 fs <- Fstats(y ~ lag1, data = break_data, from = 0.20, vcov. = vcovHAC)
@@ -80,7 +143,7 @@ plot(fs)
 # vcovHAC用于缓和异方差和序列相关的影响。本样本p约0.532，未拒绝稳定性。
 # 这不等于“证明没有突变”，也没有检验所有可能模型或2020年测试期的变化。
 
-# 3.3 多断点定位：在最多3个断点中用BIC选择，每段至少36期。
+# 3.6 多断点定位：在最多3个断点中用BIC选择，每段至少36期。
 bp <- breakpoints(y ~ lag1, data = break_data, h = 36, breaks = 3)
 summary(bp)
 plot(summary(bp))
@@ -296,3 +359,19 @@ write.csv(volatility_scores, "Lab1/results_beginner/volatility_scores.csv", row.
 # 4. 点预测与波动预测的排名是否相同？较小误差是否统计显著？
 # 官方接口说明：https://search.r-project.org/CRAN/refmans/rugarch/html/ugarchroll-methods.html
 
+
+# 13. 课后演示：为什么换成全样本，ADF结论可能改变？ ----------------------------
+# 仅在完成样本外预测评价之后阅读；以下结果不用于前面的选阶或模型选择。
+# price包含2006-01—2022-02的194个月度观测。
+adf_price_full <- ur.df(price, type = "drift", lags = 6, selectlags = "BIC")
+adf_logprice_full <- ur.df(log(price), type = "drift", lags = 6, selectlags = "BIC")
+summary(adf_price_full)
+summary(adf_logprice_full)
+# 全样本原始价格tau2约-2.714：在5%水平不拒绝，但在10%水平拒绝单位根。
+# 全样本对数价格tau2约-3.059：在5%水平拒绝单位根，支持该设定下的平稳备择。
+# 因此“价格也是stationary”必须注明：原始/对数、训练/全样本、趋势项、滞后、显著性水平。
+# 不能把全样本对数价格的结论移植给训练期原始价格，也不能从中挑最想要的结果。
+# 方法说明：
+# https://search.r-project.org/CRAN/refmans/urca/html/ur.df.html
+# https://search.r-project.org/CRAN/refmans/urca/html/ur.pp.html
+# https://search.r-project.org/CRAN/refmans/urca/html/ur.kpss.html
