@@ -2,7 +2,7 @@
 
 **Brent 价格序列：结构变化、ARMA 与 ARCH/GARCH**
 
-本实验安排在 ARCH/GARCH 课程之后，面向 R 语言初学者。代码按步骤展开，每个模型单独估计，不需要编写循环或自定义函数。
+本实验使用 Brent 价格序列，完成结构变化检验、ARMA 与 ARCH/GARCH 建模及预测比较。代码按步骤展开，每个模型单独估计，并附有操作和结果解释的注释。
 
 ## 下载数据和代码
 
@@ -51,9 +51,7 @@ source("Lab 1.R", encoding = "UTF-8")
 
 ## ADF、PP 与 KPSS：如何正确解释？ {#stationarity-tests}
 
-**2026-10-12 更新：** 代码现在分别检验原始价格、对数价格和收益率，并在 ADF 后加入 PP 与 KPSS。全部逐项调用现成函数，不需要循环或自定义函数。
-
-原代码的 `adf_price` 实际检验的是训练期的**对数价格**。本版将对象明确区分为 `adf_price`、`adf_logprice` 和 `adf_return`，并将结论限定到具体样本、设定和显著性水平。
+代码分别对原始价格、对数价格和收益率进行 ADF、PP 与 KPSS 检验。`adf_price`、`adf_logprice` 和 `adf_return` 分别对应三个对象的 ADF 结果，结论需限定到具体样本、设定和显著性水平。
 
 ### 训练样本的核验结果
 
@@ -83,7 +81,7 @@ ADF 的 5% 临界值为 −2.88，PP 约为 −2.880，统计量更负才拒绝�
 - 原始价格 tau2 约 −2.714：在 5% 水平不拒绝单位根，在 10% 水平拒绝。
 - 对数价格 tau2 约 −3.059：在 5% 水平拒绝单位根，支持该设定下的平稳备择。
 
-因此，需要说明结论指的是原始价格还是对数价格、训练期还是全样本，以及显著性水平和检验设定。脚本末尾增加了全样本演示，放在预测评价之后；其结果不用于前面的训练期模型选择。
+因此，需要说明结论指的是原始价格还是对数价格、训练期还是全样本，以及显著性水平和检验设定。脚本末尾比较了全样本与训练样本的检验结果；全样本结果不用于前面的训练期模型选择。
 
 检验使用 [urca 的 ADF 接口](https://search.r-project.org/CRAN/refmans/urca/html/ur.df.html)、[PP 接口](https://search.r-project.org/CRAN/refmans/urca/html/ur.pp.html)与 [KPSS 接口](https://search.r-project.org/CRAN/refmans/urca/html/ur.kpss.html)。更多讨论见[单位根检验比较](../第4章_非平稳时间序列模型/index.md#unit-root-test-comparison)。
 

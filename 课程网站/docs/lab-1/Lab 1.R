@@ -1,7 +1,7 @@
-# Lab 1：Brent价格、ARMA与GARCH（初学者版）=====================================
+# Lab 1：Brent价格、ARMA与GARCH ==============================================
 # 使用方法：把工作目录设为含 lab 1.csv 的课程文件夹，逐段选中代码，Ctrl+Enter运行。
-# 本文件不写循环、不自定义函数。每个模型单独写，便于对照和修改。
-# 主要学习顺序：结构变化 → ACF/PACF → 均值选阶 → ARCH检验 → GARCH → 预测。
+# 每个模型分别估计，便于对照其设定与结果。
+# 分析流程：平稳性与结构变化 → ACF/PACF → 均值选阶 → ARCH检验 → GARCH → 预测。
 # <- 表示赋值；$ 表示取出某一列；c()把几个数放在一起；#后面的文字是注释。
 
 # 0. 安装和加载包 -----------------------------------------------------------
@@ -64,7 +64,7 @@ price_train <- price[1:(n_train + 1)]    # 原始价格P：2006-01—2019-02，1
 logprice_train <- log(price_train)      # 对数价格log(P)，不是原始价格
 # train是100*diff(log(P))，2006-02—2019-02，157期；差分后少一期。
 
-# 三个检验对象分别写出，不用循环。ADF的H0：有单位根；H1：平稳。
+# 分别检验三个对象。ADF的H0：有单位根；H1：平稳。
 # drift表示含常数、不含线性时间趋势；最多6个差分滞后，由BIC选择。
 adf_price <- ur.df(price_train, type = "drift", lags = 6, selectlags = "BIC")
 adf_logprice <- ur.df(logprice_train, type = "drift", lags = 6, selectlags = "BIC")
@@ -86,7 +86,7 @@ summary(adf_return)
 # 易错点3：若用tseries::adf.test()，输出“alternative hypothesis: stationary”
 # 只是写明备择假设，并不是报告“结论为平稳”。仍要读检验p值。
 # adf.test默认含常数和趋势、使用固定滞后规则，不等同于这里的drift+BIC。
-# 易错点4：全样本与训练集可能结论不同；完整样本的演示放在脚本末尾。
+# 易错点4：全样本与训练集可能结论不同；完整样本的检验结果见脚本末尾。
 
 # 3.2 PP检验：同样以“有单位根”为H0
 # 使用urca::ur.pp()，与上面的ADF保持含常数、不含趋势的设定。
@@ -178,7 +178,7 @@ arma11 <- Arima(train, order = c(1, 0, 1), include.mean = TRUE, method = "ML")
 AIC(m0, ar1, ar2, ma1, ma2, arma11)
 BIC(m0, ar1, ar2, ma1, ma2, arma11)
 # 都是越小越好。这里事先以BIC为主；不能等看完测试期误差再改变选择标准。
-# 本数据在这些候选中选择AR(1)。让学生先读表，再运行下面这一行。
+# 比较表中BIC最小的候选模型是AR(1)，因此采用以下均值模型。
 mean_model <- ar1
 summary(mean_model)
 # AR(1)系数约0.339：上个月收益率较高时，本月收益率也倾向较高。
@@ -252,16 +252,16 @@ ArchTest(z, lags = 12, demean = TRUE)
 # 对估计后的GARCH残差，上述普通检验只是近似筛查，结合show(fit_garch)
 # 中包提供的加权残差检验阅读。QQ尾部偏离提示正态分布可能不合适。
 
-# 9. 先理解“在同一个时点预测未来12个月” --------------------------------------
+# 9. 在同一个时点预测未来12个月 ----------------------------------------------
 fc12 <- ugarchforecast(fit_garch, n.ahead = 12)
 fitted(fc12)                           # 条件均值预测
 sigma(fc12)                            # 条件标准差预测
 sigma(fc12)^2                          # 条件方差预测
 # 这些预测全部从训练期终点出发，不能误称为每月更新的一步预测。
 
-# 10. 包自动完成逐月的一步样本外预测，不用自己写循环 ----------------------------
+# 10. 逐月的一步样本外预测 ---------------------------------------------------
 # 同方差AR(1)用rugarch包中的arfimaspec和arfimaroll。
-# arfima=FALSE关闭分数差分，所以这里仍是普通AR(1)，不需要学习ARFIMA。
+# arfima=FALSE关闭分数差分，所以这里仍是普通AR(1)。
 # 三个模型均值都是AR(1)，比较方差为常数、ARCH(1)、GARCH(1,1)三种情况。
 # 与前面的Arima估计方法/初始化有细微差异，因此数值不必完全相同。
 spec_constant <- arfimaspec(
@@ -271,7 +271,7 @@ spec_constant <- arfimaspec(
 # n.start=n_train：先用前157期估计，随后预测剩余36期。
 # refit.every=1：每观察到一个新月份，重新估计一次，再预测下个月。
 # recursive：扩展窗口，只加入已经发生的数据；不会提前使用未来收益率。
-# calculate.VaR=FALSE：本节暂不计算风险价值，减少额外输出。
+# calculate.VaR=FALSE：不计算风险价值，仅输出收益率与波动预测。
 roll_constant <- arfimaroll(spec_constant, data = r_series, n.start = n_train,
   refit.every = 1, refit.window = "recursive", solver = "hybrid", calculate.VaR = FALSE)
 roll_arch <- ugarchroll(spec_arch, data = r_series, n.start = n_train,
@@ -330,7 +330,7 @@ e_garch <- test - pred_garch$Mu
 dm.test(e_garch, e_constant, h = 1, power = 2)
 # H0：两个模型的期望平方预测误差相同；p<0.05才有拒绝H0的证据。
 # 负统计量倾向GARCH更好；p>=0.05不能声称GARCH显著胜出。
-# 本测试期只有36个月，且模型可能嵌套，因此仅作教学性比较，结论要谨慎。
+# 本测试期只有36个月，且模型可能嵌套，常规DM检验的推断可能不可靠，结论要谨慎。
 
 # 11.4 画GARCH预测与95%区间（正态创新假设）
 lower <- pred_garch$Mu - 1.96 * pred_garch$Sigma
@@ -350,9 +350,9 @@ mean(test >= lower & test <= upper)      # 实际区间覆盖率，目标接近0
 dir.create("Lab1/results_beginner", recursive = TRUE, showWarnings = FALSE)
 write.csv(point_scores, "Lab1/results_beginner/point_scores.csv")
 write.csv(volatility_scores, "Lab1/results_beginner/volatility_scores.csv", row.names = FALSE)
-# 图形直接显示在RStudio的Plots窗口，可用Export保存，无需学习批量导出代码。
+# 图形直接显示在RStudio的Plots窗口，可用Export保存。
 
-# 学生报告回答四个问题：
+# 实验报告问题：
 # 1. 结构变化检验是否拒绝？这能说明什么，不能说明什么？
 # 2. 为什么选AR(1)？为什么残差不相关却还需要ARCH/GARCH？
 # 3. alpha、beta和标准化残差诊断如何解释？
@@ -360,7 +360,7 @@ write.csv(volatility_scores, "Lab1/results_beginner/volatility_scores.csv", row.
 # 官方接口说明：https://search.r-project.org/CRAN/refmans/rugarch/html/ugarchroll-methods.html
 
 
-# 13. 课后演示：为什么换成全样本，ADF结论可能改变？ ----------------------------
+# 13. 样本区间对ADF检验结论的影响 --------------------------------------------
 # 仅在完成样本外预测评价之后阅读；以下结果不用于前面的选阶或模型选择。
 # price包含2006-01—2022-02的194个月度观测。
 adf_price_full <- ur.df(price, type = "drift", lags = 6, selectlags = "BIC")

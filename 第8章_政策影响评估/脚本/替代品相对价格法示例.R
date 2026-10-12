@@ -1,4 +1,4 @@
-# 第8章：替代品相对价格法（RPS）教学示例
+# 第8章：替代品相对价格法（RPS）模拟示例
 # 默认数据为模拟价格；不复现论文，不生成真实政策结论。
 # 检验、估计和预测使用现成 R 包；本脚本只组织数据与包调用。
 
@@ -54,7 +54,7 @@ if (is.null(data_file)) {
     price_substitute = exp(untreated_substitute + substitute_effect)
   )
   label <- "SIMULATED DATA"
-  cat("教学模拟：真实对数效应 target=-0.08, substitute=0.03, relative=-0.11\n")
+  cat("模拟示例：预设对数效应 target=-0.08, substitute=0.03, relative=-0.11\n")
   cat("以下反事实估计还包含随机预测误差，不必等于已知模拟效应。\n")
 } else {
   dat <- read.csv(data_file, stringsAsFactors = FALSE)
