@@ -1,5 +1,11 @@
 # ============================================================================
 # Lab 2：VAR、SVAR 与 Local Projection
+# 软件引用：Pfaff (2008), doi:10.18637/jss.v027.i04；
+# Lange et al. (2021), doi:10.18637/jss.v097.i05；Adämmer (2019), doi:10.32614/RJ-2019-052。
+# 数据引用：Herwartz & Ploedt (2016), doi:10.1111/obes.12098；数据由 svars::USA 提供，原始来源 FRED。
+# 调用接口依据 vars/urca/svars/lpirfs/forecast 官方文档；训练测试流程和解释由课程组织。
+# 未复制包的估计实现源码。原包许可分别保留：vars/urca/lpirfs 为 GPL>=2，svars 1.3.12 为 MIT。
+# 完整作者、版本与许可：https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/版权与引用/
 # 数据作图 -> 平稳性 -> 选阶 -> 诊断 -> 结构冲击 -> 预测比较
 # ============================================================================
 # 使用方法：把 Lab 2.R 和 lab 2.csv 放在同一文件夹，用 RStudio 打开本文件。

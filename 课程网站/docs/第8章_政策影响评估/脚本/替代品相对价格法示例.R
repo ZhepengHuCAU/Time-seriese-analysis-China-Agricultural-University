@@ -1,5 +1,11 @@
 # 第8章：替代品相对价格法（RPS）模拟示例
 # 默认数据为模拟价格；不复现论文，不生成真实政策结论。
+# 方法出处：Carter & Smith (2007), doi:10.1162/rest.89.3.522；
+# Adjemian, Smith & He (2021), doi:10.1016/j.foodpol.2021.102152。
+# 本脚本由课程按所列过程生成模拟数据，非原论文真实数据或完整复现代码。
+# R 接口依据 urca/vars/strucchange/sandwich/lmtest 官方文档，原包许可分别保留。
+# 软件引用：Pfaff (2008), doi:10.18637/jss.v027.i04；Zeileis et al. (2002), doi:10.18637/jss.v007.i02。
+# 完整来源与许可：https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/版权与引用/
 # 检验、估计和预测使用现成 R 包；本脚本只组织数据与包调用。
 
 if (.Platform$OS.type == "windows") {

@@ -1,5 +1,8 @@
 # 第2章：AR、MA 与 ARMA 模型的模拟及 ACF/PACF 图
 # 说明：
+# 图像来源：课程按所列 AR/MA/ARMA 参数自行模拟绘制，非教材或包手册图像转载。
+# 函数接口依据：R Core Team, stats::arima.sim/acf/pacf 文档。
+# https://stat.ethz.ch/R-manual/R-devel/library/stats/html/arima.sim.html
 # 1. 本脚本只使用 R 自带的 stats 包；
 # 2. 运行后会生成两张图片：
 #    - 图2-1_不同ARMA模型的模拟序列.png

@@ -41,6 +41,7 @@ nav:
   - Lab 2: lab-2/index.md
   - 第7章 协整与误差修正模型: 第6章_协整与误差修正模型/index.md
   - 第8章 政策影响评估: 第8章_政策影响评估/index.md
+  - 版权与引用: 版权与引用/index.md
 
 extra_css:
   - 样式/课堂阅读.css
@@ -48,3 +49,5 @@ extra_css:
 extra_javascript:
   - 脚本/mathjax.js
   - https://unpkg.com/mathjax@3/es5/tex-mml-chtml.js
+
+copyright: '课程整理：胡哲鹏 · <a href="https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/%E7%89%88%E6%9D%83%E4%B8%8E%E5%BC%95%E7%94%A8/">版权与引用</a>'

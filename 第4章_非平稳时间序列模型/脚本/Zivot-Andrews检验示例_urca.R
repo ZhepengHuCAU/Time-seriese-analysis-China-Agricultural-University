@@ -1,5 +1,11 @@
 # 第4章：Zivot-Andrews 检验示例
 # 说明：本示例优先使用成熟 R package，不手写检验统计量。
+# 参照 urca::ur.za 文档中的 nporg 例程组织，增加年份整理、绘图与输出说明。
+# 来源：https://search.r-project.org/CRAN/refmans/urca/html/ur.za.html；原包/例程许可 GPL>=2。
+# 方法：Zivot & Andrews (1992), doi:10.1080/07350015.1992.10509904。
+# 数据：Nelson & Plosser (1982), doi:10.1016/0304-3932(82)90012-5；urca::nporg。
+# 软件引用：Pfaff (2008), Analysis of Integrated and Cointegrated Time Series with R (2nd ed.)。
+# 图由课程重新绘制，未转载原论文图。完整许可见课程网站“版权与引用”。
 # packages: urca, ggplot2
 
 library(urca)

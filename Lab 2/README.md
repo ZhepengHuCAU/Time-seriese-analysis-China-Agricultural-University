@@ -74,3 +74,7 @@ CSV 保留完整样本，主分析限定在 1984Q1—2008Q3。训练样本是 19
 不同变量的最小误差来自不同模型，产出缺口水平预测中简单基准最小。完整差分与水平结果分别保存在 `rmse_changes.csv`、`mae_changes.csv`、`rmse_levels.csv` 和 `mae_levels.csv`。
 
 数据从 `svars 1.3.12` 的 `USA` 数据集导出，并按实际数据的时间属性核验。[数据定义](https://search.r-project.org/CRAN/refmans/svars/html/USA.html)。变量定义、样本设定、统计表、图形和完整解释见[课程网站 Lab 2](https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/lab-2/)。
+
+## 来源与引用
+
+数据、方法与软件来源已在课程网页和 R 文件开头列明。输入为 `svars::USA`，原始数据来自 FRED，变换研究见 Herwartz–Ploedt（2016）。采用包自带的 `citation("包名")` 引用实际使用的软件版本；转载改编例程应保留原版权与适用许可。[完整来源与第三方许可](../THIRD_PARTY_NOTICES.md)。

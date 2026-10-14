@@ -1,5 +1,12 @@
 # 第5章：VAR、SVAR 与 Local Projection 示例
 # 说明：本脚本优先使用成熟 R package，不手写估计程序。
+# 代码出处：vars 文档的 Canada 接口示例及 svars::id.cv/id.garch/hd/cf、lpirfs::lp_lin 文档例程改编。
+# 课程调整参数、对象名及展示顺序；该脚本不是上述论文完整复现程序。
+# 作者引用：Pfaff (2008), doi:10.18637/jss.v027.i04；Lange et al. (2021), doi:10.18637/jss.v097.i05；
+# Adämmer (2019), doi:10.32614/RJ-2019-052。
+# 原例程许可：vars/lpirfs 为 GPL>=2；svars 1.3.12 为 MIT（版权与许可须保留）。
+# 来源：https://search.r-project.org/CRAN/refmans/svars/html/id.cv.html
+# 完整来源与许可：https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/版权与引用/
 # packages: vars, svars, lpirfs
 
 library(vars)

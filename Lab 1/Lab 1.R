@@ -1,5 +1,12 @@
 # Lab 1：Brent价格、ARMA与GARCH ==============================================
 # 使用方法：把工作目录设为含 lab 1.csv 的课程文件夹，逐段选中代码，Ctrl+Enter运行。
+# 数据来源：胡哲鹏提供的本人论文研究数据。
+# 软件/方法引用：Hyndman & Khandakar (2008), doi:10.18637/jss.v027.i03；
+# Zeileis et al. (2002), doi:10.18637/jss.v007.i02；Pfaff (2008), urca 推荐引用。
+# 接口来源：https://pkg.robjhyndman.com/forecast/；https://cran.r-project.org/package=rugarch；
+# https://search.r-project.org/CRAN/refmans/FinTS/html/ArchTest.html。
+# 本脚本为课程组织的调用流程，未复制包的估计实现源码。原包分别保留自己的许可。
+# 完整引用与许可：https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/版权与引用/
 # 每个模型分别估计，便于对照其设定与结果。
 # 分析流程：平稳性与结构变化 → ACF/PACF → 均值选阶 → ARCH检验 → GARCH → 预测。
 # <- 表示赋值；$ 表示取出某一列；c()把几个数放在一起；#后面的文字是注释。

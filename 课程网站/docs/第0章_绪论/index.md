@@ -179,10 +179,11 @@ AI 工具正在改变就业市场，但它并没有降低时间序列能力的�
 
 ### 中文时间序列与计量教材
 
-- 易丹辉、王燕，《应用时间序列分析》，中国人民大学出版社。适合中文入门阅读，内容覆盖时间序列分解、ARMA、预测、单位根和条件异方差等主题。
-- 王振龙，《应用时间序列分析》，中国统计出版社。偏应用统计取向，适合作为中文补充读物。
-- 田铮，《时间序列的理论与方法》，高等教育出版社。理论性更强，适合想从统计过程角度深入理解时间序列的同学。
-- 高铁梅，《计量经济分析方法与建模：EViews 应用及实例》。适合需要用计量软件完成宏观、金融和产业数据建模的同学参考。
+- 王燕，《应用时间序列分析》，中国人民大学出版社。作者署名见[中国人民大学教材记录](https://emlab.ruc.edu.cn/syjx/syjc/2aa34aadc9ed4bf8a12493420ff19ab0.htm)。
+- 易丹辉，《时间序列分析：方法与应用》（第2版，2018），中国人民大学出版社。[图书馆书目记录](https://opac.lib.uibe.edu.cn/opac/book/dec9d1c68e6fdd8d245d9811ddf876cd)。两本书应分别引用。
+- 王振龙、胡永宏，《应用时间序列分析》（2007），科学出版社。[出版社书目与作者信息](https://www.ecsponline.com/goods.php?id=44396)。
+- Peter J. Brockwell、Richard A. Davis 著，田铮译，《时间序列的理论与方法》（第2版中文译本），高等教育出版社、施普林格出版社。田铮的身份是译者，应同时保留原著作者署名。
+- 高铁梅、王金明、陈飞、刘玉红，《计量经济分析方法与建模：EViews应用及实例》（第3版，2016），清华大学出版社。[出版社书目](https://www.tup.com.cn/booksCenter/book_06018001.html)。
 
 ### R 语言与软件实现
 
@@ -200,3 +201,7 @@ AI 工具正在改变就业市场，但它并没有降低时间序列能力的�
 - Goswami et al. (2024), [MOMENT: A Family of Open Time-series Foundation Models](https://arxiv.org/abs/2402.03885).
 - Jin et al. (2023), [Time-LLM: Time Series Forecasting by Reprogramming Large Language Models](https://arxiv.org/abs/2310.01728).
 - Kottapalli et al. (2025), [Foundation Models for Time Series: A Survey](https://arxiv.org/abs/2504.04011).
+
+## 引用与版本说明 {#references}
+
+上述文献为延伸阅读与方法出处，提供书目信息或链接不表示本站拥有图书、论文和模型权重的再发布授权。引用译著时，应保留原著作者与译者的不同身份；引用软件时，应说明所用版本并采用包提供的 `citation()` 条目。本站统一使用规则见[版权与引用](../版权与引用/index.md)。

@@ -609,3 +609,12 @@ $$
 9. 标准 GARCH 模型为什么不能刻画正负冲击的不对称影响？
 10. 在 LLM 和时间序列基础模型快速发展的背景下，为什么传统时间序列模型仍然重要？
 11. 如果一个复杂机器学习模型的样本外 RMSE 只略低于 ARIMA 或 GARCH 基准模型，研究者还需要进一步考虑哪些问题？
+
+## 参考文献与软件来源 {#references}
+
+- Engle, R. F. (1982). *Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation*. *Econometrica*, 50(4), 987. [DOI](https://doi.org/10.2307/1912773).
+- Bollerslev, T. (1986). *Generalized autoregressive conditional heteroskedasticity*. *Journal of Econometrics*, 31(3), 307–327. [DOI](https://doi.org/10.1016/0304-4076(86)90063-1).
+- Enders, W. (2015). *Applied Econometric Time Series* (4th ed.). Wiley. [出版社配套网站](https://bcs.wiley.com/he-bcs/Books?action=index&bcsId=9288&itemId=1118808568).
+- Hyndman, R. J.; Khandakar, Y. (2008). *Automatic Time Series Forecasting: The forecast Package for R*. *Journal of Statistical Software*, 27(3). [DOI](https://doi.org/10.18637/jss.v027.i03).
+
+ARCH、GARCH 及相关模型名称与方法归属上述原始文献。配套 Lab 1 的 R 实现调用 [rugarch](https://cran.r-project.org/package=rugarch)、[FinTS](https://cran.r-project.org/package=FinTS)及 [forecast](https://cran.r-project.org/package=forecast)等包；代码为课程分析流程，未宣称是上述作者的论文复现程序。包作者和许可见[版权与引用](../版权与引用/index.md#software)。

@@ -1,5 +1,8 @@
 # 第4章：差分平稳与趋势平稳示意图
 # 说明：本脚本用于生成课堂讲义中的概念示意图。
+# 图像来源：课程按所列过程自行模拟绘制，非教材图像转载。
+# 方法参考：Enders (2015), Applied Econometric Time Series (4th ed.), Wiley。
+# 软件接口参考：R Core Team 的 stats 文档；ggplot2 官方文档 https://ggplot2.tidyverse.org/。
 # packages: ggplot2
 
 library(ggplot2)

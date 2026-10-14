@@ -1,5 +1,11 @@
 # 第6章：协整与误差修正模型示例
 # 说明：本脚本优先使用成熟 R package，不手写已有估计程序。
+# Johansen-Denmark 部分参照 urca::ca.jo 文档例程改编，课程增加分步输出和 VAR/IRF 调用。
+# 来源：https://search.r-project.org/CRAN/refmans/urca/html/ca.jo.html
+# 数据：urca::denmark；Johansen & Juselius (1990), doi:10.1111/j.1468-0084.1990.mp52002003.x。
+# 软件引用：Pfaff (2008), Analysis of Integrated and Cointegrated Time Series with R (2nd ed.)；
+# Pfaff (2008), doi:10.18637/jss.v027.i04。原包/例程许可：GPL>=2。
+# 完整来源与许可：https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/版权与引用/
 # packages: urca, vars
 
 library(urca)

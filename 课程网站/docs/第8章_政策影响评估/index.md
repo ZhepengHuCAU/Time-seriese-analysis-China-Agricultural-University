@@ -869,7 +869,7 @@ mean(errors[, "target"] - errors[, "substitute"])
 
 ![图8-1 RPS模拟示例：两种价格、相对价格与反事实预测偏离](图片/图8-1_RPS教学模拟/图8-1_RPS教学模拟.png)
 
-图8-1为模拟数据。第一幅比较两个对数价格，第二幅展示价格差与事件日期，第三幅展示固定事件前模型生成的预测偏离。蓝色实线为目标商品，橙色点线为替代品；竖直虚线表示模拟事件起点，点线表示分段模型估计的断点。第三幅没有给出政策效应置信带，曲线不能解释为不含预测误差的因果效应路径。
+图8-1由课程配套脚本按本章给定过程模拟绘制，未转载上述论文中的原图或真实价格数据。方法依据 Carter–Smith（2007）及 Adjemian–Smith–He（2021），完整来源见第8.16节。图8-1为模拟数据。第一幅比较两个对数价格，第二幅展示价格差与事件日期，第三幅展示固定事件前模型生成的预测偏离。蓝色实线为目标商品，橙色点线为替代品；竖直虚线表示模拟事件起点，点线表示分段模型估计的断点。第三幅没有给出政策效应置信带，曲线不能解释为不含预测误差的因果效应路径。
 
 **本节小结。** 现成包负责统计计算，研究者负责价格口径、事件定义、协整限制、反事实设定和效应解释。可运行代码并不能代替识别论证。
 
@@ -914,3 +914,13 @@ RPS 将商品替代关系转化为时间序列评估依据。政策前相对价�
 4. R 实现文档：[urca](https://cran.r-project.org/package=urca)、[vars](https://cran.r-project.org/package=vars)、[strucchange](https://cran.r-project.org/package=strucchange)、[sandwich](https://cran.r-project.org/package=sandwich)、[lmtest](https://cran.r-project.org/package=lmtest)。
 
 本章示例代码未完整复现各文献的估计程序。案例数值来自所列论文或明确标注的作者稿；模拟结果另行标注。
+
+## 代码、图表与许可说明 {#code-sources}
+
+本章配套脚本由课程按所列数据生成过程组织，调用 `urca`、`vars`、`strucchange`、`sandwich` 和 `lmtest` 的公开接口，没有转贴原论文完整估计程序。接口依据：[ca.jo](https://search.r-project.org/CRAN/refmans/urca/html/ca.jo.html)、[cajorls](https://search.r-project.org/CRAN/refmans/urca/html/cajorls.html)、[breakpoints](https://search.r-project.org/CRAN/refmans/strucchange/html/breakpoints.html)、[NeweyWest](https://search.r-project.org/CRAN/refmans/sandwich/html/NeweyWest.html)。软件论文：
+
+- Pfaff, B. (2008). *VAR, SVAR and SVEC Models: Implementation Within R Package vars*. *Journal of Statistical Software*, 27(4). [DOI](https://doi.org/10.18637/jss.v027.i04).
+- Zeileis, A.; Leisch, F.; Hornik, K.; Kleiber, C. (2002). *strucchange : An R Package for Testing for Structural Change in Linear Regression Models*. *Journal of Statistical Software*, 7(2). [DOI](https://doi.org/10.18637/jss.v007.i02).
+- Zeileis, A. (2004). *Econometric Computing with HC and HAC Covariance Matrix Estimators*. *Journal of Statistical Software*, 11(10). [DOI](https://doi.org/10.18637/jss.v011.i10).
+
+原论文的案例数值与方法出处见8.16节；课程模拟的图表与结果另行标明。来源、作者及适用软件许可见[版权与引用](../版权与引用/index.md)。

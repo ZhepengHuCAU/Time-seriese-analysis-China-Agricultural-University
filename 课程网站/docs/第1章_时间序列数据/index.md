@@ -1,5 +1,9 @@
 # 第 1 章 时间序列数据
 
+## 代码与数据说明
+
+本章示例按课程的数据读入与整理任务组织；示例中的日期、向量和表格为说明性数据。R 接口依据 [R Core Team](https://www.r-project.org/)、[zoo](https://cran.r-project.org/package=zoo)、[xts](https://cran.r-project.org/package=xts)、[tsibble](https://cran.r-project.org/package=tsibble)、[lubridate](https://lubridate.tidyverse.org/)、[readr](https://readr.tidyverse.org/)、[readxl](https://readxl.tidyverse.org/)和 [dplyr](https://dplyr.tidyverse.org/)官方文档。这里只调用这些包的公开接口，没有复制包的估计或数据处理实现源码。软件作者、审计版本与许可见[版权与引用](../版权与引用/index.md#software)。
+
 ## 导言
 
 学习时间序列模型之前，必须先回答一个更基础的问题：什么样的数据才是时间序列数据？在经济学和管理研究中，许多数据都带有时间标签，但并不是所有“带时间”的数据都适合直接当作时间序列来处理。全国月度 CPI、某只股票的日收盘价、某地区每小时电力负荷，是时间序列；31 个省份连续 20 年的 GDP、几百家企业逐年的财务指标，则是面板数据；某年一次住户调查中记录了“调查日期”，它仍然主要是截面数据。

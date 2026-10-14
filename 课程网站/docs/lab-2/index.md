@@ -450,3 +450,16 @@ $$
 - [VAR、SVAR 与多变量时间序列模型](../第5章_多变量时间序列模型/index.md)
 - [VAR/SVAR 的遗漏变量问题](../第5章_多变量时间序列模型/index.md#var-svar-omitted-variables)
 - [协整与误差修正模型](../第6章_协整与误差修正模型/index.md)
+
+## 方法、代码、数据与图表引用 {#references}
+
+本实验的训练/测试划分、变量变换、结果换算与解释由课程组织；VAR/SVAR、HD/CF 与 LP 的调用参照官方文档，数据来自已注明的 `svars::USA`。这些 R 调用未转贴包的估计实现源码。
+
+- Pfaff, B. (2008). *VAR, SVAR and SVEC Models: Implementation Within R Package vars*. *Journal of Statistical Software*, 27(4). [DOI](https://doi.org/10.18637/jss.v027.i04).
+- Lange, A.; Dalheimer, B.; Herwartz, H.; Maxand, S. (2021). *svars: An R Package for Data-Driven Identification in Multivariate Time Series Analysis*. *Journal of Statistical Software*, 97(5). [DOI](https://doi.org/10.18637/jss.v097.i05).
+- Adämmer, P. (2019). *lpirfs: An R Package to Estimate Impulse Response Functions by Local Projections*. *The R Journal*, 11(2), 421. [DOI](https://doi.org/10.32614/RJ-2019-052).
+- Herwartz, H.; Plödt, M. (2016). *Simulation Evidence on Theory‐based and Statistical Identification under Volatility Breaks*. *Oxford Bulletin of Economics and Statistics*, 78(1), 94–112. [DOI](https://doi.org/10.1111/obes.12098).
+- Jordà, Ò. (2005). *Estimation and Inference of Impulse Responses by Local Projections*. *American Economic Review*, 95(1), 161–182. [DOI](https://doi.org/10.1257/0002828053828518).
+- Kilian, L.; Lütkepohl, H. (2017). *Structural Vector Autoregressive Analysis*. Cambridge University Press. [DOI](https://doi.org/10.1017/9781108164818).
+
+具体接口：[vars::irf](https://search.r-project.org/CRAN/refmans/vars/html/irf.html)、[vars::fevd](https://search.r-project.org/CRAN/refmans/vars/html/fevd.html)、[svars::id.chol](https://search.r-project.org/CRAN/refmans/svars/html/id.chol.html)、[svars::hd](https://search.r-project.org/CRAN/refmans/svars/html/hd.html)、[svars::cf](https://search.r-project.org/CRAN/refmans/svars/html/cf.html)、[lpirfs::lp_lin](https://search.r-project.org/CRAN/refmans/lpirfs/html/lp_lin.html)。`Lab2_output` 图表均由本实验脚本重新计算、绘制；不是论文或软件手册图像的转载。数据来源与软件许可分别见[版权与引用](../版权与引用/index.md)。

@@ -38,7 +38,7 @@ source("Lab 1.R", encoding = "UTF-8")
 
 ## 数据说明
 
-数据包含 `Date` 和 `Brent` 两列，共 194 个月度价格观测，时间为 2006 年 1 月至 2022 年 2 月。日期格式为“月/日/年”。原始文件未注明价格单位及月均价、月末价口径。
+数据来源：课程作者胡哲鹏提供的本人论文研究数据。数据包含 `Date` 和 `Brent` 两列，共 194 个月度价格观测，时间为 2006 年 1 月至 2022 年 2 月。日期格式为“月/日/年”。原始文件未注明价格单位及月均价、月末价口径。
 
 实验采用百分数形式的对数收益率。训练期为 2006 年 2 月至 2019 年 2 月，测试期为 2019 年 3 月至 2022 年 2 月，共 36 个月。选阶与结构变化检验只使用训练集。
 
@@ -85,3 +85,15 @@ ADF 的 5% 临界值为 −2.88，PP 约为 −2.880，统计量更负才拒绝�
 
 检验使用 [urca 的 ADF 接口](https://search.r-project.org/CRAN/refmans/urca/html/ur.df.html)、[PP 接口](https://search.r-project.org/CRAN/refmans/urca/html/ur.pp.html)与 [KPSS 接口](https://search.r-project.org/CRAN/refmans/urca/html/ur.kpss.html)。更多讨论见[单位根检验比较](../第4章_非平稳时间序列模型/index.md#unit-root-test-comparison)。
 
+## 方法与软件引用 {#references}
+
+本实验代码为课程按 Brent 数据组织的逐步分析流程；调用所列软件接口，不复制包的估计实现源码，也不宣称复现外部论文。主要方法和软件来源：
+
+- Engle, R. F. (1982). *Autoregressive Conditional Heteroscedasticity with Estimates of the Variance of United Kingdom Inflation*. *Econometrica*, 50(4), 987. [DOI](https://doi.org/10.2307/1912773).
+- Bollerslev, T. (1986). *Generalized autoregressive conditional heteroskedasticity*. *Journal of Econometrics*, 31(3), 307–327. [DOI](https://doi.org/10.1016/0304-4076(86)90063-1).
+- Bai, J.; Perron, P. (2003). *Computation and analysis of multiple structural change models*. *Journal of Applied Econometrics*, 18(1), 1–22. [DOI](https://doi.org/10.1002/jae.659).
+- Hyndman, R. J.; Khandakar, Y. (2008). *Automatic Time Series Forecasting: The forecast Package for R*. *Journal of Statistical Software*, 27(3). [DOI](https://doi.org/10.18637/jss.v027.i03).
+- Zeileis, A.; Leisch, F.; Hornik, K.; Kleiber, C. (2002). *strucchange : An R Package for Testing for Structural Change in Linear Regression Models*. *Journal of Statistical Software*, 7(2). [DOI](https://doi.org/10.18637/jss.v007.i02).
+- Pfaff, B. (2008). *Analysis of Integrated and Cointegrated Time Series with R*. Springer New York. [DOI](https://doi.org/10.1007/978-0-387-75967-8).
+
+具体接口依据：[forecast](https://pkg.robjhyndman.com/forecast/)、[rugarch 手册](https://cran.r-project.org/web/packages/rugarch/rugarch.pdf)、[FinTS::ArchTest](https://search.r-project.org/CRAN/refmans/FinTS/html/ArchTest.html)、[strucchange::breakpoints](https://search.r-project.org/CRAN/refmans/strucchange/html/breakpoints.html)、[urca](https://cran.r-project.org/package=urca)。软件作者、版本和许可见[版权与引用](../版权与引用/index.md#software)。
