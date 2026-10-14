@@ -388,6 +388,66 @@ FEVD 是一种预测误差意义上的分解。它并不是解释某一期实际
 
 **本节小结。** FEVD 衡量不同冲击对预测误差方差的贡献，解释时需要说明预测期限。若要将这些贡献解释为需求、供给或货币政策等经济冲击的作用，还必须有可信的结构识别。
 
+<span id="5151-vars-var"></span>
+
+### R 代码示例：VAR 估计、脉冲响应与 FEVD {#var-r-example}
+
+`vars` 包提供了 VAR 估计、滞后阶数选择、Granger 因果检验、脉冲响应和方差分解等功能。以下示例使用包中自带的 `Canada` 数据。
+
+```r
+library(vars)
+
+data(Canada)
+
+# 查看数据
+head(Canada)
+
+# 选择滞后阶数
+lag_selection <- VARselect(Canada, lag.max = 8, type = "const")
+lag_selection$selection
+
+# 估计 VAR
+var_model <- VAR(Canada, p = 2, type = "const")
+summary(var_model)
+
+# 稳定性检查
+roots(var_model)
+
+# Granger 因果检验
+causality(var_model, cause = "e")
+
+# 正交化脉冲响应
+irf_var <- irf(
+  var_model,
+  impulse = "e",
+  response = "prod",
+  n.ahead = 20,
+  boot = FALSE
+)
+plot(irf_var)
+
+# 如果用于正式实证报告，通常应打开 bootstrap 置信区间。
+# ci = 0.90 表示 90% pointwise confidence bands；
+# runs = 1000 表示 bootstrap 重复次数。
+irf_var_boot <- irf(
+  var_model,
+  impulse = "e",
+  response = "prod",
+  n.ahead = 20,
+  boot = TRUE,
+  ci = 0.90,
+  runs = 1000
+)
+plot(irf_var_boot)
+
+# 预测误差方差分解
+fevd_var <- fevd(var_model, n.ahead = 20)
+plot(fevd_var)
+```
+
+这里的 `Canada` 水平数据用于展示函数接口；其变量包含对数水平和比率，不能仅凭成功运行就认定适合稳定 VAR。平稳性检验、变量变换、诊断与独立测试样本的完整处理见 [Lab 2](../lab-2/index.md)。
+
+
 ---
 
 ## 5.9 从 VAR 到 SVAR：为什么需要识别
@@ -567,6 +627,45 @@ $$
 
 **小结。** 递归识别把结构假设转化为变量排序。它简单但不无害；排序不是技术细节，而是经济假设。
 
+
+<span id="5152-vars-svar"></span>
+
+#### R 代码示例：递归 SVAR {#recursive-svar-r-example}
+
+`vars` 包也提供了 `SVAR()` 函数。下面给出一个递归识别形式的示意。矩阵中的零限制对应具体的当期反应假设，结构解释取决于这些假设是否合理。
+
+```r
+library(vars)
+
+data(Canada)
+
+var_model <- VAR(Canada, p = 2, type = "const")
+
+# B 模型递归识别示例：
+# NA 表示需要估计的元素，0 表示施加的零限制。
+# 下三角 B 矩阵对应一种递归排序。
+# 这里的排序仅用于示例，实际研究必须根据经济理论设定。
+B_matrix <- matrix(0, 4, 4)
+B_matrix[lower.tri(B_matrix, diag = TRUE)] <- NA
+colnames(B_matrix) <- rownames(B_matrix) <- colnames(Canada)
+
+svar_model <- SVAR(var_model, Bmat = B_matrix, estmethod = "scoring")
+summary(svar_model)
+
+irf_svar <- irf(
+  svar_model,
+  impulse = "e",
+  response = "prod",
+  n.ahead = 20,
+  boot = FALSE
+)
+plot(irf_svar)
+```
+
+如果需要报告置信区间，可以在正式研究中把 `boot = FALSE` 改为 `boot = TRUE`，并适当设置 bootstrap 次数。
+
+本例仍使用 `Canada` 水平数据说明递归限制的写法；变量的平稳性与协整处理需另行判断。零限制由研究者施加，SVAR 不会自动解决遗漏变量问题。
+
 ### 5.11.2 同期限制
 
 同期限制（contemporaneous restrictions）直接对矩阵 \(A\) 或 \(B\) 中的元素施加零限制。例如，如果理论认为某个变量不能在当期影响另一个变量，可以设相应元素为零。
@@ -727,6 +826,59 @@ $$
 
 **小结。** 基于异方差的识别利用不同波动状态下协方差矩阵的变化来恢复结构冲击。Rigobon 型方法说明，异方差不仅是估计中需要处理的问题，也可能成为识别结构关系的有用信息。该方法适合存在清晰波动状态变化的应用场景，但必须仔细论证结构关系在不同状态中保持稳定。
 
+<span id="5154-svars-svar"></span>
+
+#### R 代码示例：基于异方差的 SVAR 识别 {#heteroskedastic-svar-r-example}
+
+`svars` 包提供了多种 SVAR 识别函数，其中 `id.cv()` 用于基于波动变化（changes in volatility）的识别，`id.garch()` 用于基于条件异方差的识别。下面使用包内置的 `USA` 数据进行估计。该数据包含美国宏观变量，示例中假定 1979Q3 前后存在波动状态变化。
+
+```r
+library(vars)
+library(svars)
+
+data(USA, package = "svars")
+
+# 估计约简式 VAR
+var_usa <- VAR(USA, lag.max = 10, ic = "AIC")
+
+# 基于无条件波动变化的识别
+# SB = 59 表示断点前有 59 个观测值，
+# 对应 svars 文档中的 1979Q3 前后波动变化示例。
+svar_cv <- id.cv(var_usa, SB = 59)
+summary(svar_cv)
+
+# 查看结构冲击的相对方差变化矩阵
+svar_cv$Lambda
+
+# 查看估计得到的结构影响矩阵
+svar_cv$B
+
+# 脉冲响应
+irf_cv <- irf(svar_cv, n.ahead = 30)
+plot(irf_cv, scales = "free_y")
+```
+
+如果研究者希望利用条件异方差识别结构冲击，可以使用 `id.garch()`。这类方法不再只比较断点前后的两个协方差矩阵，而是利用条件方差随时间变化的模式。
+
+```r
+library(vars)
+library(svars)
+
+data(USA, package = "svars")
+
+var_usa <- VAR(USA, lag.max = 10, ic = "AIC")
+
+# 基于 SVAR-GARCH 思想的识别
+svar_garch <- id.garch(var_usa)
+summary(svar_garch)
+
+irf_garch <- irf(svar_garch, n.ahead = 30)
+plot(irf_garch, scales = "free_y")
+```
+
+识别函数的使用需要满足相应假设。`id.cv()` 的核心问题是：断点前后是否主要体现为冲击方差变化，而不是结构传导机制改变？`id.garch()` 的核心问题是：条件异方差设定是否能合理刻画数据中的波动动态？如果相应假设不成立，软件输出就不能被直接解释为可信的结构冲击。
+
+
 ---
 
 ## 5.12 如何解释 SVAR 结果
@@ -879,6 +1031,28 @@ HD 和 FEVD 的区别非常重要。FEVD 是预测误差方差的比例分解，
 
 <span id="583"></span>
 
+
+<span id="5155-svars-historical-decomposition-counterfactual-analysis"></span>
+
+#### R 代码示例：历史分解 {#hd-r-example}
+
+已经得到识别后的 `svars` 对象之后，就可以进一步做历史分解（historical decomposition）和反事实分析（counterfactual analysis）。运行前先执行 [5.11.6 的异方差识别示例](#heteroskedastic-svar-r-example)，得到 `svar_cv`。
+
+```r
+# Historical decomposition
+# series = 1 表示分解 USA 数据中的第 1 个变量。
+# 若希望分解第 2 个或第 3 个变量，可改为 series = 2 或 series = 3。
+hd_x <- hd(svar_cv, series = 1)
+
+# 查看 historical decomposition 的前几行结果
+head(hd_x[[1]])
+
+# 画出历史分解图
+plot(hd_x)
+```
+
+这段代码的含义是：把第 1 个变量的历史波动分解为不同结构冲击的累计贡献。图中每一类冲击的贡献加总后，应当能够解释该变量相对于基准路径的主要波动。
+
 ### 5.12.4 反事实分析：如果某类冲击不存在会怎样
 
 反事实分析（counterfactual analysis）进一步问：如果某一类结构冲击没有发生，变量路径会怎样？这里不重新估计模型，而是在已经估计并识别的 SVAR 中，保留原来的模型参数、初始条件、确定性项和其他冲击，只改变某一类冲击的历史取值，再重构变量路径。
@@ -911,6 +1085,25 @@ $$
 表示被剔除的第 \(k\) 类冲击对变量路径的贡献。如果去掉能源供给冲击后，通胀反事实路径明显低于实际路径，可以说在该 SVAR 识别假设下，能源供给冲击对通胀上升有重要贡献。如果去掉货币政策冲击后，产出反事实路径变化很小，则说明该时期产出波动主要不是由货币政策冲击推动。
 
 反事实分析有明确的适用边界。SVAR 反事实通常是“冲击层面的反事实”，不是完整的“制度层面的反事实”。它保持模型参数、冲击传导机制和其他冲击不变，只改变某类结构冲击的实现值。若政策制度发生变化，私人部门预期、模型参数和传导机制也可能随之变化。因此，它适合回答“这类冲击对历史路径贡献多大”，但不应轻易解释为“如果政策制度完全改变，经济会怎样”。
+
+
+#### R 代码示例：反事实路径 {#counterfactual-r-example}
+
+本段同样使用 [5.11.6](#heteroskedastic-svar-r-example) 中已估计的 `svar_cv`。
+
+```r
+# Counterfactual analysis
+# cf() 会构造不同结构冲击被排除时的反事实路径。
+cf_x <- cf(svar_cv, series = 1)
+
+# 查看 counterfactual analysis 的前几行结果
+head(cf_x$counter)
+
+# 画出反事实路径图
+plot(cf_x)
+```
+
+`hd()` 和 `cf()` 的解释同样依赖前面的结构识别。只有当结构冲击可信时，历史贡献和反事实路径才有经济含义。历史分解图本身不能验证冲击的经济含义，仍需根据识别假设判断其解释是否可信。
 
 ### 5.12.5 实证报告中的解释顺序
 
@@ -976,119 +1169,9 @@ LP 也有缺点。由于每个预测期单独估计，远期响应的估计方�
 
 **本节小结。** Local projection 通过逐期回归直接估计脉冲响应。它灵活、直观，但不自动解决识别问题。应用时应把“如何识别冲击”和“如何估计响应”区分开。
 
----
+<span id="5153-lpirfs-local-projection"></span>
 
-## 5.14 VAR、SVAR 与 Local Projection 的比较
-
-VAR、SVAR 和 LP 经常同时出现在应用研究中，但三者回答的问题不完全相同。
-
-| 方法 | 主要目的 | 冲击含义 | 优点 | 局限 |
-|---|---|---|---|---|
-| VAR | 描述多变量动态与预测关系 | 约简式扰动，一般无直接结构含义 | 易估计，适合预测、Granger 因果、初步动态分析 | 难以直接做结构解释 |
-| SVAR | 识别结构冲击并分析传导 | 由识别假设恢复的结构冲击 | 能连接经济理论与动态响应 | 结果依赖识别假设 |
-| 基于异方差的 SVAR | 利用波动状态变化识别结构冲击 | 由协方差矩阵变化恢复的结构冲击 | 不完全依赖变量排序，适合高低波动状态清晰的数据 | 要求结构传导稳定，且不同冲击方差变化有差异 |
-| Local Projection | 直接估计不同期限的冲击响应 | 取决于冲击变量是否已被识别 | 灵活，易加入非线性和状态依赖 | 远期估计可能较不平滑，标准误处理重要 |
-
-如果研究问题是“哪些变量有助于预测通胀”，VAR 可能已经足够。如果研究问题是“货币政策冲击如何影响通胀和产出”，则需要 SVAR 或外生冲击配合 LP。如果研究问题是“冲击效应是否在高通胀时期更强”，LP 的状态依赖扩展往往更方便。
-
-**本节小结。** VAR 是基础工具，SVAR 是结构解释工具，LP 是灵活的响应估计工具。选择哪一种方法，取决于研究者想回答预测问题、结构问题，还是异质性和状态依赖问题。
-
----
-
-## 5.15 R 代码示例：VAR、SVAR、历史分解与 Local Projection
-
-本节使用成熟 R package 完成 VAR、SVAR 和 Local Projection 的基本估计。实际研究中，应根据变量定义、样本频率和研究问题调整设定。
-
-### 5.15.1 使用 `vars` 估计 VAR
-
-`vars` 包提供了 VAR 估计、滞后阶数选择、Granger 因果检验、脉冲响应和方差分解等功能。以下示例使用包中自带的 `Canada` 数据。
-
-```r
-library(vars)
-
-data(Canada)
-
-# 查看数据
-head(Canada)
-
-# 选择滞后阶数
-lag_selection <- VARselect(Canada, lag.max = 8, type = "const")
-lag_selection$selection
-
-# 估计 VAR
-var_model <- VAR(Canada, p = 2, type = "const")
-summary(var_model)
-
-# 稳定性检查
-roots(var_model)
-
-# Granger 因果检验
-causality(var_model, cause = "e")
-
-# 正交化脉冲响应
-irf_var <- irf(
-  var_model,
-  impulse = "e",
-  response = "prod",
-  n.ahead = 20,
-  boot = FALSE
-)
-plot(irf_var)
-
-# 如果用于正式实证报告，通常应打开 bootstrap 置信区间。
-# ci = 0.90 表示 90% pointwise confidence bands；
-# runs = 1000 表示 bootstrap 重复次数。
-irf_var_boot <- irf(
-  var_model,
-  impulse = "e",
-  response = "prod",
-  n.ahead = 20,
-  boot = TRUE,
-  ci = 0.90,
-  runs = 1000
-)
-plot(irf_var_boot)
-
-# 预测误差方差分解
-fevd_var <- fevd(var_model, n.ahead = 20)
-plot(fevd_var)
-```
-
-### 5.15.2 使用 `vars` 估计简单 SVAR
-
-`vars` 包也提供了 `SVAR()` 函数。下面给出一个递归识别形式的示意。矩阵中的零限制对应具体的当期反应假设，结构解释取决于这些假设是否合理。
-
-```r
-library(vars)
-
-data(Canada)
-
-var_model <- VAR(Canada, p = 2, type = "const")
-
-# B 模型递归识别示例：
-# NA 表示需要估计的元素，0 表示施加的零限制。
-# 下三角 B 矩阵对应一种递归排序。
-# 这里的排序仅用于示例，实际研究必须根据经济理论设定。
-B_matrix <- matrix(0, 4, 4)
-B_matrix[lower.tri(B_matrix, diag = TRUE)] <- NA
-colnames(B_matrix) <- rownames(B_matrix) <- colnames(Canada)
-
-svar_model <- SVAR(var_model, Bmat = B_matrix, estmethod = "scoring")
-summary(svar_model)
-
-irf_svar <- irf(
-  svar_model,
-  impulse = "e",
-  response = "prod",
-  n.ahead = 20,
-  boot = FALSE
-)
-plot(irf_svar)
-```
-
-如果需要报告置信区间，可以在正式研究中把 `boot = FALSE` 改为 `boot = TRUE`，并适当设置 bootstrap 次数。
-
-### 5.15.3 使用 `lpirfs` 估计 Local Projection
+### R 代码示例：Local Projection {#lp-r-example}
 
 `lpirfs` 包可以用于估计基于 local projection 的脉冲响应。不同版本函数参数可能略有差异，运行前应根据本机 package 文档检查。
 
@@ -1113,92 +1196,37 @@ plot(lp_model)
 
 这段代码只说明 LP 的基本使用方式。真正做结构解释时，仍需要说明冲击变量如何识别。例如，如果使用外部工具变量或高频事件冲击，应先说明该冲击为什么可以被看作外生结构冲击。
 
-### 5.15.4 使用 `svars` 做基于异方差的 SVAR 识别
+`lp_lin()` 使用数据列顺序进行递归识别；这里保持 `Canada` 的原列顺序。该简短示例承接前面的接口展示，完整的检验流程和同尺度 VAR/LP 比较见 [Lab 2](../lab-2/index.md)。
 
-`svars` 包提供了多种 SVAR 识别函数，其中 `id.cv()` 用于基于波动变化（changes in volatility）的识别，`id.garch()` 用于基于条件异方差的识别。下面使用包内置的 `USA` 数据进行估计。该数据包含美国宏观变量，示例中假定 1979Q3 前后存在波动状态变化。
 
-```r
-library(vars)
-library(svars)
+---
 
-data(USA, package = "svars")
+## 5.14 VAR、SVAR 与 Local Projection 的比较
 
-# 估计约简式 VAR
-var_usa <- VAR(USA, lag.max = 10, ic = "AIC")
+VAR、SVAR 和 LP 经常同时出现在应用研究中，但三者回答的问题不完全相同。
 
-# 基于无条件波动变化的识别
-# SB = 59 表示断点前有 59 个观测值，
-# 对应 svars 文档中的 1979Q3 前后波动变化示例。
-svar_cv <- id.cv(var_usa, SB = 59)
-summary(svar_cv)
+| 方法 | 主要目的 | 冲击含义 | 优点 | 局限 |
+|---|---|---|---|---|
+| VAR | 描述多变量动态与预测关系 | 约简式扰动，一般无直接结构含义 | 易估计，适合预测、Granger 因果、初步动态分析 | 难以直接做结构解释 |
+| SVAR | 识别结构冲击并分析传导 | 由识别假设恢复的结构冲击 | 能连接经济理论与动态响应 | 结果依赖识别假设 |
+| 基于异方差的 SVAR | 利用波动状态变化识别结构冲击 | 由协方差矩阵变化恢复的结构冲击 | 不完全依赖变量排序，适合高低波动状态清晰的数据 | 要求结构传导稳定，且不同冲击方差变化有差异 |
+| Local Projection | 直接估计不同期限的冲击响应 | 取决于冲击变量是否已被识别 | 灵活，易加入非线性和状态依赖 | 远期估计可能较不平滑，标准误处理重要 |
 
-# 查看结构冲击的相对方差变化矩阵
-svar_cv$Lambda
+如果研究问题是“哪些变量有助于预测通胀”，VAR 可能已经足够。如果研究问题是“货币政策冲击如何影响通胀和产出”，则需要 SVAR 或外生冲击配合 LP。如果研究问题是“冲击效应是否在高通胀时期更强”，LP 的状态依赖扩展往往更方便。
 
-# 查看估计得到的结构影响矩阵
-svar_cv$B
+**本节小结。** VAR 是基础工具，SVAR 是结构解释工具，LP 是灵活的响应估计工具。选择哪一种方法，取决于研究者想回答预测问题、结构问题，还是异质性和状态依赖问题。
 
-# 脉冲响应
-irf_cv <- irf(svar_cv, n.ahead = 30)
-plot(irf_cv, scales = "free_y")
-```
+---
 
-如果研究者希望利用条件异方差识别结构冲击，可以使用 `id.garch()`。这类方法不再只比较断点前后的两个协方差矩阵，而是利用条件方差随时间变化的模式。
+<span id="515-r-varsvar-local-projection"></span>
 
-```r
-library(vars)
-library(svars)
+## 5.15 Lab 2：从数据检验到 VAR、SVAR 与预测比较
 
-data(USA, package = "svars")
+本章的简短 R 示例已分别放在对应理论之后：[VAR 与 FEVD](#var-r-example)、[递归 SVAR](#recursive-svar-r-example)、[异方差识别](#heteroskedastic-svar-r-example)、[历史分解](#hd-r-example)、[反事实分析](#counterfactual-r-example)和 [Local Projection](#lp-r-example)。
 
-var_usa <- VAR(USA, lag.max = 10, ic = "AIC")
+完整流程见 [Lab 2：VAR、SVAR 与局部投影](../lab-2/index.md)。实验使用宏观季度数据，从水平与差分作图、ADF/PP/KPSS 检验开始，依次完成 VAR 选阶与诊断、递归识别、IRF 与累计 IRF、FEVD、历史分解、反事实分析、LP 和样本外预测比较。
 
-# 基于 SVAR-GARCH 思想的识别
-svar_garch <- id.garch(var_usa)
-summary(svar_garch)
-
-irf_garch <- irf(svar_garch, n.ahead = 30)
-plot(irf_garch, scales = "free_y")
-```
-
-识别函数的使用需要满足相应假设。`id.cv()` 的核心问题是：断点前后是否主要体现为冲击方差变化，而不是结构传导机制改变？`id.garch()` 的核心问题是：条件异方差设定是否能合理刻画数据中的波动动态？如果相应假设不成立，软件输出就不能被直接解释为可信的结构冲击。
-
-### 5.15.5 使用 `svars` 做 historical decomposition 和 counterfactual analysis
-
-已经得到识别后的 `svars` 对象之后，就可以进一步做历史分解（historical decomposition）和反事实分析（counterfactual analysis）。下面继续使用上一小节得到的 `svar_cv`。
-
-```r
-# Historical decomposition
-# series = 1 表示分解 USA 数据中的第 1 个变量。
-# 若希望分解第 2 个或第 3 个变量，可改为 series = 2 或 series = 3。
-hd_x <- hd(svar_cv, series = 1)
-
-# 查看 historical decomposition 的前几行结果
-head(hd_x[[1]])
-
-# 画出历史分解图
-plot(hd_x)
-```
-
-这段代码的含义是：把第 1 个变量的历史波动分解为不同结构冲击的累计贡献。图中每一类冲击的贡献加总后，应当能够解释该变量相对于基准路径的主要波动。
-
-在同一个已识别 SVAR 对象上，也可以构造反事实路径：
-
-```r
-# Counterfactual analysis
-# cf() 会构造不同结构冲击被排除时的反事实路径。
-cf_x <- cf(svar_cv, series = 1)
-
-# 查看 counterfactual analysis 的前几行结果
-head(cf_x[[1]])
-
-# 画出反事实路径图
-plot(cf_x)
-```
-
-`hd()` 和 `cf()` 的解释同样依赖前面的结构识别。只有当结构冲击可信时，历史贡献和反事实路径才有经济含义。历史分解图本身不能验证冲击的经济含义，仍需根据识别假设判断其解释是否可信。
-
-**本节小结。** R package 可以帮助快速完成 VAR、SVAR 和 LP 估计，但代码不能替代识别假设。多变量时间序列应用中，最重要的不是函数名称，而是变量选择、模型设定和冲击识别是否可信。
+Lab 2 提供可下载的数据、逐步展开的 R 代码、结果图表与统计学和经济学解释。代码调用已有包，并说明变量单位、冲击尺度、识别假设和检验结论的边界。
 
 ---
 

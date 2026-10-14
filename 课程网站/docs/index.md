@@ -24,3 +24,4 @@
 ## 课程实验
 
 - [Lab 1：结构变化、ARMA 与 ARCH/GARCH](lab-1/index.md) — 下载 Brent 数据与带有注释的 R 代码。
+- [Lab 2：VAR、SVAR 与 Local Projection](lab-2/index.md) — 从作图、平稳性检验到结构冲击分析与样本外预测，附宏观数据、详细 R 注释及结果解释。

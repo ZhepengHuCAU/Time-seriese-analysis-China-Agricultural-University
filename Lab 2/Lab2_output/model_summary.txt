@@ -1,0 +1,146 @@
+
+VAR Estimation Results:
+========================= 
+Endogenous variables: dx, dpi, di 
+Deterministic variables: const 
+Sample size: 84 
+Log Likelihood: -172.044 
+Roots of the characteristic polynomial:
+0.614 0.502 0.502 0.4753 0.4284 0.2399
+Call:
+VAR(y = d_train, p = 2, type = "const")
+
+
+Estimation results for equation dx: 
+=================================== 
+dx = dx.l1 + dpi.l1 + di.l1 + dx.l2 + dpi.l2 + di.l2 + const 
+
+        Estimate Std. Error t value Pr(>|t|)   
+dx.l1   0.209965   0.112836   1.861  0.06659 . 
+dpi.l1  0.018349   0.079563   0.231  0.81822   
+di.l1  -0.111560   0.130330  -0.856  0.39466   
+dx.l2   0.323543   0.119516   2.707  0.00836 **
+dpi.l2  0.042669   0.078399   0.544  0.58784   
+di.l2   0.004556   0.118056   0.039  0.96931   
+const  -0.003593   0.054125  -0.066  0.94724   
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.479 on 77 degrees of freedom
+Multiple R-Squared: 0.1553,	Adjusted R-squared: 0.08949 
+F-statistic:  2.36 on 6 and 77 DF,  p-value: 0.03814 
+
+
+Estimation results for equation dpi: 
+==================================== 
+dpi = dx.l1 + dpi.l1 + di.l1 + dx.l2 + dpi.l2 + di.l2 + const 
+
+        Estimate Std. Error t value Pr(>|t|)    
+dx.l1   0.219092   0.156550   1.399   0.1657    
+dpi.l1 -0.470339   0.110386  -4.261 5.71e-05 ***
+di.l1  -0.192883   0.180822  -1.067   0.2894    
+dx.l2   0.139628   0.165817   0.842   0.4024    
+dpi.l2 -0.241436   0.108772  -2.220   0.0294 *  
+di.l2   0.230617   0.163792   1.408   0.1632    
+const  -0.004502   0.075094  -0.060   0.9523    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.6646 on 77 degrees of freedom
+Multiple R-Squared: 0.2521,	Adjusted R-squared: 0.1939 
+F-statistic: 4.327 on 6 and 77 DF,  p-value: 0.000819 
+
+
+Estimation results for equation di: 
+=================================== 
+di = dx.l1 + dpi.l1 + di.l1 + dx.l2 + dpi.l2 + di.l2 + const 
+
+       Estimate Std. Error t value Pr(>|t|)    
+dx.l1   0.31688    0.10146   3.123 0.002522 ** 
+dpi.l1  0.10202    0.07154   1.426 0.157927    
+di.l1   0.40609    0.11719   3.465 0.000869 ***
+dx.l2  -0.03071    0.10747  -0.286 0.775819    
+dpi.l2  0.14114    0.07050   2.002 0.048792 *  
+di.l2  -0.03829    0.10616  -0.361 0.719337    
+const  -0.06423    0.04867  -1.320 0.190822    
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+
+Residual standard error: 0.4307 on 77 degrees of freedom
+Multiple R-Squared: 0.381,	Adjusted R-squared: 0.3328 
+F-statistic: 7.899 on 6 and 77 DF,  p-value: 1.204e-06 
+
+
+
+Covariance matrix of residuals:
+          dx      dpi      di
+dx   0.22943 -0.01095 0.06007
+dpi -0.01095  0.44163 0.07846
+di   0.06007  0.07846 0.18551
+
+Correlation matrix of residuals:
+         dx     dpi     di
+dx   1.0000 -0.0344 0.2912
+dpi -0.0344  1.0000 0.2741
+di   0.2912  0.2741 1.0000
+
+
+$JB
+
+	JB-Test (multivariate)
+
+data:  Residuals of VAR object var_2
+Chi-squared = 256.44, df = 6, p-value < 2.2e-16
+
+
+$Skewness
+
+	Skewness only (multivariate)
+
+data:  Residuals of VAR object var_2
+Chi-squared = 50.095, df = 3, p-value = 7.626e-11
+
+
+$Kurtosis
+
+	Kurtosis only (multivariate)
+
+data:  Residuals of VAR object var_2
+Chi-squared = 206.34, df = 3, p-value < 2.2e-16
+
+
+$Granger
+
+	Granger causality H0: di do not Granger-cause dx dpi
+
+data:  VAR object var_model
+F-Test = 0.78538, df1 = 4, df2 = 231, p-value = 0.5357
+
+
+$Instant
+
+	H0: No instantaneous causality between: di and dx dpi
+
+data:  VAR object var_model
+Chi-squared = 11.935, df = 2, p-value = 0.00256
+
+
+$Granger
+
+	Granger causality H0: dx dpi do not Granger-cause di
+
+data:  VAR object var_model
+F-Test = 3.5049, df1 = 4, df2 = 231, p-value = 0.008429
+
+
+$Instant
+
+	H0: No instantaneous causality between: dx dpi and di
+
+data:  VAR object var_model
+Chi-squared = 11.935, df = 2, p-value = 0.00256
+
+
