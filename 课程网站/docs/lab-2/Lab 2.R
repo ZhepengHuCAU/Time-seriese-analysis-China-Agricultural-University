@@ -250,6 +250,10 @@ write.csv(data.frame(equation = c("dx", "dpi", "di"),
 summary(var_model$varresult$dx)
 # 例如 di.l1 的系数：控制所有其他所列滞后之后，上季利率变化增加 1 个百分点，
 # 本季产出缺口变化的条件均值改变多少。它不是一个完整的政策冲击响应。
+# 本例该系数=-0.1116，标准误=0.1303，p约0.395：上季利率变化多1个百分点，
+# 与本季缺口变化少0.1116个对数百分点相关；这一条件关联未达到5%显著水平。
+# 因为di是百分点变化、dx是100倍对数缺口的变化，该系数不能称为“利率弹性”。
+# 弹性是百分比变化对百分比变化的比率；这里是单位变化的条件动态关系。
 # 看利率的两阶滞后是否共同提供预测信息，要用联合检验。
 granger_rate <- causality(var_model, cause = "di")
 granger_macro <- causality(var_model, cause = c("dx", "dpi"))
@@ -273,6 +277,10 @@ svar_model$B
 write.csv(svar_model$B, "Lab2_output/impact_matrix.csv")
 # 第三列约 (0,0,.3934)：正的一个标准差利率创新，当期使 di 增加 .3934 个百分点。
 # “一个标准差冲击”不等于“利率提高1个百分点”，也不等于提高1%。
+# epsilon的方差归一化为1，因此epsilon增加1就是一个结构标准差冲击。
+# 0.3934个百分点=39.34个基点；主IRF和累计IRF均使用这个尺度。
+# 标准误（standard error）衡量估计量的不确定性，不是这里的冲击归一化尺度。
+# 若利率原为4%，+1个百分点指4%到5%；相对增加1%则指4%到4.04%。
 # 相同简约式 VAR 的递归 SVAR，只改变结构解释，不改善其条件均值点预测。
 
 # 10. IRF：方向、幅度、期限和区间要一起看 -------------------------------------
@@ -284,7 +292,7 @@ set.seed(20261014)
 irf_rate <- irf(var_model, impulse = "di", response = c("dx", "dpi", "di"),
                 n.ahead = 12, ortho = TRUE, boot = TRUE, ci = 0.95, runs = 500)
 png("Lab2_output/09_irf.png", width = 1500, height = 1100, res = 150)
-plot(irf_rate)
+plot(irf_rate, main = "Quarterly changes: one-SD rate innovation (39.34 bp on impact)")
 dev.off()
 irf_table <- data.frame(horizon = 0:12,
   dx = irf_rate$irf$di[, "dx"], dx_low = irf_rate$Lower$di[, "dx"],
@@ -294,6 +302,9 @@ irf_table
 write.csv(irf_table, "Lab2_output/irf.csv", row.names = FALSE)
 # dx 的响应是“产出缺口变化的响应”。若95%区间跨0，该期方向证据不足。
 # h=0 的 dx/dpi 恰为0源于识别限制，不能解释成精确估计的经济零效应。
+# 一个标准差利率创新发生后1季度，dx的点响应为-0.0439个对数百分点，
+# 95%区间[-0.1293,0.0511]。负向点估计与缺口收窄一致，但区间涵盖0，
+# 在这套递归识别和推断下，不能排除无响应；该数值不是GDP增长率下降0.0439%。
 
 # 11. 累计 IRF：从变化量恢复到原变量 ------------------------------------------
 # 把 dx 响应从0累加到h，才得到“产出缺口水平相对无冲击基线”的响应。
@@ -303,7 +314,7 @@ set.seed(20261014)
 irf_cumulative <- irf(var_model, impulse = "di", response = c("dx", "dpi", "di"),
   n.ahead = 12, ortho = TRUE, cumulative = TRUE, boot = TRUE, ci = 0.95, runs = 500)
 png("Lab2_output/10_cumulative_irf.png", width = 1500, height = 1100, res = 150)
-plot(irf_cumulative)
+plot(irf_cumulative, main = "Levels: one-SD rate innovation (39.34 bp on impact)")
 dev.off()
 cum_table <- data.frame(horizon = 0:12,
   x = irf_cumulative$irf$di[, "dx"], x_low = irf_cumulative$Lower$di[, "dx"],
@@ -313,6 +324,22 @@ cum_table
 write.csv(cum_table, "Lab2_output/cumulative_irf.csv", row.names = FALSE)
 # 本例h=4的缺口累计点估计约-.104，但区间跨0；不能声称有显著紧缩效应。
 # 差分模型允许原变量冲击有持久累计效应，这是模型设定的含义而非长期因果证明。
+# 这里x=100*log(实际GDP/潜在GDP)，-0.1039是“对数百分点”，不是x相对下降0.1039%。
+# 转换后，实际GDP与潜在GDP之比在冲击后4季度比无冲击基线低约0.1038%。
+# 这既不是GDP增速的响应，也不单独识别GDP和潜在GDP各自的响应。
+# 将冲击按当期利率+1个百分点换算，h=4的x点响应为-0.2640个对数百分点。
+# 这是按利率百分点计的动态乘数；除以100后，是log(GDP/潜在GDP)的动态半弹性。
+# 利率没有取对数，因而该结果不能称为“产出对利率的弹性”。
+# 以下只换算点估计；+1个百分点归一化的置信区间需在每次bootstrap内重做归一化。
+impact_pp <- irf_rate$irf$di[1, "di"]
+response_units <- data.frame(horizon = 0:12,
+  rate_impact_pp = impact_pp, rate_impact_basis_points = 100 * impact_pp,
+  gap_response_logpp = cum_table$x,
+  output_potential_ratio_response_pct = 100 * expm1(cum_table$x / 100),
+  gap_response_logpp_per_1pp_rate_impact = cum_table$x / impact_pp,
+  dynamic_semi_elasticity_per_1pp = (cum_table$x / 100) / impact_pp)
+response_units
+write.csv(response_units, "Lab2_output/response_units.csv", row.names = FALSE)
 
 # 12. 改变变量顺序：检验结论对识别假设的敏感性 -------------------------------
 # 把 di 放在第一位，允许利率创新当期影响其他变量，但不让利率当期响应它们。
@@ -339,6 +366,13 @@ fevd_result <- fevd(var_model, n.ahead = 12)
 fevd_result$dx
 write.csv(data.frame(horizon = 1:12, fevd_result$dx),
   "Lab2_output/fevd_dx.csv", row.names = FALSE)
+# 三个响应变量的完整占比表。乘100后，例如1.2767表示1.2767%，不是0.012767%。
+fevd_all_percent <- rbind(
+  data.frame(response = "dx", forecast_horizon = 1:12, 100 * fevd_result$dx),
+  data.frame(response = "dpi", forecast_horizon = 1:12, 100 * fevd_result$dpi),
+  data.frame(response = "di", forecast_horizon = 1:12, 100 * fevd_result$di))
+names(fevd_all_percent)[3:5] <- c("dx_innovation_pct", "dpi_innovation_pct", "di_innovation_pct")
+write.csv(fevd_all_percent, "Lab2_output/fevd_all_percent.csv", row.names = FALSE)
 png("Lab2_output/12_fevd.png", width = 1500, height = 1100, res = 150)
 plot(fevd_result)
 dev.off()
@@ -346,6 +380,13 @@ dev.off()
 # 本例h=12，di创新约解释dx预测误差方差的1.28%。
 # 这是变化量dx的FEVD，不是GDP水平、缺口水平的FEVD，也不是“解释经济增长1.28%”。
 # FEVD 依赖变量集合和识别顺序；遗漏变量不因使用 SVAR 而消失。
+# 在12季度预测期限，dx的误差方差占比分别为98.47%、0.25%、1.28%。
+# 这些占比的分母是dx的12步预测误差方差，而非实际GDP波动、增长或历史观测值。
+# di创新的占比从H=4的1.20%到H=12的1.28%，增加约0.08个百分点。
+# H=1时dx自己的创新占100%，由递归限制直接决定，不是“经济只受自身冲击”的证据。
+# 对di自身，H=12三类占比为26.46%、13.13%、60.41%；这反映不同创新
+# 经当期相关和滞后反馈传递到利率变化的预测误差，不能全称为外生政策决定。
+# FEVD是非负的方差份额，不显示冲击方向；大小或排序不能替代因果识别和不确定性推断。
 
 # 14. 历史分解 HD 与反事实路径 ------------------------------------------------
 # 本段沿用同一递归 SVAR，没有额外引入异方差识别或重新命名冲击。
@@ -362,6 +403,21 @@ write.csv(hd_table, "Lab2_output/historical_decomposition.csv", row.names = FALS
 # 各创新贡献之和=重构序列；它与实际去均值序列可能有初始条件/基线差异。
 # 图中的“累计贡献”指历史各期冲击对当期dx的叠加，不是把dx积分成GDP或缺口水平。
 # 第一个残差季度是1984Q4：差分损失一期，VAR(2)再损失两期。
+# HD是有符号的历史贡献，不同于FEVD的非负方差份额。
+# 以2001Q4为例：冲击重构的去均值dx约-0.6456；三类创新贡献依次为
+# -0.6736、-0.0097、+0.0377个对数百分点。利率创新的历史净贡献为正，
+# 在固定模型下缓冲了另外两类创新导致的缺口变化下降。
+# 若把各贡献除以重构值，份额可能为负或超过100%，表示抵消关系，并非计算错误。
+# 这种份额只用于明确分母的会计分解；分母接近0时份额极不稳定。
+hd_example <- hd_table[hd_table$quarter == "2001 Q4", ]
+hd_example_components <- data.frame(
+  component = c("dx innovation", "dpi innovation", "di innovation", "baseline/initial-condition gap"),
+  contribution_logpp = c(hd_example[1, 4], hd_example[1, 5], hd_example[1, 6],
+    hd_example[1, 2] - hd_example[1, 3]),
+  percent_of_shock_reconstruction = c(100 * hd_example[1, 4] / hd_example[1, 3],
+    100 * hd_example[1, 5] / hd_example[1, 3], 100 * hd_example[1, 6] / hd_example[1, 3], NA))
+hd_example_components
+write.csv(hd_example_components, "Lab2_output/hd_example_2001Q4.csv", row.names = FALSE)
 
 cf_dx <- svars::cf(svar_model, series = 1)
 head(cf_dx$actual)
@@ -375,6 +431,8 @@ write.csv(cf_table, "Lab2_output/counterfactual.csv", row.names = FALSE)
 # cf 对目标dx返回剔除dpi创新、剔除di创新历史贡献后的去均值路径。
 # 后者回答“在原模型参数和其他创新不变时，移去识别出的利率创新贡献会怎样”。
 # 它不是“央行从未加息”的政策制度反事实；政策规则变化可能改变其他行为和参数。
+# 2001Q4实际去均值dx约-0.6514，剔除di创新贡献后约-0.6892，差额+0.0377。
+# 这对应HD中di创新的贡献，表示给定模型下的缓冲作用，不是政策规则改变的因果估计。
 
 # 15. Local Projection：同一识别顺序，不同动态估计方法 ------------------------
 # 列顺序仍为 dx,dpi,di，固定2阶控制变量、常数项。
@@ -402,7 +460,7 @@ png("Lab2_output/15_var_lp.png", width = 1400, height = 1000, res = 150)
 matplot(0:12, lp_comparison[, c("VAR", "VAR_low", "VAR_up", "LP", "LP_low", "LP_up")],
   type = "l", lty = c(1, 2, 2, 1, 3, 3), col = c(rep("navy", 3), rep("firebrick", 3)),
   xlab = "Quarters after shock", ylab = "Response of change in output gap",
-  main = "VAR and LP: rate innovation, pointwise 95% intervals")
+  main = "VAR and LP: +39.34 bp rate impact (95% pointwise intervals)")
 abline(h = 0, col = "grey60")
 legend("bottomright", c("VAR", "LP"), col = c("navy", "firebrick"), lty = 1)
 dev.off()
@@ -526,3 +584,4 @@ capture.output(summary(var_model), normal_2, granger_rate, granger_macro,
 # 报告时同时写明：变量定义与单位、样本、变换、确定性项、滞后、诊断、识别假设、
 # 冲击尺度、置信区间和预测设计。统计显著性与经济重要性需要分别说明。
 # 所有图表已经保存到 Lab2_output；原CSV没有被改写。
+
