@@ -2,9 +2,11 @@
 
 使用美国产出缺口、通胀和联邦基金利率数据，完成平稳性检验、VAR 选阶与诊断、Granger 检验、递归 SVAR、IRF 与累计 IRF、FEVD、历史分解、反事实分析、LP，以及样本外预测比较。
 
-- `lab 2.csv`：来自 `svars::USA` 的 175 个季度观测，1965Q1—2008Q3。
+- `lab 2.csv`：美国数据，来自 `svars::USA` 的 175 个季度观测，1965Q1—2008Q3。
 - `Lab 2.R`：分步骤调用现有 R 包的代码，附有参数及结果解释。
 - [完整实验说明与结果解读](https://zhepenghucau.github.io/Time-seriese-analysis-China-Agricultural-University/lab-2/)
+
+章节中的 VAR、递归 SVAR 与 LP 简短示例使用另一套加拿大数据 `vars::Canada`（1980Q1—2000Q4，84 期，变量为 `e`、`prod`、`rw`、`U`）。Lab 2 使用美国的 `x`、`pi`、`i`，两套数据的变量定义和结果不能混用。[加拿大数据说明](https://search.r-project.org/CRAN/refmans/vars/html/Canada.html)。
 
 ## 运行方法
 

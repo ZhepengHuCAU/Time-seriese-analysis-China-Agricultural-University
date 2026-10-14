@@ -31,6 +31,17 @@ source("Lab 2.R", encoding = "UTF-8")
 
 数据来自 R 包 `svars` 的 [`USA` 数据集](https://search.r-project.org/CRAN/refmans/svars/html/USA.html)，原始来源为 FRED。CSV 从 `svars 1.3.12` 的实际数据导出，按时间属性核验为 1965 年第一季度至 2008 年第三季度的 175 个季度观测。
 
+### 与章节代码示例的数据关系
+
+本实验使用美国数据；本章的部分简短代码示例使用加拿大数据。两套数据的国家、变量和样本范围不同：
+
+| 使用位置 | 数据集与国家 | 变量 | 完整样本 |
+|---|---|---|---|
+| Lab 2；异方差 SVAR、历史分解与反事实示例 | `svars::USA`，美国 | `x` 产出缺口、`pi` 通胀率、`i` 联邦基金利率 | 1965Q1—2008Q3；本实验 CSV 为 175 期 |
+| 章节中的 VAR、递归 SVAR、LP 简短示例 | `vars::Canada`，加拿大 | `e` 就业、`prod` 劳动生产率、`rw` 实际工资、`U` 失业率 | 1980Q1—2000Q4；84 期 |
+
+章节示例的加拿大数据定义见 [`vars::Canada` 官方文档](https://search.r-project.org/CRAN/refmans/vars/html/Canada.html)。本实验下载的 `lab 2.csv` 对应美国 `USA` 数据集，代码和结果中的 `x`、`pi`、`i` 均按美国变量定义解释。
+
 | 变量 | 定义 | 读数的经济含义 |
 |---|---|---|
 | `x` | 产出缺口：\(100\log(实际GDP/潜在GDP)\) | 正值表示实际产出高于潜在产出；不是实际 GDP 的对数水平 |
