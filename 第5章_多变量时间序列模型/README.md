@@ -7,6 +7,8 @@
 - `第5章_多变量时间序列模型_教材式中文讲义.md`：第五章主讲义，内容包括 VAR、SVAR、脉冲响应、方差分解、结构识别和 local projection。
 - `脚本/VAR_SVAR_LocalProjection示例.R`：使用 `vars`、`svars` 与 `lpirfs` 包演示 VAR、SVAR、基于异方差的 SVAR 识别、historical decomposition、counterfactual analysis 和 local projection 的课堂代码。
 
+- `脚本/GIRF示例.R`：配合 5.7 节的广义脉冲响应补充内容，比较 GIRF 与 Cholesky OIRF，统一冲击尺度并核验排序不变性；在 RStudio 中直接作图。
+
 ## 文件夹结构
 
 - `图片/`：存放第五章讲义、网页和课件中使用的图形。

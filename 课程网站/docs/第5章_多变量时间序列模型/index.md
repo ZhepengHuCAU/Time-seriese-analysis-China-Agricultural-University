@@ -345,11 +345,143 @@ $$
 
 但 Cholesky 分解依赖变量排序。变量排序不同，矩阵 \(P\) 不同，脉冲响应也可能不同。因此，正交化 VAR 的脉冲响应隐含了一组同期因果排序假设。若这个排序没有经济依据，结果就不应被过度解释。
 
-**本节小结。** 脉冲响应函数描述冲击的动态影响。约简式 VAR 的冲击通常没有直接结构含义；正交化脉冲响应需要额外假设，特别是变量排序假设。
+### 5.7.1 广义脉冲响应：保留创新的同期相关性 {#girf}
+
+正交化 IRF 需要先决定变量排序。如果研究者希望描述“某个变量出现超出过去信息预测的变化时，系统通常怎样共同调整”，可以使用**广义脉冲响应**（generalized impulse response function, GIRF）。Pesaran 与 Shin（1998）给出了线性 VAR 中常用的 GIRF。它不先将约简式创新正交化，而是保留创新之间的同期相关性。[原论文](https://doi.org/10.1016/S0165-1765(97)00214-0)
+
+#### 条件响应与计算公式
+
+记 \(\mathcal F_{t-1}\) 为冲击前的信息集，\(e_k\) 为第 \(k\) 个单位向量，\(\sigma_{kk}\) 为 \(\Sigma_u\) 的第 \(k\) 个对角元素。GIRF 比较两个条件期望：
+
+$$
+GI_k(h,\delta,\mathcal F_{t-1})
+=E(y_{t+h}\mid u_{kt}=\delta,\mathcal F_{t-1})
+-E(y_{t+h}\mid\mathcal F_{t-1}).
+$$
+
+这里固定第 \(k\) 个约简式创新为 \(\delta\)，其他同期创新按其条件分布取平均；并没有把它们全部设为零。在线性 VAR、创新跨期独立且服从零均值多元正态分布的设定下：
+
+$$
+E(u_t\mid u_{kt}=\delta)
+=\frac{\Sigma_u e_k}{\sigma_{kk}}\delta.
+$$
+
+将这一当期变化向量代入本节的移动平均表示，就得到：
+
+$$
+GI_k(h,\delta)
+=\Psi_h\frac{\Sigma_u e_k}{\sigma_{kk}}\delta.
+$$
+
+若取一个约简式创新的标准差，即 \(\delta=\sqrt{\sigma_{kk}}\)，则：
+
+$$
+\boxed{GIRF_k(h)=\frac{\Psi_h\Sigma_u e_k}{\sqrt{\sigma_{kk}}}.}
+$$
+
+在这个线性设定下，响应不随具体的历史状态变化。若不假定高斯分布，上述闭式公式仍需要相应的线性条件均值条件；仅知道协方差矩阵，不能保证任意分布都具有相同条件期望。Koop、Pesaran 与 Potter（1996）讨论的更一般非线性 GIRF 还可能随历史状态、冲击大小及符号变化，本节聚焦线性 VAR。[非线性 GIRF 的方法来源](https://doi.org/10.1016/0304-4076(95)01753-4)
+
+#### 一个两变量例子
+
+设两个创新的协方差矩阵为：
+
+$$
+\Sigma_u=\begin{pmatrix}1&0.6\\0.6&1\end{pmatrix}.
+$$
+
+第 2 个创新增加一个标准差时，GIRF 的当期变化是 \((0.6,1)'\)：正相关意味着第 1 个创新的条件均值也上升。普通非正交化 IRF 则人为指定 \((0,1)'\)。按“变量 1 → 变量 2”排序，Cholesky 的第 2 列为 \((0,0.8)'\)；即使将其缩放为第 2 个变量当期增加 1，变化仍是 \((0,1)'\)。因此，差异既涉及冲击大小，也涉及其他变量是否同时响应。
+
+#### 三种 IRF 应如何区分
+
+| 对象 | 当期变化向量 | 是否依赖递归排序 | 如何理解 |
+|---|---|---|---|
+| 普通非正交化 IRF | \(e_k\)：第 \(k\) 个创新增加一个单位，其他创新为零 | 不依赖 Cholesky 排序 | 人为单独改变一个约简式创新 |
+| Cholesky 正交化 IRF（OIRF） | \(Pe_k\)：一个标准差的正交创新 | 通常依赖 | 在指定递归限制下分离一个正交创新 |
+| GIRF | \(\Sigma_u e_k/\sqrt{\sigma_{kk}}\) | 同一 VAR 仅重排变量时不变 | 给定一个约简式创新后，允许其他创新按同期相关性共同变化 |
+
+比较曲线前应统一冲击尺度。“一个标准差的约简式创新”与“一个标准差的正交创新”，不一定使冲击变量当期变化相同幅度。
+
+对相同样本、变量集合、滞后阶数和确定性项估计的同一个不受限 VAR，重排变量只会重排系数与协方差矩阵；按变量名对齐后，GIRF 保持不变。**更改变量集合、样本、滞后阶数或模型限制，不属于单纯重排，GIRF 仍可能改变。**
+
+把正在研究的变量排在第一位时，该变量冲击的 OIRF 与 GIRF 相同；但分别把每一个变量排第一得到的各列，通常不属于同一套正交结构冲击。不能将这一性质理解为“找到了无需假设的结构模型”。[Kim（2009）对结构解释的讨论](https://mpra.ub.uni-muenchen.de/17014/)
+
+GIRF 适合描述创新伴随的动态联动。若要回答外生货币政策、供给冲击或政策干预的因果效应，仍需要可信的结构识别。**排序不敏感，并不等于因果识别成立。** 例如，失业率创新可能同时包含需求、供给等多种因素，不能因为使用 GIRF 就把它直接称为纯粹的政策冲击。
+
+### 5.7.2 R 示例：计算 GIRF 并检验排序不变性 {#girf-r-example}
+
+`vars::irf(var_model, ortho = FALSE)` 返回普通非正交化 IRF，**不是 GIRF**。`ortho = TRUE` 使用 Cholesky 正交化。计算 GIRF 时，应先用 `vars::Phi()` 取得普通移动平均系数，再结合残差协方差矩阵计算上面的公式。[irf 接口](https://search.r-project.org/CRAN/refmans/vars/html/irf.html)、[Phi 接口](https://search.r-project.org/CRAN/refmans/vars/html/Phi.html)
+
+本章公式把普通 MA 系数记为 \(\Psi_h\)，而 vars 包将对应函数命名为 **`Phi()`**；包中的 `Psi()` 返回正交化系数。应区分公式记号与函数名。
+
+下面的例子使用加拿大 `Canada` 数据：`e` 为 \(100\log(就业)\)，`U` 为以百分数记录的失业率，另外两个变量为劳动生产率 `prod` 和实际工资 `rw`。样本为 1980Q1—2000Q4，共 84 期。失业率增加 1 个百分点对应 `U` 增加 1；`e` 的响应单位为 100 × 对数点。[数据定义](https://search.r-project.org/CRAN/refmans/vars/html/Canada.html)
+
+**[下载完整可运行 R 示例](脚本/GIRF示例.R){ download="GIRF示例.R" }**。首次使用先安装 `vars`，再在 RStudio 中运行。代码调用包中的 VAR 估计与 MA 系数函数，GIRF 按上述公式组合；图形直接显示在 Plots，不自动保存图片。
+
+```r
+library(vars)
+data("Canada", package = "vars")
+
+girf_linear <- function(fit, impulse, n.ahead = 20L) {
+  ma <- vars::Phi(fit, nstep = n.ahead)
+  u <- residuals(fit)
+  Sigma <- crossprod(u) / df.residual(fit$varresult[[1]])
+  impact <- Sigma[, impulse] / sqrt(Sigma[impulse, impulse])
+  out <- t(vapply(seq_len(n.ahead + 1L), function(h) {
+    drop(ma[, , h] %*% impact)
+  }, numeric(ncol(u))))
+  dimnames(out) <- list(0:n.ahead, colnames(u))
+  out
+}
+
+# 相同模型，仅将失业率 U 从最后移到最前。
+fit_last <- VAR(Canada[, c("e", "prod", "rw", "U")], p = 2, type = "const")
+fit_first <- VAR(Canada[, c("U", "e", "prod", "rw")], p = 2, type = "const")
+g_last <- girf_linear(fit_last, "U")
+g_first <- girf_linear(fit_first, "U")
+
+# 重排结果必须按变量名对齐。
+max(abs(g_last - g_first[, colnames(g_last)]))
+
+o_last <- irf(fit_last, impulse = "U", n.ahead = 20,
+              ortho = TRUE, boot = FALSE)$irf$U
+o_first <- irf(fit_first, impulse = "U", n.ahead = 20,
+               ortho = TRUE, boot = FALSE)$irf$U
+max(abs(g_last - o_first[, colnames(g_last)]))
+
+# 统一为失业率当期上升 1 个百分点，再比较就业响应。
+curves <- cbind(
+  GIRF = g_last[, "e"] / g_last[1, "U"],
+  OIRF_U_last = o_last[, "e"] / o_last[1, "U"],
+  OIRF_U_first = o_first[, "e"] / o_first[1, "U"]
+)
+matplot(0:20, curves, type = "l", lty = 1:3, lwd = 2,
+        col = c("steelblue", "darkorange", "purple"),
+        xlab = "冲击后季度数", ylab = "就业响应（100 × 对数点）")
+abline(h = 0, col = "grey60", lty = 3)
+legend("bottomleft", colnames(curves), lty = 1:3, lwd = 2,
+       col = c("steelblue", "darkorange", "purple"), bty = "n")
+```
+
+本次在 vars 1.6-1 中运行，两个 `max(abs(...))` 均小于 `1e-10`，验证了 GIRF 排序不变，以及 U 排第一时 OIRF 与 GIRF 相等。统一冲击幅度后，就业响应的部分点估计如下：
+
+| 冲击后季度数 | GIRF（两种排序一致） | OIRF：U 排最后 | OIRF：U 排最前 |
+|---|---:|---:|---:|
+| 0 | −0.883356 | 0.000000 | −0.883356 |
+| 1 | −1.179034 | 0.265585 | −1.179034 |
+| 4 | −0.422645 | 1.648851 | −0.422645 |
+| 8 | 1.217461 | 2.777750 | 1.217461 |
+
+GIRF 与“U 排第一”的曲线重合，而“U 排最后”的递归限制要求其他变量不当期响应该正交创新。这说明即使统一了冲击幅度，不同的同期处理仍会改变动态路径。这里比较的是同一个估计模型中的统计响应，不能把正负差异直接解释为失业率的政策因果效应。
+
+此例只报告点估计，没有 GIRF 置信带，不能据此判断统计显著性。若对 GIRF 做 bootstrap，应在每个伪样本重新估计 VAR 和残差协方差，再计算该次 GIRF；若使用“当期 1 个百分点”的归一化，也应在每次重复中重新归一化，不能直接套用 OIRF 的误差带。Canada 的水平 VAR 在这里用于教学，不能代替对单位根、协整及模型设定的完整检查。
+
+**本节小结。** 普通非正交化 IRF、Cholesky OIRF 与 GIRF 对同期创新的处理不同。OIRF 依赖递归排序；GIRF 在同一 VAR 仅重排变量时保持不变，但不能替代结构识别。比较曲线前必须统一冲击尺度，并区分点估计与统计不确定性。
 
 ---
 
 ## 5.8 预测误差方差分解
+
+本节的 FEVD 建立在正交冲击上，`vars::fevd(varest)` 使用 Cholesky 分解。GIRF 所对应的创新没有被共同正交化，不能直接把 GIRF 列代入下面的正交 FEVD 公式并要求份额加总为 100%；广义 FEVD 需要单独定义和归一化。
 
 脉冲响应描述冲击发生后变量如何变化；预测误差方差分解则衡量不同冲击对预测不确定性的贡献。冲击的经济含义依赖 SVAR 的识别假设。历史分解和反事实分析分别见 [5.12.3 节](#5123)和 [5.12.4 节](#5124)。
 
@@ -1260,7 +1392,7 @@ VAR、SVAR 和 LP 经常同时出现在应用研究中，但三者回答的问�
 
 ## 5.15 Lab 2：从数据检验到 VAR、SVAR 与预测比较
 
-本章的简短 R 示例已分别放在对应理论之后：[VAR 与 FEVD](#var-r-example)、[递归 SVAR](#recursive-svar-r-example)、[异方差识别](#heteroskedastic-svar-r-example)、[历史分解](#hd-r-example)、[反事实分析](#counterfactual-r-example)和 [Local Projection](#lp-r-example)。
+本章的简短 R 示例已分别放在对应理论之后：[VAR 与 FEVD](#var-r-example)、[GIRF 与排序比较](#girf-r-example)、[递归 SVAR](#recursive-svar-r-example)、[异方差识别](#heteroskedastic-svar-r-example)、[历史分解](#hd-r-example)、[反事实分析](#counterfactual-r-example)和 [Local Projection](#lp-r-example)。
 
 完整流程见 [Lab 2：VAR、SVAR 与局部投影](../lab-2/index.md)。实验使用美国 `svars::USA` 季度数据（`x` 产出缺口、`pi` 通胀率、`i` 联邦基金利率），与前面使用加拿大 `Canada` 的简短示例不同。从水平与差分作图、ADF/PP/KPSS 检验开始，依次完成 VAR 选阶与诊断、递归识别、IRF 与累计 IRF、FEVD、历史分解、反事实分析、LP 和样本外预测比较。
 
@@ -1305,8 +1437,14 @@ Local projection 提供了估计脉冲响应的另一种方法。它对每个预
 17. SVAR 中的反事实分析为什么不能简单等同于政策制度模拟？
 18. Local projection 与 VAR 脉冲响应有什么区别？
 19. 为什么说 local projection 不自动解决结构识别问题？
+20. GIRF 如何处理其他同期创新？为什么 `irf(ortho = FALSE)` 不是 GIRF？
+21. 为什么 GIRF 的排序不变性不等于结构识别？比较 GIRF 与 OIRF 时，应如何统一冲击尺度？
 
 ## 参考文献、软件与数据来源 {#references}
+
+- Pesaran, H. H.; Shin, Y. (1998). *Generalized impulse response analysis in linear multivariate models*. *Economics Letters*, 58(1), 17–29. [DOI](https://doi.org/10.1016/S0165-1765(97)00214-0).
+- Koop, G.; Pesaran, M. H.; Potter, S. M. (1996). *Impulse response analysis in nonlinear multivariate models*. *Journal of Econometrics*, 74(1), 119–147. [DOI](https://doi.org/10.1016/0304-4076(95)01753-4).
+- Kim, H. (2009). *Generalized Impulse Response Analysis: General or Extreme?* MPRA Paper 17014. [工作论文](https://mpra.ub.uni-muenchen.de/17014/).
 
 - Sims, C. A. (1980). *Macroeconomics and Reality*. *Econometrica*, 48(1), 1. [DOI](https://doi.org/10.2307/1912017).
 - Lütkepohl, H. (2005). *New Introduction to Multiple Time Series Analysis*. Springer Berlin Heidelberg. [DOI](https://doi.org/10.1007/978-3-540-27752-1).
