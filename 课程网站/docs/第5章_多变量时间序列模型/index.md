@@ -1082,6 +1082,20 @@ plot(irf_garch, scales = "free_y")
 识别函数的使用需要满足相应假设。`id.cv()` 的核心问题是：断点前后是否主要体现为冲击方差变化，而不是结构传导机制改变？`id.garch()` 的核心问题是：条件异方差设定是否能合理刻画数据中的波动动态？如果相应假设不成立，软件输出就不能被直接解释为可信的结构冲击。
 
 
+#### 推荐阅读：svars 软件与应用（学生自学） {#svars-reading}
+
+请在学完本节后，自行阅读 Lange、Dalheimer、Herwartz 与 Maxand 的 [*svars: An R Package for Data-Driven Identification in Multivariate Time Series Analysis*（CRAN 文档，PDF）](https://cran.r-project.org/web/packages/svars/vignettes/svars.pdf)。
+
+这份文档介绍如何利用冲击的波动变化或非高斯分布等统计特征识别 SVAR，并结合 R 函数和宏观经济案例说明具体做法，可以与本节的异方差识别示例对照阅读。
+
+建议按以下顺序阅读：
+
+1. **先理解识别思路：第 2.1、2.2 和 2.4 节。** 重点看为什么约简式残差还不能直接解释为结构冲击，以及利用波动变化识别时需要哪些假设。
+2. **再看函数如何使用：第 4 节。** 对照本节代码，了解 `id.cv()`、`id.garch()` 的输入与输出，以及估计得到的结构影响矩阵表示什么。
+3. **最后阅读应用案例：第 5 节。** 沿着“估计 VAR—识别结构冲击—解释脉冲响应”的顺序，理解模型如何用于实际经济问题。
+
+阅读时，请始终区分“软件算出了一个结果”和“识别假设在经济上可信”，并尝试用自己的话说明案例中的识别依据。
+
 ---
 
 ## 5.12 如何解释 SVAR 结果
@@ -1511,7 +1525,7 @@ Local projection 提供了估计脉冲响应的另一种方法。它对每个预
 - Rigobon, R. (2003). *Identification Through Heteroskedasticity*. *Review of Economics and Statistics*, 85(4), 777–792. [DOI](https://doi.org/10.1162/003465303772815727).
 - Jordà, Ò. (2005). *Estimation and Inference of Impulse Responses by Local Projections*. *American Economic Review*, 95(1), 161–182. [DOI](https://doi.org/10.1257/0002828053828518).
 - Pfaff, B. (2008). *VAR, SVAR and SVEC Models: Implementation Within R Package vars*. *Journal of Statistical Software*, 27(4). [DOI](https://doi.org/10.18637/jss.v027.i04).
-- Lange, A.; Dalheimer, B.; Herwartz, H.; Maxand, S. (2021). *svars: An R Package for Data-Driven Identification in Multivariate Time Series Analysis*. *Journal of Statistical Software*, 97(5). [DOI](https://doi.org/10.18637/jss.v097.i05).
+- Lange, A.; Dalheimer, B.; Herwartz, H.; Maxand, S. (2021). *svars: An R Package for Data-Driven Identification in Multivariate Time Series Analysis*. *Journal of Statistical Software*, 97(5). [DOI](https://doi.org/10.18637/jss.v097.i05). [CRAN 文档（PDF）](https://cran.r-project.org/web/packages/svars/vignettes/svars.pdf)。
 - Adämmer, P. (2019). *lpirfs: An R Package to Estimate Impulse Response Functions by Local Projections*. *The R Journal*, 11(2), 421. [DOI](https://doi.org/10.32614/RJ-2019-052).
 - Herwartz, H.; Plödt, M. (2016). *Simulation Evidence on Theory‐based and Statistical Identification under Volatility Breaks*. *Oxford Bulletin of Economics and Statistics*, 78(1), 94–112. [DOI](https://doi.org/10.1111/obes.12098).
 
