@@ -1,0 +1,85 @@
+*
+* Replication file for Kilian, L. (2009), "Not All Oil Price Shocks Are
+* Alike: Disentangling Demand and Supply Shocks in the Crude Oil
+* Market", American Economic Review, vol. 99, no. 3, pp. 1053-1069.
+*
+* 3-variable oil model, using Monte Carlo integration for IRF error bands.
+*
+* Number of lags
+*
+compute p=24
+*
+* Number of IRF steps
+*
+compute nsteps=48
+*
+* Number of draws for generating confidence intervals
+*
+compute ndraws=10000
+*
+open data "kilian2009.rat"
+calendar(m) 1973:2
+data(format=rats) 1973:02 2007:12 pcoilprod rea logrealcrude
+*
+* Data are:
+*   PCOILPROD:    percentage change in log world oil production (in 10^6 barrels/day)
+*   REA:          detrended index of real economic activity
+*   LOGREALCRUDE: 100 x log real crude oil price
+*
+system(model=varmodel)
+variables pcoilprod rea logrealcrude
+lags 1 to p
+det constant
+end(system)
+*
+* Number of identified shocks
+* Number of response variables
+*
+compute nshocks=3
+compute ntarget=3
+*
+* Descriptive labels for the target variables
+*
+dec vect[strings] vl(ntarget)
+compute vl=||"Oil Production","Real Activity","Real Price of Oil"||
+*
+* Descriptive labels for the shocks
+*
+dec vect[strings] sl(nshocks)
+compute sl=||"Oil Supply","Aggregate Demand","Oil-Specific Demand"||
+*
+estimate
+*
+* This does a standard Cholesky factor, but flips the sign of column 1
+* (oil supply shock) so the impact on oil production is negative.
+*
+function SignedFactor sigma model
+type rect SignedFactor
+type symm sigma
+type model model
+*
+compute SignedFactor=%dmult(%chol(sigma),||-1.0,1.0,1.0||)
+end
+*
+@MCVARDoDraws(model=varmodel,steps=nsteps,draws=ndraws,ffunction=SignedFactor,accum=||1||)
+@MCGraphIRF(model=varmodel,varlabels=vl,shocklabels=sl,$
+  page=all,percent=||.025,.16,.84,.975||)
+*
+* Historical decomposition
+* (While this does the "signed corrected" factor of %SIGMA, the sign of
+* the shock doesn't matter in the results of the historical decomposition.)
+*
+history(model=varmodel,base=base,effects=effects,factor=SignedFactor(%sigma,varmodel))
+*
+* Get the max and min values across the three effects series so we can
+* get a common scale on the graphs.
+*
+table / effects(3,1) effects(3,2) effects(3,3)
+spgraph(vfields=3,header="Figure 6: Historical Decomposition of Real Price of Oil\\1975.2-2005.9")
+ graph(header="Cumulative Effect of Oil Supply Shock on Real Price of Oil",max=%maximum,min=%minimum)
+ # effects(3,1) * 2005:9
+ graph(header="Cumulative Effect of Aggregate Demand Shock on Real Price of Oil",max=%maximum,min=%minimum)
+ # effects(3,2) * 2005:9
+ graph(header="Cumulative Effect of Oil-Specific Demand Shock on Real Price of Oil",max=%maximum,min=%minimum)
+ # effects(3,3) * 2005:9
+spgraph(done)

@@ -1,0 +1,102 @@
+[
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/dta/src/dat_figure3-CI.csv",
+    "path": "kilian_2009_replication/references/author_mirror/dat_figure3-CI.csv",
+    "github_blob_sha": "8867bda4deea4367e06fcaad2757670025899411"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/dta/src/dat_figure3-IRF.csv",
+    "path": "kilian_2009_replication/references/author_mirror/dat_figure3-IRF.csv",
+    "github_blob_sha": "17e960964bd90d66c5ff4b5eba7317b76fbdb646"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/dta/src/dat_figure4-historical-decomposition.csv",
+    "path": "kilian_2009_replication/references/author_mirror/dat_figure4-historical-decomposition.csv",
+    "github_blob_sha": "c166d8e43760b273057ec87995ed1b0ce3dfbbe5"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/dta/src/dat_figure5-irf2-cpi.csv",
+    "path": "kilian_2009_replication/references/author_mirror/dat_figure5-irf2-cpi.csv",
+    "github_blob_sha": "4ee79db49f58e7538ce07a8cc0480f769baf2649"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/dta/src/dat_figure5-irf2-gdp.csv",
+    "path": "kilian_2009_replication/references/author_mirror/dat_figure5-irf2-gdp.csv",
+    "github_blob_sha": "fbd9ec00a09c1a7dfcb4636694ec68d7720c0b06"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/LICENSE.txt",
+    "path": "kilian_2009_replication/references/author_mirror/LICENSE.txt",
+    "github_blob_sha": "4c21872fb40082f4ea9250e7856772f9da936a8f"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/beagdp.txt",
+    "path": "kilian_2009_replication/references/author_mirror/beagdp.txt",
+    "github_blob_sha": "b0218f80c15bc52d567b681a958d4f02654aca1a"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/cpi.txt",
+    "path": "kilian_2009_replication/references/author_mirror/cpi.txt",
+    "github_blob_sha": "6c9a02088c5edf6d652f173486d1e6aec70c51ec"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/data.txt",
+    "path": "kilian_2009_replication/references/author_mirror/data.txt",
+    "github_blob_sha": "7c99f4f77218066185c63ee2aaf86f0da8e54c23"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/dif.m",
+    "path": "kilian_2009_replication/references/author_mirror/dif.m",
+    "github_blob_sha": "aeeea87e4ce87ff6200df62adcdd2b2da44d2c7a"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/figure2.m",
+    "path": "kilian_2009_replication/references/author_mirror/figure2.m",
+    "github_blob_sha": "dc6cd0173564aa8c7fcf59cebb063c49f93ec402"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/figure3.m",
+    "path": "kilian_2009_replication/references/author_mirror/figure3.m",
+    "github_blob_sha": "5c33ed4fd30097c9ed418408cb94c913de8fda3b"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/figure4.m",
+    "path": "kilian_2009_replication/references/author_mirror/figure4.m",
+    "github_blob_sha": "1ab993753db5384c2116f77564f058fdef2068e0"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/figure5.m",
+    "path": "kilian_2009_replication/references/author_mirror/figure5.m",
+    "github_blob_sha": "5712103472198f7bd247aa647d46fd9f00f24463"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/irfvar.m",
+    "path": "kilian_2009_replication/references/author_mirror/irfvar.m",
+    "github_blob_sha": "cd112bd83eab7473966ca633e200fe5760b162cd"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/olsvarc.m",
+    "path": "kilian_2009_replication/references/author_mirror/olsvarc.m",
+    "github_blob_sha": "99cf3c4bac0613276d23da0f31cd650cc0153dec"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/readme.txt",
+    "path": "kilian_2009_replication/references/author_mirror/readme.txt",
+    "github_blob_sha": "c14e1f0f9e9893f0c1aab4fd8655591050116985"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/stage2irf.m",
+    "path": "kilian_2009_replication/references/author_mirror/stage2irf.m",
+    "github_blob_sha": "8bb3da3ad910a4dc65196d5a6c0f942525b86d3c"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/trivar.m",
+    "path": "kilian_2009_replication/references/author_mirror/trivar.m",
+    "github_blob_sha": "c7f2d6a451303eaedd734490abc33d48eac60850"
+  },
+  {
+    "source": "https://github.com/richryan/jcre-oil/blob/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication/vec.m",
+    "path": "kilian_2009_replication/references/author_mirror/vec.m",
+    "github_blob_sha": "fb8d2c444fde4bb0a1106a666f93b32ad42cdb51"
+  }
+]

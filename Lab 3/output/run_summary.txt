@@ -1,0 +1,9 @@
+vars 1.6.1; openxlsx 4.2.9
+Completed: 2026-10-25 19:09:55.158162
+Input: data/kilian_analysis_data.xlsx; preparation is separate from analysis.
+VAR(24), intercept; 419 inputs, 395 effective months; residual df=322.
+SVAR: lower triangular B-model, scoring estimation, positive diagonal.
+SVAR scoring iterations: 21; maximum root: 0.988591998
+Wild bootstrap=2000; macro block bootstrap=20000 per equation; seed=1234.
+irf(..., boot=FALSE) supplies point estimates. Original-paper bootstrap is implemented separately.
+Production retains archived units. Figure 5 log-percent variant divides original scale by 4.

@@ -106,6 +106,16 @@ packageDescription("vars", fields = "License")
 
 ## 第三方许可文本 {#licenses}
 
+### Lab 3：Kilian（2009）复现材料
+
+[Lab 3](../lab-3/index.md) 使用 Kilian（2009）原论文归档数据和复现材料的[固定版本镜像](https://github.com/richryan/jcre-oil/tree/d4e339300f8ee48f2ccb42051cb3a48f1fb9cfb0/kilianAER2009replication)，月度输入另与 [Hansen 配套数据](https://users.ssc.wisc.edu/~bhansen/econometrics/Kilian2009.txt)逐值核对。它不把今日修订版活动指数标为原文当时的数据。
+
+复现包内 `references/author_mirror/LICENSE.txt` 保留镜像所附 AEA 许可文本：代码与软件采用 Modified BSD，数据库、表格及文本等采用 CC BY 4.0。新增 R 代码与整理说明另附 BSD-3-Clause 许可。论文引用为 Kilian（2009），*American Economic Review*, 99(3), 1053–1069，[DOI](https://doi.org/10.1257/aer.99.3.1053)。
+
+R 代码调用 `vars` 与 `openxlsx` 的公开接口；下载包不分发已安装的软件库。图形由 R 按已注明数据重新计算并在绘图窗口显示，不转载论文图片。数据来源、数值核验记录和适用许可随复现包保留。
+
+### 其他软件许可文本
+
 - [GPL 第2版全文](许可证/GPL-2.0.txt)、[GNU 官方 GPL-2.0](https://www.gnu.org/licenses/old-licenses/gpl-2.0.html)。
 - [GPL 第3版全文](许可证/GPL-3.0.txt)、[GNU 官方 GPL-3.0](https://www.gnu.org/licenses/gpl-3.0.html)。
 - [svars 1.3.12 的 MIT 版权与许可全文](许可证/svars-1.3.12-MIT.txt)。版权人按该版本 `LICENSE` 保留：Alexander Lange、Bernhard Dalheimer、Helmut Herwartz、Simone Maxand、Hannes Riebl，2018年。

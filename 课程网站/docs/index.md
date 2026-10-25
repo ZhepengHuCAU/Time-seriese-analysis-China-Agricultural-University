@@ -25,6 +25,7 @@
 
 - [Lab 1：结构变化、ARMA 与 ARCH/GARCH](lab-1/index.md) — 下载 Brent 数据与带有注释的 R 代码。
 - [Lab 2：VAR、SVAR 与 Local Projection](lab-2/index.md) — 从作图、平稳性检验到结构冲击分析与样本外预测，附宏观数据、详细 R 注释及结果解释。
+- [Lab 3：Kilian（2009）石油价格冲击复现](lab-3/index.md) — 用 vars 包识别供给、总需求和石油特定需求冲击；数据整理与正文分析分开，附 Excel 数据和完整复现包，直接在 RStudio 中作图。
 
 ## 引用与使用
 

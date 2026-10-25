@@ -1,0 +1,36 @@
+Loading required package: MASS
+Loading required package: strucchange
+Loading required package: zoo
+
+Attaching package: 'zoo'
+
+The following objects are masked from 'package:base':
+
+    as.Date, as.Date.numeric
+
+Loading required package: sandwich
+Loading required package: urca
+Loading required package: lmtest
+Warning messages:
+1: package 'vars' was built under R version 4.5.3 
+2: package 'strucchange' was built under R version 4.5.3 
+3: package 'zoo' was built under R version 4.5.3 
+4: package 'sandwich' was built under R version 4.5.3 
+5: package 'urca' was built under R version 4.5.3 
+6: package 'lmtest' was built under R version 4.5.3 
+Warning message:
+package 'openxlsx' was built under R version 4.5.3 
+                                   check max_abs_difference tolerance pass
+               Excel_monthly_vs_original       0.000000e+00     1e-07 TRUE
+            Excel_GDP_growth_vs_original       1.953993e-14     1e-07 TRUE
+         Excel_CPI_inflation_vs_original       4.440892e-14     1e-07 TRUE
+            SVAR_B_vs_Cholesky_benchmark       5.400125e-13     1e-07 TRUE
+              Figure3_vs_archived_MATLAB       8.585133e-12     1e-07 TRUE
+              Figure4_vs_archived_MATLAB       1.422507e-11     1e-07 TRUE
+          Figure5_GDP_vs_archived_MATLAB       3.597123e-13     1e-07 TRUE
+          Figure5_CPI_vs_archived_MATLAB       8.508749e-13     1e-07 TRUE
+ Historical_decomposition_reconstruction       3.595346e-12     1e-07 TRUE
+    Structural_covariance_reconstruction       2.023626e-11     1e-07 TRUE
+          Structural_shock_orthogonality       6.494805e-14     1e-07 TRUE
+                        FEVD_sums_to_100       4.263256e-14     1e-07 TRUE
+12 项检查通过。估计对象确认为 vars::VAR / vars::SVAR 返回类型。

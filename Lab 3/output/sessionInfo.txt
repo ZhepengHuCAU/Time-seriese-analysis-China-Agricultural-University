@@ -1,0 +1,21 @@
+R version 4.5.2 (2025-10-31 ucrt)
+Platform: x86_64-w64-mingw32/x64
+Running under: Windows 11 x64 (build 26200)
+
+Matrix products: default
+  LAPACK version 3.12.1
+
+locale:
+[1] LC_COLLATE=English_world.utf8  LC_CTYPE=English_world.utf8    LC_MONETARY=English_world.utf8 LC_NUMERIC=C                   LC_TIME=English_world.utf8    
+
+time zone: Asia/Shanghai
+tzcode source: internal
+
+attached base packages:
+[1] stats     graphics  grDevices utils     datasets  methods   base     
+
+other attached packages:
+[1] openxlsx_4.2.9    vars_1.6-1        lmtest_0.9-40     urca_1.3-4        strucchange_1.6-0 sandwich_3.1-3    zoo_1.9-1         MASS_7.3-65      
+
+loaded via a namespace (and not attached):
+[1] compiler_4.5.2 tools_4.5.2    Rcpp_1.1.2     stringi_1.8.9  nlme_3.1-168   grid_4.5.2     zip_3.0.2      lattice_0.22-7

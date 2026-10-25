@@ -1,0 +1,109 @@
+*
+* Replication file for Kilian, L. (2009), "Not All Oil Price Shocks Are
+* Alike: Disentangling Demand and Supply Shocks in the Crude Oil
+* Market", American Economic Review, vol. 99, no. 3, pp. 1053-1069.
+*
+* Analysis of interaction between oil supply shocks and U.S. macro
+* variables. The shocks are computed using the monthly model, but the
+* interaction is done at the quarterly level.
+*
+* Number of lags in the VAR.
+*
+compute p=24
+*
+open data "kilian2009.rat"
+calendar(m) 1973:2
+data(format=rats) 1973:02 2007:12 pcoilprod rea logrealcrude
+*
+* Data are:
+*   PCOILPROD:    percentage change in log world oil production (in 10^6 barrels/day)
+*   REA:          detrended index of real economic activity
+*   LOGREALCRUDE: 100 x log real crude oil price
+*
+system(model=varmodel)
+variables pcoilprod rea logrealcrude
+lags 1 to p
+det constant
+end(system)
+*
+* Estimate the model and save the residuals.
+*
+estimate(resids=u)
+*
+* This does a standard Cholesky factor, but flips the sign of column 1
+* (oil supply shock) so the impact on oil production is negative.
+*
+function SignedFactor sigma model
+type rect SignedFactor
+type symm sigma
+type model model
+*
+compute SignedFactor=%dmult(%chol(sigma),||-1.0,1.0,1.0||)
+end
+*
+@StructResids(factor=SignedFactor(%sigma,varmodel)) u / structu
+set oilsupply = structu(1)
+set aggdemand = structu(2)
+set oildemand = structu(3)
+*
+* Get the CPI (which is monthly on the data file)
+*
+data(format=rats) 1974:12 2007:12 cpi
+*
+* Compute monthly (annualized) inflation
+*
+set inflation = 1200.0*log(cpi/cpi{1})
+*
+* Create file with monthly data on inflation and the shocks
+*
+open copy monthlytemp.xls
+copy(dates,org=columns,format=xls) / oilsupply aggdemand oildemand inflation
+close copy
+*
+cal(q) 1973:1
+*
+* Read GDP data and convert to annualized growth rates
+*
+data(format=rats) 1974:04 2007:04 beagdp
+set gdpgrowth = 400.0*log(beagdp/beagdp{1})
+*
+* Read monthly data as quarterly averages
+*
+open data monthlytemp.xls
+data(format=xls,org=columns,compact=average) * 2007:4 oilsupply aggdemand oildemand inflation
+*
+* The IRF's will be lags 0 to dllags copied out of the coefficients of
+* the regressions of the macro variables on the shocks
+*
+compute dllags=12
+compute ndraws=20000
+*
+compute nshocks=3
+compute ntargets=2
+*
+dec vect[rect] %%responses(ndraws)
+ewise %%responses(i)=%zeros(nshocks*ntargets,dllags+1)
+*
+dofor depvar = gdpgrowth inflation
+   compute itarget=%doforpass
+   dofor shock = oilsupply aggdemand oildemand
+      compute jshock=%doforpass
+      linreg depvar
+      # constant shock{0 to dllags}
+      do draw=1,ndraws
+         boot(block=4) shuffle %regstart() %regend()
+         linreg(shuffle=shuffle,lastreg,noprint)
+         set(first=%beta(2)) accirf 1 dllags+1 = accirf{1}+%beta(t+1)
+         do k=1,dllags+1
+            compute %%responses(draw)(ntargets*(jshock-1)+itarget,k)=accirf(k)
+         end do k
+      end do draw
+   end dofor shock
+end dofor depvar
+*
+* This does percentiles rather than 1 and 2 s.d. bands
+*
+@mcgraphirf(header="Figure 5. Responses of U.S. Real GDP and CPI to Structural Shocks",$
+   varlabels=||"log GDP","log CPI"||,$
+   shocklabels=||"Oil Supply Shock","Aggregate Demand Shock","Oil-Specific Demand"||,$
+   percentiles=||.025,.16,.84,.975||)

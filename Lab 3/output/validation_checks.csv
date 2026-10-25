@@ -1,0 +1,13 @@
+"check","max_abs_difference","tolerance","pass"
+"Excel_monthly_vs_original",0,1e-07,TRUE
+"Excel_GDP_growth_vs_original",1.95399252334028e-14,1e-07,TRUE
+"Excel_CPI_inflation_vs_original",4.44089209850063e-14,1e-07,TRUE
+"SVAR_B_vs_Cholesky_benchmark",5.40012479177676e-13,1e-07,TRUE
+"Figure3_vs_archived_MATLAB",8.58513260482141e-12,1e-07,TRUE
+"Figure4_vs_archived_MATLAB",1.42250655699172e-11,1e-07,TRUE
+"Figure5_GDP_vs_archived_MATLAB",3.59712259978551e-13,1e-07,TRUE
+"Figure5_CPI_vs_archived_MATLAB",8.5087492607272e-13,1e-07,TRUE
+"Historical_decomposition_reconstruction",3.59534624294611e-12,1e-07,TRUE
+"Structural_covariance_reconstruction",2.02362571144477e-11,1e-07,TRUE
+"Structural_shock_orthogonality",6.49480469405717e-14,1e-07,TRUE
+"FEVD_sums_to_100",4.2632564145606e-14,1e-07,TRUE
